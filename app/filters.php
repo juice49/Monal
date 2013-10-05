@@ -13,13 +13,14 @@
 
 App::before(function($request)
 {
-	//
+	View::addLocation(app('path').'/theme/templates');
+    View::addNamespace('theme', app('path').'/theme/templates');
 });
 
 
 App::after(function($request, $response)
 {
-	//
+
 });
 
 /*
