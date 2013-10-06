@@ -1,16 +1,34 @@
 <?php
 /**
+ * Admin Controller
  *
+ * Base controller for CMS admin pages
+ *
+ * @author Arran Jacques
  */
+
+use App\Modules\Users\Contracts\UserAuthInterface;
+use App\Modules\Messages\Contracts\MessagesInterface;
 
 class AdminController extends BaseController {
 
-	public function __construct(App\Modules\Users\Contracts\UserAuthInterface $auth)
+	public function __construct(UserAuthInterface $auth, MessagesInterface $message)
 	{
 		$this->auth = $auth;
-		$this->user = $this->auth->loggedIn();
+		$this->data = Input::all();
+		if(isset($this->data['logout']))
+		{
+			$this->auth->logout();
+		}
+		$this->user = $this->auth->adminLoggedIn();
+		$this->message = $message;
 	}
 
+	/**
+	 * Controls and displays CMS login page
+	 *
+	 * @return	\Illuminate\Support\Facades\View
+	 */
 	public function login()
 	{
 		if ($this->user)
@@ -18,28 +36,54 @@ class AdminController extends BaseController {
 			return Redirect::route('admin');
 		}
 
-		$data = Input::all();
-
-		if($data)
+		if($this->data)
 		{
-			if ($this->auth->login($data['email'], $data['password']))
-			{
-				return Redirect::route('admin');
-			}
-		}
+			$validation = Validator::make($this->data,
+				array(
+					'email' => 'required|email',
+					'password' => 'required',
+					)
+				);
 
-		return View::make('theme::login');
+			if (!$validation->fails())
+			{
+				if ($this->auth->adminLogin($this->data['email'], $this->data['password']))
+				{
+					return Redirect::route('admin');
+				}
+			}
+
+			$this->message->setMessages(array(
+					'error' => array(
+						'Invalid login details',
+						)
+					));
+		}
+		$messages = $this->message->getMessages();
+		$data = $this->data;
+		return View::make('theme::login', compact('messages', 'data'));
 	}
 
+	/**
+	 * Controls and displays CMS main dashboard
+	 *
+	 * @return	\Illuminate\Support\Facades\View
+	 */
 	public function dashboard()
 	{
 		if (!$this->user)
 		{
 			return Redirect::route('admin.login');
 		}
-		return 'admin';
+		$messages = $this->message->getMessages();
+		return View::make('theme::sections.dashboard', compact('messages'));
 	}
 
+	/**
+	 * Controls and displays CMS module page
+	 *
+	 * @return	\Illuminate\Support\Facades\View
+	 */
 	public function module($module = null)
 	{
 		if (!$this->user)
@@ -51,8 +95,6 @@ class AdminController extends BaseController {
 		{
 			return Redirect::route('admin');
 		}
-
 		return $module;
 	}
-
 }

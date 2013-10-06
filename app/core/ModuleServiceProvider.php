@@ -1,12 +1,13 @@
-<?php
+<?php namespace App\Core\Modules;
 /**
  * Modules Service Provider
  *
- * This is used to register packages with Laravel allowing a
- * moduler approach to organising code.
+ * Registers modules as packages with Laravel and loads in their
+ * routes
+ *
+ * @author Arran Jacques
  */
 
-namespace App\Core\Modules;
 use Illuminate\Support\ServiceProvider;
 
 abstract class ModuleServiceProvider extends ServiceProvider {
@@ -14,7 +15,7 @@ abstract class ModuleServiceProvider extends ServiceProvider {
 	/**
 	 * Bootstrap the application events.
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	public function boot()
 	{
@@ -27,7 +28,7 @@ abstract class ModuleServiceProvider extends ServiceProvider {
 	/**
 	 * Register the service provider.
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	public function register()
 	{
@@ -36,17 +37,22 @@ abstract class ModuleServiceProvider extends ServiceProvider {
             $this->app['config']->package('app/' . $module, app_path() . '/modules/' . $module . '/config');
  
             $routes = app_path() . '/modules/' . $module . '/routes.php';
-            if (file_exists($routes)) require $routes;
+            if (file_exists($routes))
+            {
+            	require $routes;
+            }
         }
 	}
 
 	/**
+	 * Get the first argument passed to the function and return it
+	 * as the module name
 	 *
+	 * @return	mixed
 	 */
 	public function getModule($args)
     {
         $module = (isset($args[0]) and is_string($args[0])) ? $args[0] : null;
- 
         return $module;
     }
 

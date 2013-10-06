@@ -2,6 +2,7 @@
 /**
  *
  */
+
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use App\Modules\Users\Contracts\UserModelInterface;
@@ -13,14 +14,14 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface, Us
 	 *
 	 * @var string
 	 */
-	protected $table = 'users';
+	 protected $table = 'users';
 
-	/**
+	 /**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	protected $hidden = array('password');
+	protected $hidden = array('password', 'salt');
 
 	/**
 	 * Get the unique identifier for the user.
@@ -52,17 +53,13 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface, Us
 		return $this->email;
 	}
 
-	public function checkUserCredentials($email = null, $password = null)
-	{
-		if (!$email or !$password)
-		{
-			return false;
-		}
-		if (Auth::attempt(array('email' => $email, 'password' => $password), false))
-		{
-			return true;
-		}
-		return false;
-	}
-
+	public static function findByEmail($email)
+	 {
+	 	$user = self::select('*')->where('users.email', '=', $email)->first();
+	 	if (!$user)
+	 	{
+	 		return false;
+	 	}
+	 	return $user->toArray();
+	 }
 }
