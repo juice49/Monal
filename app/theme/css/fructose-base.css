@@ -3,7 +3,7 @@ html,body,input,textarea,select{font-family:"HelveticaNeue-Light","Helvetica Neu
 input,textarea,select{font-size:1em}
 .alignright{text-align:right}
 .aligncenter{text-align:center}
-.btn{display:inline-block;zoom:1;*display:inline;padding:10px 20px 10px 20px;border:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;cursor:pointer}
+.btn{display:inline-block;zoom:1;*display:inline;padding:10px 20px 10px 20px;border:none;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;cursor:pointer;outline:none}
 .btn.green{color:#fff;text-shadow:0 -1px 0 #000;border:solid 1px #005b18;background:-moz-linear-gradient(top,#009b3e 0%,#006e2e 100%);background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#009b3e),color-stop(100%,#006e2e));background:-webkit-linear-gradient(top,#009b3e 0%,#006e2e 100%);background:-o-linear-gradient(top,#009b3e 0%,#006e2e 100%);background:-ms-linear-gradient(top,#009b3e 0%,#006e2e 100%);background:linear-gradient(to bottom,#009b3e 0%,#006e2e 100%);background-color:#006e2e;-webkit-box-shadow:0 0 2px #111;-moz-box-shadow:0 0 2px #111;box-shadow:0 0 2px #111}
 .btn.green:hover{background:#009b3e}
 .btn.green:active{border:solid 1px #062300;background:#005b18;-webkit-box-shadow:inset 0 1px 2px #003508;-moz-box-shadow:inset 0 1px 2px #003508;box-shadow:inset 0 1px 2px #003508}
@@ -12,8 +12,21 @@ input,textarea,select{font-size:1em}
 .defaultinput:focus{border:solid 1px #009b3e}
 .messagebox{padding:10px;margin-bottom:20px;text-align:center;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;cursor:default}
 .messagebox.error{color:#a71505;border:solid 1px #fa6b5c;background-color:#fca79e}
-.dashboard .control_panel{position:absolute;width:280px;height:100%;border-right:solid 2px #000;background-image:url("../images/binding_dark_@2X.png");-webkit-background-size:180px 180px;-moz-background-size:180px 180px;background-size:180px 180px}
-.dashboard .body-wrap{position:relative;height:100%;padding-left:282px}
-.dashboard .body{height:auto;min-height:100%;padding:0 15px 0 30px;border-left:solid 1px #6a6a6a;}
-.dashboard .body .logout{padding:15px 0 30px 0}
-.dashboard .body h1.dashboard-title{margin:0;padding:0;color:#eee;font-size:3em;text-shadow:0 -1px 0 #333;font-weight:300}
+.dashboard .body-wrap{position:relative;height:auto;min-height:100%;padding-left:282px;overflow:hidden}
+.dashboard .body{height:auto;padding-left:30px;border-left:solid 1px #6a6a6a}
+.dashboard .logout{padding:15px 15px 30px 0}
+.control_panel{position:fixed;z-index:1;width:280px;height:100%;border-right:solid 2px #000;background-image:url("../images/binding_dark_@2X.png");-webkit-background-size:180px 180px;-moz-background-size:180px 180px;background-size:180px 180px;overflow:hidden;}
+.control_panel .logo{width:100%;height:220px}
+.control_panel-submenu_bkg{position:absolute;top:0;right:0;z-index:2;height:100%;border-left:solid 2px #000;background-image:url("../images/pool_table_@2X.png");-webkit-background-size:256px 256px;-moz-background-size:256px 256px;background-size:256px 256px;-webkit-box-shadow:inset 0 0 10px #333;-moz-box-shadow:inset 0 0 10px #333;box-shadow:inset 0 0 10px #333}
+.control_panel-nav{position:relative;}
+.control_panel-nav ul{padding:0;margin:0;list-style:none;}
+.control_panel-nav ul li{display:block;width:100%;}
+.control_panel-nav ul li a,.control_panel-nav ul li span{display:block;padding:20px;font-size:1.25em;text-decoration:none;letter-spacing:1px;cursor:pointer}
+.control_panel-nav > ul{border-bottom:solid 1px #333}
+.control_panel-nav .cp-heading > span,.control_panel-nav .cp-heading > a{color:#888;text-shadow:0 -1px 0 #000;border-top:solid 1px #333;border-bottom:solid 2px #000}
+.control_panel-nav .cp-heading > span:hover,.control_panel-nav .cp-heading > a:hover{color:#fff;background:#000}
+.control_panel-nav .cp-submenu{position:absolute;top:0;left:100%;z-index:3;width:100%}
+.dashboard-main{position:relative;}
+.dashboard-main h1.dashboard-title{margin:0;padding:0;color:#eee;font-size:3em;text-shadow:0 -1px 0 #333;font-weight:300;cursor:default}
+.dashboard-main .dashboard-content{padding-right:280px}
+.dashboard-main .dashboard-config{position:absolute;top:0;right:0;width:280px;height:auto;min-height:100%;border-left:solid 1px #6a6a6a;-webkit-box-shadow:0 20px 20px #000;-moz-box-shadow:0 20px 20px #000;box-shadow:0 20px 20px #000;background-image:url("../images/tweed_@2X.png");-webkit-background-size:200px 200px;-moz-background-size:200px 200px;background-size:200px 200px}

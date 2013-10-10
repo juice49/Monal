@@ -8,7 +8,12 @@
 	<body class="admin dashboard">
 
 		<div class="control_panel">
-			@yield('control_panel')
+			<div class="logo">
+			</div>
+			@include('partials.control_panel')
+			<div class="control_panel-submenu_bkg">
+				<span class="control_panel_close"></span>
+			</div>
 		</div>
 
 		<div class="body-wrap">
@@ -21,7 +26,16 @@
 					{{ Form::close() }}
 				</div>
 
-				@yield('dashboard')
+				<div class="dashboard-main">
+					
+					<div class="dashboard-content">
+						@yield('dashboard_content')
+					</div>
+
+					@yield('dashboard_config')
+
+				</div>
+
 			</div>
 
 		</div>

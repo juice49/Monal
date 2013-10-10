@@ -4,7 +4,7 @@
 	<head>
 		@include('partials.head')
 		<link type="text/css" rel="stylesheet" href="http://localhost:8888/fructosecms.dev/app/theme/css/login.css" />
-		<script src="http://localhost:8888/fructosecms.dev/app/theme/js/adminlogin.js"></script>
+		<script src="http://localhost:8888/fructosecms.dev/app/theme/js/login.js"></script>
 	</head>
 
 	<body class="admin login">

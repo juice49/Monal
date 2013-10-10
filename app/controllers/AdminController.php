@@ -9,10 +9,11 @@
 
 use App\Modules\Users\Contracts\UserAuthInterface;
 use App\Modules\Messages\Contracts\MessagesInterface;
+use App\Modules\Module\Contracts\ModuleManagerInterface;
 
 class AdminController extends BaseController {
 
-	public function __construct(UserAuthInterface $auth, MessagesInterface $message)
+	public function __construct(UserAuthInterface $auth, MessagesInterface $message, ModuleManagerInterface $module)
 	{
 		$this->auth = $auth;
 		$this->data = Input::all();
@@ -22,6 +23,9 @@ class AdminController extends BaseController {
 		}
 		$this->user = $this->auth->adminLoggedIn();
 		$this->message = $message;
+		$this->module = $module;
+
+		$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->module->installedModules());
 	}
 
 	/**
@@ -76,7 +80,9 @@ class AdminController extends BaseController {
 			return Redirect::route('admin.login');
 		}
 		$messages = $this->message->getMessages();
-		return View::make('theme::sections.dashboard', compact('messages'));
+		$user = $this->user->data;
+		$modules  = self::buildControlPanelNavigation($this->module->installedModules());
+		return View::make('theme::sections.dashboard', compact('messages', 'user', 'modules'));
 	}
 
 	/**
@@ -96,5 +102,36 @@ class AdminController extends BaseController {
 			return Redirect::route('admin');
 		}
 		return $module;
+	}
+
+	/**
+	 * Processes array of installed modules into a structured array
+	 * that can be used to build the control panel navigation menu 
+	 *
+	 * @param	array
+	 * @return	array
+	 */
+	public function buildControlPanelNavigation(array $modules)
+	{
+		$navigation_tree = array();
+		foreach ($modules as $module)
+		{
+			if (isset($module['details']['has_backend']) && $module['details']['has_backend'])
+			{
+				if (isset($module['details']['control_panel_heading']) && !empty($module['details']['control_panel_heading']))
+				{
+					$submenu = (isset($module['details']['control_panel_sub_menu']) && is_array($module['details']['control_panel_sub_menu'])) ? $module['details']['control_panel_sub_menu'] : array();
+					if (!isset($navigation_tree[$module['details']['control_panel_heading']]))
+					{
+						$navigation_tree[$module['details']['control_panel_heading']] = $submenu;
+					}
+					else
+					{
+						$navigation_tree[$module['details']['control_panel_heading']] = array_merge($navigation_tree[$module['details']['control_panel_heading']], $submenu);
+					}
+				}
+			}
+		}
+		return $navigation_tree;
 	}
 }

@@ -118,6 +118,7 @@ return array(
 		// Fructose CMS core service provider
 		'App\Modules\Users\UsersServiceProvider',
 		'App\Modules\Messages\MessagesServiceProvider',
+		'App\Modules\Module\ModuleManagerServiceProvider',
 
 	),
 

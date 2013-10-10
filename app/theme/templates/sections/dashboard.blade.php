@@ -1,5 +1,5 @@
 @extends('dashboard')
 
-@section('dashboard')
-    <h1 class="dashboard-title">Welcome</h1>
+@section('dashboard_content')
+	<h1 class="dashboard-title">Welcome {{ $user['first_name'] }}</h1>
 @stop

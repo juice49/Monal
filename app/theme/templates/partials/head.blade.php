@@ -1,2 +1,2 @@
 <link type="text/css" rel="stylesheet" href="http://localhost:8888/fructosecms.dev/app/theme/css/fructose-base.css" />
-<script src="http://localhost:8888/fructosecms.dev/app/theme/js/libs/jquery-1.10.2.min.js"></script>
+<script src="http://localhost:8888/fructosecms.dev/app/theme/js/compressed/core.js"></script>
