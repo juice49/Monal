@@ -63,4 +63,25 @@ class UsersManager implements UsersManagerInterface {
 		}
 		return false;
 	}
+
+	/**
+	 * Switches a groups active status around
+	 *
+	 * @param	int
+	 * @return	boolean
+	 */
+	public function switchUserGroupsStatus($group_id)
+	{
+		if ($group_id != 1)
+		{
+			$group = \UserGroups_m::find($group_id);
+			if ($group)
+			{
+				$group->active = ($group->active == 1) ? 0 : 1;
+				$group->save();
+				return true;
+			}
+		}
+		return false;
+	}
 }

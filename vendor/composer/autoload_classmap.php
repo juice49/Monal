@@ -6,6 +6,7 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'AJAXController' => $baseDir . '/app/controllers/AJAX.php',
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
     'App\\Core\\Contracts\\ServiceProviderInterface' => $baseDir . '/app/core/contracts/ServiceProviderInterface.php',
     'App\\Core\\Modules\\ModuleServiceProvider' => $baseDir . '/app/core/ModuleServiceProvider.php',
@@ -17,7 +18,6 @@ return array(
     'App\\Modules\\Module\\ModuleManagerServiceProvider' => $baseDir . '/app/modules/module/ModuleManagerServiceProvider.php',
     'App\\Modules\\Users\\Contracts\\UserAuthInterface' => $baseDir . '/app/modules/users/contracts/UserAuthInterface.php',
     'App\\Modules\\Users\\Contracts\\UserInterface' => $baseDir . '/app/modules/users/contracts/UserInterface.php',
-    'App\\Modules\\Users\\Contracts\\UserModelInterface' => $baseDir . '/app/modules/users/contracts/UserModelInterface.php',
     'App\\Modules\\Users\\Contracts\\UsersManagerInterface' => $baseDir . '/app/modules/users/contracts/UsersManagerInterface.php',
     'App\\Modules\\Users\\User' => $baseDir . '/app/modules/users/libraries/User.php',
     'App\\Modules\\Users\\UserAuth' => $baseDir . '/app/modules/users/libraries/UserAuth.php',
@@ -35,6 +35,7 @@ return array(
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
     'UserGroups_m' => $baseDir . '/app/modules/users/models/UserGroups_m.php',
+    'UsersAJAX' => $baseDir . '/app/modules/users/libraries/AJAX.php',
     'UsersController' => $baseDir . '/app/modules/users/controllers/Users.php',
     'Users_m' => $baseDir . '/app/modules/users/models/Users_m.php',
 );

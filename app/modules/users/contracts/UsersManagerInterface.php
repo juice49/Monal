@@ -23,4 +23,12 @@ interface UsersManagerInterface {
 	 * @return	boolean
 	 */
 	public function saveUserGroup($data);
+
+	/**
+	 * Switches a groups active status around
+	 *
+	 * @param	int
+	 * @return	boolean
+	 */
+	public function switchUserGroupsStatus($group_id);
 }

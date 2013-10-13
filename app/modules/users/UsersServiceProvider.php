@@ -38,21 +38,13 @@ class UsersServiceProvider extends ModuleServiceProvider implements ServiceProvi
     {
         parent::register('users');
 
-        $this->app->bind('\App\Modules\Users\Contracts\UserModelInterface', function()
-			{
-				return new \Users_m;
-			});
         $this->app->bind('App\Modules\Users\Contracts\UsersManagerInterface', function()
 			{
-				return new \App\Modules\Users\UsersManager(
-						$this->app->make('\App\Modules\Users\Contracts\UserModelInterface')
-					);
+				return new \App\Modules\Users\UsersManager();
 			});
 		$this->app->bind('\App\Modules\Users\Contracts\UserInterface', function()
 			{
-				return new \App\Modules\Users\User(
-						$this->app->make('\App\Modules\Users\Contracts\UserModelInterface')
-					);
+				return new \App\Modules\Users\User();
 			});
 		$this->app->bind('App\Modules\Users\Contracts\UserAuthInterface', function()
 			{
