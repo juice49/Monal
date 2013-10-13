@@ -31,7 +31,7 @@ class UserAuth implements UserAuthInterface {
 		{
 			return false;
 		}
-		if ($user = $this->user->model->findByEmail($email))
+		if ($user = \Users_m::findByEmail($email))
 		{
 			$this->user->setUser($user);
 			if ($this->user->hasPrivileges())
@@ -64,7 +64,7 @@ class UserAuth implements UserAuthInterface {
 	{
 		if (\Auth::check())
 		{
-			$this->user->data = \Auth::user()->toArray();
+			$this->user->user_data = \Auth::user()->toArray();
 			return $this->user;
 		}
 		return false;

@@ -2,9 +2,19 @@
 
 interface UserInterface {
 
-	public function __construct(\App\Modules\Users\Contracts\UserModelInterface $model);
+	/**
+	 * Set the user data for the object instance
+	 *
+	 * @param	array
+	 * @return	void
+	 */
+	public function setUser($data);
 
-	public function setUser(array $user);
-	
+	/**
+	 * Check user has privileges for the area they are trying to
+	 * access
+	 *
+	 * @return void
+	 */	
 	public function hasPrivileges();
 }

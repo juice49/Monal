@@ -15,7 +15,8 @@ class Module_Users extends Module implements ModuleInterface {
 				'has_backend' => true,
 				'control_panel_heading' => 'Users',
 				'control_panel_sub_menu' => array(
-						'Manage Users' => '/users',
+						'Users' => '/users',
+						'User Groups' => '/users/groups',
 						'User Privileges' =>  '/users/privileges',
 					),
 			);

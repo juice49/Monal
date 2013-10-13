@@ -9,6 +9,7 @@ module.exports = function(grunt){
         stylus: {
             compile : {
                 files: {
+                    'css/grid.css' : 'css/stylus/grid.styl',
                     'css/fructose-base.css': 'css/stylus/fructose-base.styl',
                     'css/login.css': 'css/stylus/login.styl',
                 }
@@ -31,6 +32,7 @@ module.exports = function(grunt){
         watch : {
             css : {
                 files : [
+                        'css/stylus/grid.styl',
                         'css/stylus/fructose-base.styl',
                         'css/stylus/login.styl'
                     ],

@@ -26,12 +26,13 @@ class AdminController extends BaseController {
 		$this->module = $module;
 
 		$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->module->installedModules());
+		View::share('control_panel', $this->controlPanelNavigation );
 	}
 
 	/**
 	 * Controls and displays CMS login page
 	 *
-	 * @return	\Illuminate\Support\Facades\View
+	 * @return	\Illuminate\View\View
 	 */
 	public function login()
 	{
@@ -40,7 +41,7 @@ class AdminController extends BaseController {
 			return Redirect::route('admin');
 		}
 
-		if($this->data)
+		if ($this->data)
 		{
 			$validation = Validator::make($this->data,
 				array(
@@ -71,7 +72,7 @@ class AdminController extends BaseController {
 	/**
 	 * Controls and displays CMS main dashboard
 	 *
-	 * @return	\Illuminate\Support\Facades\View
+	 * @return	\Illuminate\View\View
 	 */
 	public function dashboard()
 	{
@@ -80,28 +81,8 @@ class AdminController extends BaseController {
 			return Redirect::route('admin.login');
 		}
 		$messages = $this->message->getMessages();
-		$user = $this->user->data;
-		$modules  = self::buildControlPanelNavigation($this->module->installedModules());
-		return View::make('theme::sections.dashboard', compact('messages', 'user', 'modules'));
-	}
-
-	/**
-	 * Controls and displays CMS module page
-	 *
-	 * @return	\Illuminate\Support\Facades\View
-	 */
-	public function module($module = null)
-	{
-		if (!$this->user)
-		{
-			return Redirect::route('admin.login');
-		}
-
-		if (!$module or $module != 'users' or !$this->user->hasPrivileges())
-		{
-			return Redirect::route('admin');
-		}
-		return $module;
+		$user = $this->user->user_data;
+		return View::make('theme::sections.dashboard', compact('messages', 'user'));
 	}
 
 	/**

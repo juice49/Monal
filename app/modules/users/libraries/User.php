@@ -7,21 +7,26 @@
  * @author Arran Jacques
  */
 
-class User implements Contracts\UserInterface {
+use App\Modules\Users\Contracts\UserInterface;
 
-	public function __construct(\App\Modules\Users\Contracts\UserModelInterface $model)
-	{
-		$this->model = $model;
-	}
+class User implements UserInterface {
 
 	/**
-	 * Save user data to object
+	 * User's data
 	 *
+	 * @var		array
+	 */
+	public $user_data;
+
+	/**
+	 * Set the user data for the object instance
+	 *
+	 * @param	array
 	 * @return	void
 	 */
-	public function setUser(array $user)
+	public function setUser($data)
 	{
-		$this->data = $user;
+		$this->user_data = $data;
 	}
 
 	/**
@@ -32,7 +37,7 @@ class User implements Contracts\UserInterface {
 	 */
 	public function hasPrivileges()
 	{
-		if ($this->data['active'] == 1 and $this->data['role'] == 1)
+		if ($this->user_data['active'] == 1 and $this->user_data['group'] == 1)
 		{
 			return true;
 		}

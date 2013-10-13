@@ -18,8 +18,10 @@ return array(
     'App\\Modules\\Users\\Contracts\\UserAuthInterface' => $baseDir . '/app/modules/users/contracts/UserAuthInterface.php',
     'App\\Modules\\Users\\Contracts\\UserInterface' => $baseDir . '/app/modules/users/contracts/UserInterface.php',
     'App\\Modules\\Users\\Contracts\\UserModelInterface' => $baseDir . '/app/modules/users/contracts/UserModelInterface.php',
+    'App\\Modules\\Users\\Contracts\\UsersManagerInterface' => $baseDir . '/app/modules/users/contracts/UsersManagerInterface.php',
     'App\\Modules\\Users\\User' => $baseDir . '/app/modules/users/libraries/User.php',
     'App\\Modules\\Users\\UserAuth' => $baseDir . '/app/modules/users/libraries/UserAuth.php',
+    'App\\Modules\\Users\\UsersManager' => $baseDir . '/app/modules/users/libraries/UsersManager.php',
     'App\\Modules\\Users\\UsersServiceProvider' => $baseDir . '/app/modules/users/UsersServiceProvider.php',
     'BaseController' => $baseDir . '/app/controllers/BaseController.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
@@ -32,5 +34,7 @@ return array(
     'Modules_m' => $baseDir . '/app/modules/module/models/Module_m.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
+    'UserGroups_m' => $baseDir . '/app/modules/users/models/UserGroups_m.php',
+    'UsersController' => $baseDir . '/app/modules/users/controllers/Users.php',
     'Users_m' => $baseDir . '/app/modules/users/models/Users_m.php',
 );
