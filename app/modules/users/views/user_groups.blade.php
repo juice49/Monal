@@ -11,10 +11,13 @@
 		<a href="{{ URL::route('admin.users.groups.add') }}" class="btn green">Add new user group</a>
 	</div>
 
-	@if($messages->has('success'))
-		<div class="messagebox success">
-			{{ $messages->get('success')[0] }}
-		</div> 
+	@if($messages)
+		@if($messages->has('success'))
+			<div class="messagebox success">
+				<h6>SUCCESS</h6>
+				{{ $messages->get('success')[0] }}
+			</div> 
+		@endif
 	@endif
 
 	<div class="well">
@@ -34,7 +37,7 @@
 					@else
 						<div class="span-left span-10 aligncenter"><div class="span-pad"><span class="btn orange small active_state" data-id="{{ $group['id'] }}">no</span></div></div>
 					@endif
-					<div class="span-left span-45 alignright"><div class="span-pad"><span class="btn blue small">edit</span><span class="btn red small">delete</span></div></div>
+					<div class="span-left span-45 alignright"><div class="span-pad"><a href="{{ URL::route('admin.users.groups.edit', array('group_id' => $group['id'])) }}" class="btn blue small">edit</a><span class="btn red small">delete</span></div></div>
 				</li>
 				<?php $i++; ?>
 			@endforeach

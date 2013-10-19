@@ -60,11 +60,17 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface {
 	 */
 	public static function findByEmail($email)
 	{
-	 	$user = self::select('*')->where('users.email', '=', $email)->first();
-	 	if (!$user)
-	 	{
-	 		return false;
-	 	}
-	 	return $user->toArray();
-	 }
+	$user = self::select('*')->where('users.email', '=', $email)->first();
+		if (!$user)
+		{
+			return false;
+		}
+		return $user->toArray();
+	}
+
+	public static function setUsersStatusByGroup($group_id, $status)
+	{
+		self::where('group', '=', $group_id)->update(array('active' => $status));
+		return true;
+	}
 }

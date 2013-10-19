@@ -2,7 +2,7 @@
 /**
  * Users Controller
  *
- * Controller for Users Module CMS admin pages
+ * Controller for Users Module's CMS admin pages
  *
  * @author Arran Jacques
  */
@@ -37,6 +37,129 @@ class UsersController extends AdminController {
 	}
 
 	/**
+	 * Controls and displays add user page
+	 *
+	 * @return	\Illuminate\View\View
+	 */
+	public function addUser()
+	{
+		if (!$this->user)
+		{
+			return Redirect::route('admin.login');
+		}
+		if ($this->data)
+		{
+			$validation = Validator::make($this->data,
+				array(
+					'first_name' => 'required|alpha|min:2',
+					'last_name' => 'required|alpha|min:2',
+					'username' => 'required|min:2|alpha_dash|unique:users',
+					'email' => 'required|email|unique:users',
+					'password' => 'required|min:6|confirmed',
+					'password_confirmation' => 'required|min:6',
+					'user_group' => 'required',
+					)
+				);
+
+			if ($validation->passes())
+			{
+				$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
+
+				if ($this->users->createUser($this->data))
+				{
+					$this->message->setMessages(array(
+						'success' => array(
+							'User created',
+							)
+						))->flash();
+					return Redirect::route('admin.users');
+				}
+				else
+				{
+					$this->message->setMessages(array(
+						'error' => array(
+							'There was an error creating this user. Please try again.',
+							)
+						));
+				}
+			}
+			else
+			{
+				$this->message->setMessages($validation->messages()->toArray());
+			}
+		}
+		$user_groups = $this->formatUserGroups($this->users->getUserGroups());
+		$messages = $this->message->getMessages();
+		return View::make('users::add_user', compact('messages', 'user_groups'));
+	}
+
+	/**
+	 * Controls and displays edit user page
+	 *
+	 * @param	Int
+	 * @return	\Illuminate\View\View
+	 */
+	public function editUser($user_id)
+	{
+		if (!$this->user)
+		{
+			return Redirect::route('admin.login');
+		}
+
+		if (isset($user_id) && $user = $this->users->getUser($user_id))
+		{
+			if ($this->data)
+			{
+				$validation = Validator::make($this->data,
+					array(
+						'first_name' => 'required|alpha|min:2',
+						'last_name' => 'required|alpha|min:2',
+						'username' => 'required|min:2|alpha_dash|unique:users,username,' . $user_id,
+						'email' => 'required|email|unique:users,email,' . $user_id,
+						'password' => 'min:6|confirmed',
+						'password_confirmation' => 'min:6',
+						'user_group' => 'required',
+						)
+					);
+
+				if ($validation->passes())
+				{
+					$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
+
+					if ($this->users->editUser($user_id, $this->data))
+					{
+						$this->message->setMessages(array(
+							'success' => array(
+								'Changes to user saved.',
+								)
+							))->flash();
+						return Redirect::route('admin.users');
+					}
+					else
+					{
+						$this->message->setMessages(array(
+							'error' => array(
+								'There was an error editing this user. Please try again.',
+								)
+							));
+					}
+				}
+				else
+				{
+					$this->message->setMessages($validation->messages()->toArray());
+				}
+			}
+			$user_groups = $this->formatUserGroups($this->users->getUserGroups());
+			$messages = $this->message->getMessages();
+			return View::make('users::edit_user', compact('messages', 'user', 'user_groups'));
+		}
+		else
+		{
+			return Redirect::route('admin.users');
+		}
+	}
+
+	/**
 	 * Controls and displays user groups page
 	 *
 	 * @return	\Illuminate\View\View
@@ -67,7 +190,7 @@ class UsersController extends AdminController {
 		{
 			$validation = Validator::make($this->data,
 				array(
-					'name' => 'required|min:3',
+					'name' => 'required|alpha_num|unique:user_groups',
 					)
 				);
 
@@ -75,11 +198,11 @@ class UsersController extends AdminController {
 			{
 				$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
 
-				if ($this->users->saveUserGroup($this->data))
+				if ($this->users->createUserGroup($this->data))
 				{
 					$this->message->setMessages(array(
 						'success' => array(
-							'User group created',
+							'The user group ' . $this->data['name'] . ' was created.',
 							)
 						))->flash();
 					return Redirect::route('admin.users.groups');
@@ -88,7 +211,7 @@ class UsersController extends AdminController {
 				{
 					$this->message->setMessages(array(
 						'error' => array(
-							'There was an error adding this user group',
+							'There was an error adding this user group. Please try again.',
 							)
 						));
 				}
@@ -103,11 +226,70 @@ class UsersController extends AdminController {
 	}
 
 	/**
+	 * Controls and displays edit user group page
+	 *
+	 * @param	Int
+	 * @return	\Illuminate\View\View
+	 */
+	public function editUserGroup($group_id)
+	{
+		if (!$this->user)
+		{
+			return Redirect::route('admin.login');
+		}
+
+		if (isset($group_id) && $user_group = $this->users->getUserGroup($group_id))
+		{
+			if ($this->data)
+			{
+				$validation = Validator::make($this->data,
+					array(
+						'name' => 'required|alpha_num|unique:user_groups,name,' . $group_id,
+						)
+					);
+
+				if ($validation->passes())
+				{
+					$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
+
+					if ($this->users->editUserGroup($group_id, $this->data))
+					{
+						$this->message->setMessages(array(
+							'success' => array(
+								'Changes to the user group ' . $this->data['name'] . ' where saved.',
+								)
+							))->flash();
+						return Redirect::route('admin.users.groups');
+					}
+					else
+					{
+						$this->message->setMessages(array(
+							'error' => array(
+								'There was an error editing this user group. Please try again.',
+								)
+							));
+					}
+				}
+				else
+				{
+					$this->message->setMessages($validation->messages()->toArray());
+				}
+			}
+			$messages = $this->message->getMessages();
+			return View::make('users::edit_user_group', compact('messages', 'user_group'));
+		}
+		else
+		{
+			return Redirect::route('admin.users.groups');
+		}
+	}
+
+	/**
 	 * Formats a list of user groups into a simple array where the
 	 * key is the group ID and the value is the group name
 	 *
-	 * @param	array
-	 * @return	array
+	 * @param	Array
+	 * @return	Array
 	 */
 	public function formatUserGroups(array $user_groups)
 	{

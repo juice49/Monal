@@ -11,6 +11,8 @@ use Illuminate\Support\MessageBag;
 
 class Messages implements Contracts\MessagesInterface {
 
+	protected $messages;
+
 	public function __construct()
 	{
 		$this->messages = new MessageBag();
@@ -38,7 +40,11 @@ class Messages implements Contracts\MessagesInterface {
 				}
 			}
 		}
-		return $this->messages;
+		if ($this->messages->count() > 0)
+		{
+			return $this->messages;
+		}
+		return false;
 	}
 
 	/**

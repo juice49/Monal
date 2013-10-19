@@ -15,6 +15,16 @@ class UsersAJAX {
 		$this->users = new App\Modules\Users\UsersManager();
 	}
 
+	public function switchUsersStatus($data)
+	{
+		$results = $this->users->switchUsersStatus($data['user_id']);
+		if ($results)
+		{
+			return 'success';
+		}
+		return 'error';
+	}
+
 	public function switchUserGroupsStatus($data)
 	{
 		$results = $this->users->switchUserGroupsStatus($data['group_id']);

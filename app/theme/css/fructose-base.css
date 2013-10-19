@@ -24,7 +24,10 @@ html .clearfix{display:block}
 .defaultlabel{display:block;color:#444;font-size:1.125em;margin-bottom:7px}
 .defaultinput{display:block;width:400px;max-width:100%;padding:10px;margin-bottom:20px;border:solid 1px #6a6a6a;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background:#fff;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;-webkit-box-shadow:inset 0 0 3px #333;-moz-box-shadow:inset 0 0 3px #333;box-shadow:inset 0 0 3px #333;outline:none;resize:none}
 .defaultinput:focus{border:solid 1px #333}
-.messagebox{padding:10px;margin-bottom:20px;text-align:center;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;cursor:default}
+.messagebox{padding:10px;margin-bottom:20px;text-align:center;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;cursor:default;}
+.messagebox h6{padding:0;margin:0 0 10px 0;font-size:1em}
+.messagebox ul,.messagebox ol{padding:0;margin:0;list-style:none;}
+.messagebox ul li,.messagebox ol li{margin-bottom:5px}
 .messagebox.error{color:#a71505;border:solid 1px #fa6b5c;background-color:#fca79e}
 .messagebox.success{color:#2d9324;border:solid 1px #6fda65;background-color:#bceeb7}
 .dashboard .body-wrap{position:relative;height:auto;min-height:100%;padding-left:282px;overflow:hidden}

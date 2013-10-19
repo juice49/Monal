@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('dashboard_content')
-	<h1 class="dashboard-title">Add User Group</h1>
+	<h1 class="dashboard-title">Edit User Group</h1>
 
 	@if($messages)
 		<div class="messagebox error">
@@ -18,11 +18,11 @@
 		<div class="well">
 			<div class="block">
 				{{ Form::label('name', 'Name', array('class' => 'defaultlabel')) }}
-				{{ Form::input('text', 'name', Input::has('name') ? Input::get('name') : null, array('class' => 'defaultinput')) }}
+				{{ Form::input('text', 'name', Input::has('name') ? Input::get('name') : $user_group['name'], array('class' => 'defaultinput')) }}
 			</div>
 			<div class="block">
 				{{ Form::label('active', 'Activate', array('class' => 'defaultlabel')) }}
-				{{ Form::checkbox('active', '1', Input::has('active') ? true : false) }}
+				{{ Form::checkbox('active', '1', Input::has('active') ? true : $user_group['active']) }}
 			</div>
 		</div>
 

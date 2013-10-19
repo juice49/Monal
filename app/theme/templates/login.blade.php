@@ -19,7 +19,7 @@
 
 						{{ Form::open(array('class' => 'login-form')) }}
 
-							@if($messages->has('error'))
+							@if($messages)
 								<div class="messagebox error">
 									{{ $messages->get('error')[0] }}
 								</div> 

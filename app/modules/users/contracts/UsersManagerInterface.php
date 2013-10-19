@@ -3,32 +3,82 @@
 interface UsersManagerInterface {
 
 	/**
+	 * Get a user by their ID along with their respective user group
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getUser($user_id);
+
+	/**
 	 * Get all users along with their respective user groups
 	 *
-	 * @return	array
+	 * @return	Array
 	 */
 	public function getUsers();
 
 	/**
+	 * Create a new user
+	 *
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function createUser($data);
+
+	/**
+	 * Edit an existing user
+	 *
+	 * @param	Int
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function editUser($user_id, $data);
+
+	/**
+	 * Switches a user's active status around
+	 *
+	 * @param	Int
+	 * @return	Boolean
+	 */
+	public function switchUsersStatus($user_id);
+
+	/**
+	 * Get a user group by its ID
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getUserGroup($group_id);
+
+	/**
 	 * Get all user groups
 	 *
-	 * @return	array
+	 * @return	Array
 	 */
 	public function getUserGroups();
 
 	/**
-	 * Save a new user group
+	 * Create a new user group
 	 *
-	 * @param	array
-	 * @return	boolean
+	 * @param	Array
+	 * @return	Boolean
 	 */
-	public function saveUserGroup($data);
+	public function createUserGroup($data);
+
+	/**
+	 * Edit an existing user group
+	 *
+	 * @param	Int
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function editUserGroup($group_id, $data);
 
 	/**
 	 * Switches a groups active status around
 	 *
-	 * @param	int
-	 * @return	boolean
+	 * @param	Int
+	 * @return	Boolean
 	 */
 	public function switchUserGroupsStatus($group_id);
 }

@@ -17,16 +17,24 @@ class AdminController extends BaseController {
 	{
 		$this->auth = $auth;
 		$this->data = Input::all();
-		if(isset($this->data['logout']))
+
+		if (isset($this->data['logout']))
 		{
 			$this->auth->logout();
 		}
+
 		$this->user = $this->auth->adminLoggedIn();
+
+		if ($this->user)
+		{
+			View::share('current_user', $this->user->user_data);
+		}
+
 		$this->message = $message;
 		$this->module = $module;
-
 		$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->module->installedModules());
-		View::share('control_panel', $this->controlPanelNavigation );
+		
+		View::share('control_panel', $this->controlPanelNavigation);
 	}
 
 	/**

@@ -2,7 +2,7 @@
 /**
  * User Manager
  *
- * Library for managing users, user groups and user privileges
+ * Library for managing users and user groups
  *
  * @author Arran Jacques
  */
@@ -12,9 +12,26 @@ use App\Modules\Users\Contracts\UsersManagerInterface;
 class UsersManager implements UsersManagerInterface {
 
 	/**
+	 * Get a user by their ID along with their respective user group
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getUser($user_id)
+	{
+		$user = \Users_m::find($user_id);
+		if ($user)
+		{
+			$user['group'] = $this->getUserGroup($user['group']);
+			return $user->toArray();
+		}
+		return false;
+	}
+
+	/**
 	 * Get all users along with their respective user groups
 	 *
-	 * @return	array
+	 * @return	Array
 	 */
 	public function getUsers()
 	{
@@ -35,9 +52,78 @@ class UsersManager implements UsersManagerInterface {
 	}
 
 	/**
+	 * Create a new user
+	 *
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function createUser($data)
+	{
+		$user = new \Users_m();
+		$user->first_name = $data['first_name'];
+		$user->last_name = $data['last_name'];
+		$user->username = $data['username'];
+		$user->email = $data['email'];
+		$user->password = \Hash::make($data['password']);
+		$user->group = $data['user_group'];
+		$user->active = $data['active'];
+		if ($user->save())
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Edit an existing user
+	 *
+	 * @param	Int
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function editUser($user_id, $data)
+	{
+		$user = \Users_m::find($user_id);
+		if ($user)
+		{
+			$user->first_name  = $data['first_name'];
+			$user->last_name  = $data['last_name'];
+			$user->username = $data['username'];
+			$user->email = $data['email'];
+			$user->group = $data['user_group'];
+			$user->active = $data['active'];
+			if (isset($data['password']) && !empty($data['password']))
+			{
+				$user->password = \Hash::make($data['password']);
+			}
+			if ($user->save())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Get a user group by its ID
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getUserGroup($group_id)
+	{
+		$group = \UserGroups_m::find($group_id);
+		if ($group)
+		{
+			return $group->toArray();
+		}
+		return false;
+	}
+
+	/**
 	 * Get all user groups
 	 *
-	 * @return	array
+	 * @return	Array
 	 */
 	public function getUserGroups()
 	{
@@ -45,30 +131,68 @@ class UsersManager implements UsersManagerInterface {
 	}
 
 	/**
-	 * Save a new user group
+	 * Switches a user's active status around
 	 *
-	 * @param	array
-	 * @return	boolean
+	 * @param	Int
+	 * @return	Boolean
 	 */
-	public function saveUserGroup($data)
+	public function switchUsersStatus($user_id)
 	{
-		$exists = \UserGroups_m::findByName($data['name']);
-		if (!$exists)
+		$user = \Users_m::find($user_id);
+		if ($user)
 		{
-			$group = new \UserGroups_m();
-			$group->name  = $data['name'];
-			$group->active  = $data['active'];
-			$group->save();
+			$user->active = ($user->active == 1) ? 0 : 1;
+			$user->save();
 			return true;
 		}
 		return false;
 	}
 
 	/**
-	 * Switches a groups active status around
+	 * Create a new user group
 	 *
-	 * @param	int
-	 * @return	boolean
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function createUserGroup($data)
+	{
+		$group = new \UserGroups_m();
+		$group->name  = $data['name'];
+		$group->active  = $data['active'];
+		if ($group->save())
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Edit an existing user group
+	 *
+	 * @param	Int
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function editUserGroup($group_id, $data)
+	{
+		$group = \UserGroups_m::find($group_id);
+		if ($group)
+		{
+			$group->name  = $data['name'];
+			$group->active  = $data['active'];
+			if ($group->save())
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Switches a group's active status around
+	 *
+	 * @param	Int
+	 * @return	Boolean
 	 */
 	public function switchUserGroupsStatus($group_id)
 	{
@@ -78,6 +202,7 @@ class UsersManager implements UsersManagerInterface {
 			if ($group)
 			{
 				$group->active = ($group->active == 1) ? 0 : 1;
+				\Users_m::setUsersStatusByGroup($group_id, $group->active);
 				$group->save();
 				return true;
 			}
