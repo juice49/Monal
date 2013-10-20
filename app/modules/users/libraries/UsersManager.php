@@ -52,6 +52,28 @@ class UsersManager implements UsersManagerInterface {
 	}
 
 	/**
+	 * Get all users that belong to a given user group
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getUsersByGroup($group_id)
+	{
+		$users =  \Users_m::findByGroup($group_id);
+		if ($users)
+		{
+			$users =  $users->toArray();
+			$group = $this->getUserGroup($group_id);
+			foreach ($users as &$user)
+			{
+				$user['group'] = $group;
+			}
+			return $users;
+		}
+		return false;
+	}
+
+	/**
 	 * Create a new user
 	 *
 	 * @param	Array
@@ -179,7 +201,10 @@ class UsersManager implements UsersManagerInterface {
 		if ($group)
 		{
 			$group->name  = $data['name'];
-			$group->active  = $data['active'];
+			if ($group->id != 1)
+			{
+				$group->active  = $data['active'];
+			}
 			if ($group->save())
 			{
 				return true;
@@ -202,11 +227,36 @@ class UsersManager implements UsersManagerInterface {
 			if ($group)
 			{
 				$group->active = ($group->active == 1) ? 0 : 1;
-				\Users_m::setUsersStatusByGroup($group_id, $group->active);
 				$group->save();
 				return true;
 			}
 		}
 		return false;
+	}
+
+	/**
+	 * Counts the number active users with an administrator role
+	 *
+	 * @return	Int
+	 */
+	public function countActiveAdministrators()
+	{
+		$count = 0;
+		$users = $this->getUsersByGroup(1);
+		if(count($users) <= 1)
+		{
+			$count = 1;
+		}
+		else
+		{
+			foreach ($users as $user)
+			{
+				if($user['active'])
+				{
+					$count++;
+				}
+			}
+		}
+		return $count;
 	}
 }

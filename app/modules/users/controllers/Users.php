@@ -125,23 +125,36 @@ class UsersController extends AdminController {
 				if ($validation->passes())
 				{
 					$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
-
+					if ((!$this->data['active'] && $user['group']['id'] == 1) || ($this->data['user_group'] != 1 && $user['group']['id'] == 1))
+					{
+						if ($this->users->countActiveAdministrators() <= 1)
+						{
+							$this->message->setMessages(array(
+									'error' => array(
+										'This is the only ' . $user['group']['name'] . ' user. You must have at least one active Administrator.',
+										)
+									));
+							$user_groups = $this->formatUserGroups($this->users->getUserGroups());
+							$messages = $this->message->getMessages();
+							return View::make('users::edit_user', compact('messages', 'user', 'user_groups'));
+						}
+					}
 					if ($this->users->editUser($user_id, $this->data))
 					{
 						$this->message->setMessages(array(
-							'success' => array(
-								'Changes to user saved.',
-								)
-							))->flash();
+								'success' => array(
+									'Changes to user saved.',
+									)
+								))->flash();
 						return Redirect::route('admin.users');
 					}
 					else
 					{
 						$this->message->setMessages(array(
-							'error' => array(
-								'There was an error editing this user. Please try again.',
-								)
-							));
+								'error' => array(
+									'There was an error editing this user. Please try again.',
+									)
+								));
 					}
 				}
 				else

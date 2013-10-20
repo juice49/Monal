@@ -1,29 +1,31 @@
 <?php namespace App\Modules\Users\Contracts;
 
+use App\Modules\Users\Contracts\UserInterface;
+
 interface UserAuthInterface {
 
-	public function __construct(\App\Modules\Users\Contracts\UserInterface $user);
+	public function __construct(UserInterface $user);
 	
 	/**
-	 * Check user's credentials and log them in if they pass
+	 * Check user's credentials and log them in as an admin if they pass
 	 *
-	 * @param	string
-	 * @param	string
-	 * @return	void
+	 * @param	String
+	 * @param	String
+	 * @return	Void
 	 */
 	public function adminLogin($email = null, $password = null);
 
 	/**
 	 * Log user out
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function logout();
 
 	/**
 	 * Check if user with admin privileges is logged in
 	 *
-	 * @return	mixed
+	 * @return	App\Modules\Users\User / Boolean
 	 */
 	public function adminLoggedIn();
 }

@@ -1,5 +1,14 @@
 @extends('dashboard')
 
+@section('head')
+	<script src="http://localhost:8888/fructosecms.dev/app/modules/users/assets/users.js"></script>
+	<script>
+		var
+			_USER_GROUP = {{ $user['group']['id'] }},
+			_USER_GROUP_ACTIVE = {{ $user['group']['active'] }};
+	</script>
+@stop
+
 @section('dashboard_content')
 	<h1 class="dashboard-title">Edit User</h1>
 
@@ -14,8 +23,9 @@
 		</div> 
 	@endif
 
-	{{ Form::open() }}
-		<div class="well">
+	{{ Form::open(array('id' => 'user-form')) }}
+		<?php $is_user = ($user['id'] == $current_user['id']) ? 'true' : 'false'; ?>
+		<div class="well" data-user="{{ $is_user }}">
 			<div class="block">
 				{{ Form::label('first_name', 'First Name', array('class' => 'defaultlabel')) }}
 				{{ Form::input('text', 'first_name', Input::has('first_name') ? Input::get('first_name') : $user['first_name'], array('class' => 'defaultinput')) }}

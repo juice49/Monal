@@ -19,10 +19,10 @@ class User implements UserInterface {
 	public $user_data;
 
 	/**
-	 * Set the user data for the object instance
+	 * Set the user data for the object's instance
 	 *
-	 * @param	array
-	 * @return	void
+	 * @param	Array
+	 * @return	Void
 	 */
 	public function setUser($data)
 	{
@@ -30,16 +30,27 @@ class User implements UserInterface {
 	}
 
 	/**
-	 * Check user has privileges for the area they are trying to
-	 * access
+	 * Check user has privileges to access an area of the CMS
 	 *
-	 * @return void
+	 * @return Void
 	 */
-	public function hasPrivileges()
+	public function hasAccessPrivileges($area)
 	{
-		if ($this->user_data['active'] == 1 and $this->user_data['group'] == 1)
+		$user_group = \UserGroups_m::find($this->user_data['group']);
+		if (isset($user_group) && !empty($user_group))
 		{
-			return true;
+			if ($user_group->active)
+			{
+				switch ($area)
+				{
+					case 'CMS':
+						if($user_group->id == 1)
+						{
+							return true;
+						}
+				        break;
+				}
+			}
 		}
 		return false;
 	}

@@ -13,17 +13,19 @@ use App\Modules\Users\Contracts\UserInterface;
 
 class UserAuth implements UserAuthInterface {
 
+	protected $users;
+
 	public function __construct(UserInterface $user)
 	{
 		$this->user = $user;
 	}
 
 	/**
-	 * Check user's credentials and log them in if they pass
+	 * Check user's credentials and log them in as an admin if they pass
 	 *
-	 * @param	string
-	 * @param	string
-	 * @return	void
+	 * @param	String
+	 * @param	String
+	 * @return	Void
 	 */
 	public function adminLogin($email = null, $password = null)
 	{
@@ -34,7 +36,7 @@ class UserAuth implements UserAuthInterface {
 		if ($user = \Users_m::findByEmail($email))
 		{
 			$this->user->setUser($user);
-			if ($this->user->hasPrivileges())
+			if ($this->user->user_data['active'] && $this->user->hasAccessPrivileges('CMS'))
 			{
 				if (\Auth::attempt(array('email' => $email, 'password' => $password), false))
 				{
@@ -48,7 +50,7 @@ class UserAuth implements UserAuthInterface {
 	/**
 	 * Log user out
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function logout()
 	{
@@ -58,14 +60,21 @@ class UserAuth implements UserAuthInterface {
 	/**
 	 * Check if user with admin privileges is logged in
 	 *
-	 * @return	mixed
+	 * @return	App\Modules\Users\User / Boolean
 	 */
 	public function adminLoggedIn()
 	{
 		if (\Auth::check())
 		{
 			$this->user->user_data = \Auth::user()->toArray();
-			return $this->user;
+			if ($this->user->user_data['active'] && $this->user->hasAccessPrivileges('CMS'))
+			{
+				return $this->user;
+			}
+			else
+			{
+				$this->logout();
+			}
 		}
 		return false;
 	}

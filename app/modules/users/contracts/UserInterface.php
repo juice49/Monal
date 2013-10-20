@@ -3,18 +3,17 @@
 interface UserInterface {
 
 	/**
-	 * Set the user data for the object instance
+	 * Set the user data for the object's instance
 	 *
-	 * @param	array
-	 * @return	void
+	 * @param	Array
+	 * @return	Void
 	 */
 	public function setUser($data);
 
 	/**
-	 * Check user has privileges for the area they are trying to
-	 * access
+	 * Check user has privileges to access an area of the CMS
 	 *
-	 * @return void
-	 */	
-	public function hasPrivileges();
+	 * @return Void
+	 */
+	public function hasAccessPrivileges($area);
 }

@@ -1,5 +1,14 @@
 @extends('dashboard')
 
+@section('head')
+	<script src="http://localhost:8888/fructosecms.dev/app/modules/users/assets/usergroups.js"></script>
+	<script>
+		var
+			_USER_GROUP = {{ $user_group['id'] }},
+			_CURRENT_USER_GROUP = {{ $current_user['group'] }};
+	</script>
+@stop
+
 @section('dashboard_content')
 	<h1 class="dashboard-title">Edit User Group</h1>
 
@@ -14,16 +23,18 @@
 		</div> 
 	@endif
 
-	{{ Form::open() }}
+	{{ Form::open(array('id' => 'user_group-form')) }}
 		<div class="well">
 			<div class="block">
 				{{ Form::label('name', 'Name', array('class' => 'defaultlabel')) }}
 				{{ Form::input('text', 'name', Input::has('name') ? Input::get('name') : $user_group['name'], array('class' => 'defaultinput')) }}
 			</div>
-			<div class="block">
-				{{ Form::label('active', 'Activate', array('class' => 'defaultlabel')) }}
-				{{ Form::checkbox('active', '1', Input::has('active') ? true : $user_group['active']) }}
-			</div>
+			@if($user_group['id'] != 1)
+				<div class="block">
+					{{ Form::label('active', 'Activate', array('class' => 'defaultlabel')) }}
+					{{ Form::checkbox('active', '1', Input::has('active') ? true : $user_group['active']) }}
+				</div>
+			@endif
 		</div>
 
 		<div class="clearfix block">

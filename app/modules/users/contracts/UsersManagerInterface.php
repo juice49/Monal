@@ -18,6 +18,14 @@ interface UsersManagerInterface {
 	public function getUsers();
 
 	/**
+	 * Get all users that belong to a given user group
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getUsersByGroup($group_id);
+
+	/**
 	 * Create a new user
 	 *
 	 * @param	Array
@@ -81,4 +89,11 @@ interface UsersManagerInterface {
 	 * @return	Boolean
 	 */
 	public function switchUserGroupsStatus($group_id);
+
+	/**
+	 * Counts the number active users with an administrator role
+	 *
+	 * @return	Int
+	 */
+	public function countActiveAdministrators();
 }
