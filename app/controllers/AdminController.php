@@ -17,24 +17,18 @@ class AdminController extends BaseController {
 	{
 		$this->auth = $auth;
 		$this->data = Input::all();
-
 		if (isset($this->data['logout']))
 		{
 			$this->auth->logout();
 		}
-
-		$this->user = $this->auth->adminLoggedIn();
-
-		if ($this->user)
+		if ($this->user = $this->auth->adminLoggedIn())
 		{
+			$this->module = $module;
+			$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->module->installedModules());
 			View::share('current_user', $this->user->user_data);
+			View::share('control_panel', $this->controlPanelNavigation);
 		}
-
 		$this->message = $message;
-		$this->module = $module;
-		$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->module->installedModules());
-		
-		View::share('control_panel', $this->controlPanelNavigation);
 	}
 
 	/**
@@ -94,18 +88,18 @@ class AdminController extends BaseController {
 	}
 
 	/**
-	 * Processes array of installed modules into a structured array
-	 * that can be used to build the control panel navigation menu 
+	 * Processes array of installed modules into a structured array that
+	 * can be used to build the control panel navigation menu 
 	 *
-	 * @param	array
-	 * @return	array
+	 * @param	Array
+	 * @return	Array
 	 */
 	public function buildControlPanelNavigation(array $modules)
 	{
 		$navigation_tree = array();
 		foreach ($modules as $module)
 		{
-			if (isset($module['details']['has_backend']) && $module['details']['has_backend'])
+			if (isset($module['details']['has_backend']) && $module['details']['has_backend'] && $this->user->hasAccessPrivileges($module['slug']))
 			{
 				if (isset($module['details']['control_panel_heading']) && !empty($module['details']['control_panel_heading']))
 				{

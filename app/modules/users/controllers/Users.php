@@ -31,6 +31,11 @@ class UsersController extends AdminController {
 		{
 			return Redirect::route('admin.login');
 		}
+		if (!$this->user->hasAccessPrivileges('users'))
+		{
+			return Redirect::route('admin');
+		}
+
 		$users = $this->users->getUsers();
 		$messages = $this->message->getMessages();
 		return View::make('users::users', compact('messages', 'users'));
@@ -47,6 +52,11 @@ class UsersController extends AdminController {
 		{
 			return Redirect::route('admin.login');
 		}
+		if (!$this->user->hasAccessPrivileges('users'))
+		{
+			return Redirect::route('admin');
+		}
+
 		if ($this->data)
 		{
 			$validation = Validator::make($this->data,
@@ -104,6 +114,10 @@ class UsersController extends AdminController {
 		if (!$this->user)
 		{
 			return Redirect::route('admin.login');
+		}
+		if (!$this->user->hasAccessPrivileges('users'))
+		{
+			return Redirect::route('admin');
 		}
 
 		if (isset($user_id) && $user = $this->users->getUser($user_id))
@@ -183,6 +197,11 @@ class UsersController extends AdminController {
 		{
 			return Redirect::route('admin.login');
 		}
+		if (!$this->user->hasAccessPrivileges('users'))
+		{
+			return Redirect::route('admin');
+		}
+
 		$user_groups = $this->users->getUserGroups();
 		$messages = $this->message->getMessages();
 		return View::make('users::user_groups', compact('messages', 'user_groups'));
@@ -199,6 +218,11 @@ class UsersController extends AdminController {
 		{
 			return Redirect::route('admin.login');
 		}
+		if (!$this->user->hasAccessPrivileges('users'))
+		{
+			return Redirect::route('admin');
+		}
+
 		if ($this->data)
 		{
 			$validation = Validator::make($this->data,
@@ -210,7 +234,7 @@ class UsersController extends AdminController {
 			if ($validation->passes())
 			{
 				$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
-
+				$this->data['cms'] = (isset($this->data['cms'])) ? 1 : 0;
 				if ($this->users->createUserGroup($this->data))
 				{
 					$this->message->setMessages(array(
@@ -234,8 +258,9 @@ class UsersController extends AdminController {
 				$this->message->setMessages($validation->messages()->toArray());
 			}
 		}
+		$modules = $this->module->installedModules();
 		$messages = $this->message->getMessages();
-		return View::make('users::add_user_group', compact('messages'));
+		return View::make('users::add_user_group', compact('messages', 'modules'));
 	}
 
 	/**
@@ -249,6 +274,10 @@ class UsersController extends AdminController {
 		if (!$this->user)
 		{
 			return Redirect::route('admin.login');
+		}
+		if (!$this->user->hasAccessPrivileges('users'))
+		{
+			return Redirect::route('admin');
 		}
 
 		if (isset($group_id) && $user_group = $this->users->getUserGroup($group_id))
@@ -264,7 +293,7 @@ class UsersController extends AdminController {
 				if ($validation->passes())
 				{
 					$this->data['active'] = (isset($this->data['active'])) ? 1 : 0;
-
+					$this->data['cms'] = (isset($this->data['cms'])) ? 1 : 0;
 					if ($this->users->editUserGroup($group_id, $this->data))
 					{
 						$this->message->setMessages(array(
@@ -288,8 +317,10 @@ class UsersController extends AdminController {
 					$this->message->setMessages($validation->messages()->toArray());
 				}
 			}
+			$privileges = $this->users->getGroupPrivileges($group_id);
+			$modules = $this->module->installedModules();
 			$messages = $this->message->getMessages();
-			return View::make('users::edit_user_group', compact('messages', 'user_group'));
+			return View::make('users::edit_user_group', compact('messages', 'user_group', 'privileges', 'modules'));
 		}
 		else
 		{
@@ -298,8 +329,8 @@ class UsersController extends AdminController {
 	}
 
 	/**
-	 * Formats a list of user groups into a simple array where the
-	 * key is the group ID and the value is the group name
+	 * Formats a list of user groups into a simple array where the key is
+	 * the group ID and the value is the group name
 	 *
 	 * @param	Array
 	 * @return	Array

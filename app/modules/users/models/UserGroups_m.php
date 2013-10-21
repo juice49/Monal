@@ -3,8 +3,6 @@
  *
  */
 
-use Illuminate\Auth\Reminders\RemindableInterface;
-
 class UserGroups_m extends Eloquent {
 
 	/**

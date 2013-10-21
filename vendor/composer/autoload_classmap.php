@@ -34,6 +34,7 @@ return array(
     'Modules_m' => $baseDir . '/app/modules/module/models/Module_m.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',
+    'UserGroupPrivileges_m' => $baseDir . '/app/modules/users/models/UserGroupPrivileges_m.php',
     'UserGroups_m' => $baseDir . '/app/modules/users/models/UserGroups_m.php',
     'UsersAJAX' => $baseDir . '/app/modules/users/libraries/AJAX.php',
     'UsersController' => $baseDir . '/app/modules/users/controllers/Users.php',

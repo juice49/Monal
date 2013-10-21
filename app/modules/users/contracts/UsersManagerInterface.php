@@ -91,6 +91,31 @@ interface UsersManagerInterface {
 	public function switchUserGroupsStatus($group_id);
 
 	/**
+	 * Return a group's privilege set
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getGroupPrivileges($group_id);
+
+	/**
+	 * Create a new privilege set for a user group
+	 *
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function createUserGroupPrivileges($group_id, $data);
+
+	/**
+	 * Edit a user group's privilege set
+	 *
+	 * @param	Int
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function editUserGroupPrivileges($group_id, $data);
+
+	/**
 	 * Counts the number active users with an administrator role
 	 *
 	 * @return	Int

@@ -36,6 +36,19 @@ $(document).ready(function(){
 		}
 	});
 
+	$('#cms').on('change', function(){
+		if($('#cms').is(':checked')){
+			$('.module_privileges').slideDown(200);
+		}
+		else{
+			$('.module_privileges').slideUp(200);
+		}
+	});
+
+	if(!$('#cms').is(':checked')){
+		$('.module_privileges').hide();
+	}
+
 });
 
 function switchUserGroupsStatus(id){

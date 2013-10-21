@@ -19,8 +19,8 @@ class AJAXController extends BaseController {
 			$class = (isset($data['_namespace'])) ? ($data['_namespace'] . '\\' . $map[0]) : $map[0];
 			$load = new $class();
 			unset(
-					$data['_use'],
-					$data['_namespace']
+				$data['_use'],
+				$data['_namespace']
 				);
 			return $load->{$map[1]}($data);
 		}

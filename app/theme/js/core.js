@@ -32,13 +32,13 @@
 				$('#' + _CMS.submenuOnDisplay).show();
 
 				$('.control_panel').animate({
-					'padding-right' : '+=280',
+					'padding-right' : '+=250',
 				}, 500);
 				$('.body-wrap, .control_panel-submenu_bkg').animate({
-					'padding-left' : '+=280',
+					'padding-left' : '+=250',
 				}, 500);
 				$('.dashboard-content').animate({
-					'margin-right' : '-=280',
+					'margin-right' : '-=250',
 				}, 500);
 
 				_CMS.controlPanelOpen = true;
@@ -55,10 +55,10 @@
 			if(_CMS.controlPanelOpen){
 
 				$('.control_panel').animate({
-					'padding-right' : '-=280',
+					'padding-right' : '-=250',
 				}, 500);
 				$('.body-wrap, .control_panel-submenu_bkg').animate({
-					'padding-left' : '-=280',
+					'padding-left' : '-=250',
 				}, 500);
 
 				_CMS.controlPanelOpen = false;

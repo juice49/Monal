@@ -13,7 +13,7 @@ interface UserInterface {
 	/**
 	 * Check user has privileges to access an area of the CMS
 	 *
-	 * @return Void
+	 * @return Boolean
 	 */
 	public function hasAccessPrivileges($area);
 }

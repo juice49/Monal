@@ -81,17 +81,20 @@ class UsersManager implements UsersManagerInterface {
 	 */
 	public function createUser($data)
 	{
-		$user = new \Users_m();
-		$user->first_name = $data['first_name'];
-		$user->last_name = $data['last_name'];
-		$user->username = $data['username'];
-		$user->email = $data['email'];
-		$user->password = \Hash::make($data['password']);
-		$user->group = $data['user_group'];
-		$user->active = $data['active'];
-		if ($user->save())
+		if (isset($data['email']) && isset($data['password']) && isset($data['user_group']))
 		{
-			return true;
+			$user = new \Users_m();
+			$user->first_name = isset($data['first_name']) ? $data['first_name'] : null;
+			$user->last_name = isset($data['last_name']) ? $data['last_name'] :  null;
+			$user->username = isset($data['username']) ? $data['username'] : null;
+			$user->email = $data['email'];
+			$user->password = \Hash::make($data['password']);
+			$user->group = $data['user_group'];
+			$user->active = isset($data['active']) ? $data['active'] : 0;
+			if ($user->save())
+			{
+				return true;
+			}
 		}
 		return false;
 	}
@@ -108,16 +111,13 @@ class UsersManager implements UsersManagerInterface {
 		$user = \Users_m::find($user_id);
 		if ($user)
 		{
-			$user->first_name  = $data['first_name'];
-			$user->last_name  = $data['last_name'];
-			$user->username = $data['username'];
-			$user->email = $data['email'];
-			$user->group = $data['user_group'];
-			$user->active = $data['active'];
-			if (isset($data['password']) && !empty($data['password']))
-			{
-				$user->password = \Hash::make($data['password']);
-			}
+			$user->first_name  = isset($data['first_name']) ? $data['first_name'] : $user->first_name;
+			$user->last_name  = isset($data['last_name']) ? $data['last_name'] : $user->last_name;
+			$user->username = isset($data['username']) ? $data['username'] : $user->username;
+			$user->email = isset($data['email']) ? $data['email'] : $user->email;
+			$user->group = isset($data['user_group']) ? $data['user_group'] : $user->group;
+			$user->active = isset($data['active']) ? $data['active'] : $user->active;
+			$user->password = isset($data['password']) ? \Hash::make($data['password']) : $user->password;
 			if ($user->save())
 			{
 				return true;
@@ -164,8 +164,10 @@ class UsersManager implements UsersManagerInterface {
 		if ($user)
 		{
 			$user->active = ($user->active == 1) ? 0 : 1;
-			$user->save();
-			return true;
+			if ($user->save())
+			{
+				return true;
+			}
 		}
 		return false;
 	}
@@ -179,10 +181,11 @@ class UsersManager implements UsersManagerInterface {
 	public function createUserGroup($data)
 	{
 		$group = new \UserGroups_m();
-		$group->name  = $data['name'];
-		$group->active  = $data['active'];
+		$group->name  = isset($data['name']) ? $data['name'] : 'unnamed';
+		$group->active  = isset($data['active']) ? $data['active'] : 0;
 		if ($group->save())
 		{
+			$this->createUserGroupPrivileges($group->id, $data);
 			return true;
 		}
 		return false;
@@ -200,10 +203,11 @@ class UsersManager implements UsersManagerInterface {
 		$group = \UserGroups_m::find($group_id);
 		if ($group)
 		{
-			$group->name  = $data['name'];
+			$group->name  = isset($data['name']) ? $data['name'] : $group->name;
 			if ($group->id != 1)
 			{
-				$group->active  = $data['active'];
+				$group->active  = isset($data['active']) ? $data['active'] : $group->active;
+				$this->editUserGroupPrivileges($group_id, $data);
 			}
 			if ($group->save())
 			{
@@ -227,7 +231,84 @@ class UsersManager implements UsersManagerInterface {
 			if ($group)
 			{
 				$group->active = ($group->active == 1) ? 0 : 1;
-				$group->save();
+				if ($group->save())
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Return a group's privilege set
+	 *
+	 * @param	Int
+	 * @return	Array / Boolean
+	 */
+	public function getGroupPrivileges($group_id)
+	{
+		$privileges = \UserGroupPrivileges_m::findByGroup($group_id);
+		if ($privileges)
+		{
+			$privileges->modules_backend = json_decode($privileges->modules_backend, true);
+			return $privileges->toArray();
+		}
+		return false;
+	}
+
+	/**
+	 * Create a new privilege set for a user group
+	 *
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function createUserGroupPrivileges($group_id, $data)
+	{
+		$privileges = new \UserGroupPrivileges_m();
+		$privileges->group = $group_id;
+		$privileges->cms = (isset($data['cms'])) ? $data['cms'] : 0;
+		$modules_backend = array();
+		foreach ($data as $key => $value)
+		{
+			if (strpos($key, 'module_') !== false)
+			{
+				$modules_backend[$value] = true;
+			}
+		}
+		$privileges->modules_backend = json_encode($modules_backend, JSON_FORCE_OBJECT);
+		if ($privileges->save())
+		{
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Edit a user group's privilege set
+	 *
+	 * @param	Int
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function editUserGroupPrivileges($group_id, $data)
+	{
+		$privileges = \UserGroupPrivileges_m::findByGroup($group_id);
+		if ($privileges)
+		{
+			$privileges->cms = (isset($data['cms'])) ? $data['cms'] : $privileges->cms;
+
+			$modules_backend = array();
+			foreach ($data as $key => $value)
+			{
+				if (strpos($key, 'module_') !== false)
+				{
+					$modules_backend[$value] = true;
+				}
+			}
+			$privileges->modules_backend = json_encode($modules_backend, JSON_FORCE_OBJECT);
+			if ($privileges->save())
+			{
 				return true;
 			}
 		}
