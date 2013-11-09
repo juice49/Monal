@@ -2,7 +2,10 @@
 .login .body{width:95%;height:auto;min-height:100%;margin-left:auto;margin-right:auto}
 .login .login-wrap.animate{margin-top:-50px;-webkit-animation:animateLogin 1s 1;-moz-animation:animateLogin 1s 1;-o-animation:animateLogin 1s 1;animation:animateLogin 1s 1}
 .login .login-form-wrap{width:500px;max-width:100%;margin-left:auto;margin-right:auto;border:solid 1px #5a5a5a;border-bottom:solid 1px #6a6a6a;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background-image:url("../images/binding_dark_@2X.png");-webkit-background-size:180px 180px;-moz-background-size:180px 180px;background-size:180px 180px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
-.login .login-form{width:auto;padding:30px;border:solid 2px #000;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px}
+.login .login-form{width:auto;padding:30px;border:solid 2px #000;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;}
+.login .login-form .loginlabel{display:block;color:#777;font-size:1.125em;margin-bottom:7px}
+.login .login-form .logininput{display:block;width:100%;padding:10px;margin-bottom:20px;color:#333;border:solid 1px #777;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;background-color:#eee;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;outline:none;resize:none}
+.login .login-form .logininput:focus{color:#000;border:solid 1px #008000;background-color:#fff}
 @-moz-keyframes animateLogin{0%{margin-top:0;opacity:0}
 100%{margin-top:-50px;opacity:1}
 }@-webkit-keyframes animateLogin{0%{margin-top:0;opacity:0}

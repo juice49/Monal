@@ -1,4 +1,5 @@
 <link type="text/css" rel="stylesheet" href="http://localhost:8888/fructosecms.dev/app/theme/css/grid.css" />
+<link type="text/css" rel="stylesheet" href="http://localhost:8888/fructosecms.dev/app/theme/css/fonts/fonts.css" />
 <link type="text/css" rel="stylesheet" href="http://localhost:8888/fructosecms.dev/app/theme/css/fructose-base.css" />
 <script>
 	var

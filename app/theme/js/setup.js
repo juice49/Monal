@@ -1,11 +1,14 @@
 /**
+ * Setup scripts for dashboard
  *
+ * @author Arran Jacques 
  */
 
 (function($, conscious){
 
+	// On document load initialise the dashboard
 	$(document).ready(function(){
-		_CMS.init();
+		_DASHBOARD.init();
 	});
 
 })(jQuery, conscious);

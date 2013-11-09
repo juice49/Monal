@@ -33,8 +33,8 @@
 		@foreach($users as $user)
 			<?php $class = ($i % 2 == 0) ? 'odd' : 'even'; ?>
 			<?php $is_user = ($user['id'] == $current_user['id']) ? true : false; ?>
-			<li class="clearfix {{ $class }}">
-				<div class="span-left span-20"><div class="span-pad">{{ $user['first_name'] . ' ' . $user['last_name'] }}</div></div>
+			<li class="clearfix {{ $class }}" id="row-{{ $i }}">
+				<div class="span-left span-20"><div class="span-pad"><span class="false_txtbtn user-details" data-user_details="user_details-{{ $user['id'] }}" data-row="{{ $i }}">{{ $user['first_name'] . ' ' . $user['last_name'] }}</span></div></div>
 				<div class="span-left span-20"><div class="span-pad">{{ $user['username'] }}</div></div>
 				<div class="span-left span-20"><div class="span-pad">{{ $user['group']['name'] }}</div></div>
 				@if($user['group']['active'])
@@ -52,4 +52,22 @@
 		@endforeach
 		</ul>
 	</div>
+@stop
+
+@section('dashboard_config')
+<div class="dashboard-config">
+
+	<div class="dashboard-config-padd">
+		<h2 class="dashboard-config-title">User Details</h2>
+		@foreach($users as $user)
+			<ul class="config_panel-nolist" id="user_details-{{ $user['id'] }}">
+				<li><span class="config_panel-list_heading">ID</span>{{ $user['id'] }}</li>
+				<li><span class="config_panel-list_heading">Last Logged In</span>Never</li>
+				<li><span class="config_panel-list_heading">Last Updated</span>{{ $user['updated_at'] }}</li>
+				<li><span class="config_panel-list_heading">Created</span>{{ $user['created_at'] }}</li>
+			</ul>
+		@endforeach
+	</div>
+
+</div>
 @stop

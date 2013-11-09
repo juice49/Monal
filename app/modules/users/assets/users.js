@@ -50,6 +50,21 @@ $(document).ready(function(){
 		}
 	});
 
+	$('.user-details').on('click', function(){
+		var _this = $(this);
+		$('.config_panel-nolist').hide();
+		if($('#row-' + _this.data('row')).data('active')){
+			$('#row-' + _this.data('row')).data('active', false).removeClass('active');
+		}
+		else{
+			$('#' + _this.data('user_details')).show();
+			$('.table_list li').data('active', false).removeClass('active');
+			$('#row-' + _this.data('row')).data('active', true).addClass('active');
+		}
+	});
+
+	$('.config_panel-nolist').hide();
+
 });
 
 function switchUsersStatus(id){

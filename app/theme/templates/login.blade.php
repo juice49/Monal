@@ -25,10 +25,10 @@
 								</div> 
 							@endif
 
-							{{ Form::label('email', 'Email', array('class' => 'defaultlabel')) }}
-							{{ Form::input('email', 'email', isset($data['email']) ? $data['email'] : '' , array('class' => 'defaultinput')) }}
-							{{ Form::label('password', 'Password', array('class' => 'defaultlabel')) }}
-							{{ Form::input('password', 'password', null, array('class' => 'defaultinput')) }}
+							{{ Form::label('email', 'Email', array('class' => 'loginlabel')) }}
+							{{ Form::input('email', 'email', isset($data['email']) ? $data['email'] : '' , array('class' => 'logininput')) }}
+							{{ Form::label('password', 'Password', array('class' => 'loginlabel')) }}
+							{{ Form::input('password', 'password', null, array('class' => 'logininput')) }}
 							<div class="alignright"> 
 								{{ Form::submit('Login', array('class' => 'btn green')) }}
 							</div>

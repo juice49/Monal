@@ -1,36 +1,59 @@
 /**
+ * Core scripts for controlling dashboard layout and interactions
  *
+ * @author Arran Jacques 
  */
 
 (function($, conscious){
 
 	'use strict';
 
-	window._CMS = {
+	// Dashboard object
+	window._DASHBOARD = {
 
+		// Is the control panel submenu on display
 		controlPanelOpen : false,
-		submenuOnDisplay : false,
 
+		/**
+		 * Initialise the dashboard on load
+		 */
 		init : function() {
 
-			$('.cp-submenu').hide();
-			$('.has_submenu').on('click', function(){
-				_CMS.submenuOnDisplay = $(this).data('submenu');
-				_CMS.expandControlPanel();
-			});
-			$('.body-wrap').on('click', _CMS.collapseControlPanel);
+			$('.control_panel-submenu').hide();
+			$('.control_panel-submenu_close').hide();
 
-			$('.dashboard-main').height($('.body-wrap').height() - $('.logout').outerHeight())
+			// Bind mouse events for control panel
+			$('.control_panel-heading').on('click', function(){
+				$('.control_panel-heading').removeClass('active');
+				if(!$(this).data('active')){
+					$('.control_panel-heading').data('active', false);
+					$(this).addClass('active').data('active', true);
+					_DASHBOARD.expandControlPanel($(this).data('submenu'));
+				}
+				else{
+					$('.control_panel-heading').data('active', false);
+					_DASHBOARD.collapseControlPanel();
+				}
+			});
+			$('.body-wrap, .control_panel-submenu_close').on('click', function(){
+				$('.control_panel-heading').removeClass('active').data('active', false);
+				_DASHBOARD.collapseControlPanel();
+			});
+
+			$('.dashboard-main').height($('.body-wrap').height() - $('.logout').outerHeight());
 		},
 
-		expandControlPanel : function(){
+		/**
+		 * Expand the dashboard control panel to reveal submenu for menu item
+		 *
+		 * @param	String		The submenu to reveal
+		 */
+		expandControlPanel : function(submenu){
 
-			$('.cp-submenu').hide();
+			$('.control_panel-submenu').hide();
+			$('#' + submenu).show();
 		
-			if(!_CMS.controlPanelOpen){
-
-				$('#' + _CMS.submenuOnDisplay).show();
-
+			if(!_DASHBOARD.controlPanelOpen){
 				$('.control_panel').animate({
 					'padding-right' : '+=250',
 				}, 500);
@@ -39,31 +62,32 @@
 				}, 500);
 				$('.dashboard-content').animate({
 					'margin-right' : '-=250',
-				}, 500);
-
-				_CMS.controlPanelOpen = true;
-			}
-			else{
-				$('#' + _CMS.submenuOnDisplay).show();
+				}, 500, null, function(){
+					$('.control_panel-submenu_close').show();
+				});
+				_DASHBOARD.controlPanelOpen = true;
 			}
 		},
 
+		/**
+		 * Collapse the dashboard control panel to hide submenus
+		 */
 		collapseControlPanel : function(){
 
-			$('.cp-submenu').hide();
-
-			if(_CMS.controlPanelOpen){
-
+			if(_DASHBOARD.controlPanelOpen){
 				$('.control_panel').animate({
 					'padding-right' : '-=250',
 				}, 500);
 				$('.body-wrap, .control_panel-submenu_bkg').animate({
 					'padding-left' : '-=250',
 				}, 500);
-
-				_CMS.controlPanelOpen = false;
-				_CMS.submenuOnDisplay = false;
+				$('.dashboard-content').animate({
+					'margin-right' : '+=250',
+				}, 500);
+				$('.control_panel-submenu_close').hide();
+				_DASHBOARD.controlPanelOpen = false;
 			}
+			
 		}
 
 	}

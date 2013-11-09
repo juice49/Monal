@@ -12,8 +12,13 @@
 			<div class="logo">
 			</div>
 			@include('partials.control_panel')
+
+			<div class="control_panel-shadow_left"><div></div></div>
+			<div class="control_panel-shadow_right"></div>
+
 			<div class="control_panel-submenu_bkg">
-				<span class="control_panel_close"></span>
+				<div class="control_panel-submenu_bkg-border"></div>
+				<div class="control_panel-submenu_close"><span class="icon icon-close"></span></div>
 			</div>
 		</div>
 
