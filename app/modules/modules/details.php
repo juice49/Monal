@@ -5,7 +5,7 @@
  * @author Arran Jacques
  */
 
-use App\Core\Contracts;
+use App\Core\Contracts\ModuleInterface;
 
 class Module_Modules extends Module implements ModuleInterface {
 

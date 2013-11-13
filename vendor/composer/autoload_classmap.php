@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'AJAXController' => $baseDir . '/app/controllers/AJAX.php',
     'AdminController' => $baseDir . '/app/controllers/AdminController.php',
+    'App\\Core\\Contracts\\ModuleInterface' => $baseDir . '/app/core/contracts/ModuleInterface.php',
     'App\\Core\\Contracts\\ServiceProviderInterface' => $baseDir . '/app/core/contracts/ServiceProviderInterface.php',
     'App\\Core\\Modules\\ModuleServiceProvider' => $baseDir . '/app/core/ModuleServiceProvider.php',
     'App\\Modules\\Messages\\Contracts\\MessagesInterface' => $baseDir . '/app/modules/messages/contracts/MessagesInterface.php',
@@ -27,7 +28,6 @@ return array(
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'IlluminateQueueClosure' => $vendorDir . '/laravel/framework/src/Illuminate/Queue/IlluminateQueueClosure.php',
     'Module' => $baseDir . '/app/core/Module.php',
-    'ModuleInterface' => $baseDir . '/app/core/contracts/ModuleInterface.php',
     'Module_Messages' => $baseDir . '/app/modules/messages/details.php',
     'Module_Modules' => $baseDir . '/app/modules/modules/details.php',
     'Module_Users' => $baseDir . '/app/modules/users/details.php',
