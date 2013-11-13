@@ -24,7 +24,7 @@
 	@endif
 
 	{{ Form::open(array('id' => 'user-form')) }}
-		<?php $is_user = ($user['id'] == $current_user['id']) ? 'true' : 'false'; ?>
+		<?php $is_user = ($user['id'] == $current_user->details['id']) ? 'true' : 'false'; ?>
 		<div class="well" data-user="{{ $is_user }}">
 			<div class="block">
 				{{ Form::label('first_name', 'First Name', array('class' => 'defaultlabel')) }}

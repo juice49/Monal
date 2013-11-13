@@ -10,9 +10,9 @@
 class Modules_m extends Eloquent {
 
 	/**
-	 * The database table used by the model.
+	 * The database table used by the model
 	 *
-	 * @var String
+	 * @var		String
 	 */
 	 protected $table = 'modules';
 
@@ -31,5 +31,4 @@ class Modules_m extends Eloquent {
 	 	}
 	 	return false;
 	 }
-
 }

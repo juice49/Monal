@@ -30,7 +30,7 @@
 			<?php $i = 0 ?>
 			@foreach($user_groups as $group)
 				<?php $class = ($i % 2 == 0) ? 'odd' : 'even'; ?>
-				<?php $is_user_group = ($group['id'] == $current_user['group']) ? true : false; ?>
+				<?php $is_user_group = ($group['id'] == $current_user->details['group']) ? true : false; ?>
 				<li class="clearfix {{ $class }}">
 					<div class="span-left span-45"><div class="span-pad">{{ $group['name'] }}</div></div>
 					@if($group['id'] == 1)

@@ -16,31 +16,38 @@ class User implements UserInterface {
 	 *
 	 * @var		array
 	 */
-	public $user_data;
+	public $details;
 
 	/**
-	 * Set the user data for the object's instance
+	 * Initialise user object
 	 *
-	 * @param	Array
-	 * @return	Void
+	 * @param	Array		The details of the user to initialise the
+	 *						instance with
 	 */
-	public function setUser($data)
+	public function __construct($details)
 	{
-		$this->user_data = $data;
+		if (is_array($details))
+		{
+			$this->details = $details;
+		}
+		else
+		{
+			$this->details = array();
+		}
 	}
 
 	/**
 	 * Check user has privileges to access an area of the CMS
 	 *
-	 * @return Boolean
+	 * @return	Boolean
 	 */
 	public function hasAccessPrivileges($area)
 	{
-		if ($this->user_data['group'] == 1)
+		if ($this->details['group'] == 1)
 		{
 			return true;
 		}
-		$user_group = \UserGroups_m::find($this->user_data['group']);
+		$user_group = \UserGroups_m::find($this->details['group']);
 		if (isset($user_group) && !empty($user_group))
 		{
 			if ($user_group->active)

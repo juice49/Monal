@@ -1,31 +1,34 @@
 <?php 
 /**
+ * Users
  *
+ * Model for the users table
+ *
+ * @author Arran Jacques
  */
 
 use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableInterface;
 
-class Users_m extends Eloquent implements UserInterface, RemindableInterface {
+class Users_m extends Eloquent implements UserInterface {
 
 	/**
 	 * The database table used by the model
 	 *
-	 * @var		string
+	 * @var		String
 	 */
 	 protected $table = 'users';
 
 	 /**
 	 * The attributes excluded from the model's JSON form
 	 *
-	 * @var		array
+	 * @var		Array
 	 */
 	protected $hidden = array('password', 'salt');
 
 	/**
 	 * Get the unique identifier for the user
 	 *
-	 * @return	mixed
+	 * @return	Mixed
 	 */
 	public function getAuthIdentifier()
 	{
@@ -35,7 +38,7 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Get the password for the user.
 	 *
-	 * @return	string
+	 * @return	String
 	 */
 	public function getAuthPassword()
 	{
@@ -45,7 +48,7 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface {
 	/**
 	 * Get the e-mail address where password reminders are sent.
 	 *
-	 * @return	string
+	 * @return	String
 	 */
 	public function getReminderEmail()
 	{
@@ -53,10 +56,21 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface {
 	}
 
 	/**
+	 * Save a user's login time
+	 *
+	 * @return	Void
+	 */
+	public function updateUsersLoginTime()
+	{
+		$this->last_logged_in = time();
+		$this->save();
+	}
+
+	/**
 	 * Find a user by their email address
 	 *
-	 * @param	string
-	 * @return	mixed
+	 * @param	String
+	 * @return	Mixed
 	 */
 	public static function findByEmail($email)
 	{
@@ -65,7 +79,7 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface {
 		{
 			return false;
 		}
-		return $user->toArray();
+		return $user;
 	}
 
 	/**
@@ -84,7 +98,14 @@ class Users_m extends Eloquent implements UserInterface, RemindableInterface {
 		return false;
 	}
 
-	public static function setUsersStatusByGroup($group_id, $status)
+	/**
+	 * Update the status of all users within a given user group
+	 *
+	 * @param	Int
+	 * @param	Int
+	 * @return	Boolean
+	 */
+	public static function updateUsersStatusByGroup($group_id, $status)
 	{
 		self::where('group', '=', $group_id)->update(array('active' => $status));
 		return true;

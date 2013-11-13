@@ -32,7 +32,7 @@
 		<?php $i = 0 ?>
 		@foreach($users as $user)
 			<?php $class = ($i % 2 == 0) ? 'odd' : 'even'; ?>
-			<?php $is_user = ($user['id'] == $current_user['id']) ? true : false; ?>
+			<?php $is_user = ($user['id'] == $current_user->details['id']) ? true : false; ?>
 			<li class="clearfix {{ $class }}" id="row-{{ $i }}">
 				<div class="span-left span-20"><div class="span-pad"><span class="false_txtbtn user-details" data-user_details="user_details-{{ $user['id'] }}" data-row="{{ $i }}">{{ $user['first_name'] . ' ' . $user['last_name'] }}</span></div></div>
 				<div class="span-left span-20"><div class="span-pad">{{ $user['username'] }}</div></div>

@@ -7,22 +7,22 @@
  * @author Arran Jacques
  */
 
-use \App\Core\Modules\ModuleServiceProvider;
-use \App\Core\Contracts\ServiceProviderInterface;
+use App\Core\Modules\ModuleServiceProvider;
+use App\Core\Contracts\ServiceProviderInterface;
 
 class MessagesServiceProvider extends ModuleServiceProvider implements ServiceProviderInterface {
 
 	/**
-	 * Indicates if loading of the provider is deferred.
+	 * Indicates if loading of the provider is deferred
 	 *
-	 * @var		bool
+	 * @var		Boolean
 	 */
 	protected $defer = false;
 
 	/**
-	 * Bootstrap the application events.
+	 * Bootstrap the application events
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
     public function boot()
     {
@@ -30,9 +30,9 @@ class MessagesServiceProvider extends ModuleServiceProvider implements ServicePr
     }
 
     /**
-	 * Register the service provider.
+	 * Register the service provider
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function register()
     {

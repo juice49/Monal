@@ -1,20 +1,28 @@
 <?php
 /**
+ * Messages Module
  *
+ * @author Arran Jacques
  */
+
+use App\Core\Contracts;
 
 class Module_Messages extends Module implements ModuleInterface {
 
+	/**
+	 * Return module's details
+	 *
+	 * @return	Array
+	 */
 	public function info()
 	{
 		return array(
 				'name' => 'Messages',
 				'description' => array(
-						'en' => 'Manages app messages',
+						'en' => 'Set and retrieve messages',
 					),
 				'has_backend' => false,
-				'control_panel_heading' => false,
-				'sub_menu' => false,
+				'control_panel_menu' => false,
 			);
 	}
 }

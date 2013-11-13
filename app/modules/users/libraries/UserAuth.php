@@ -15,11 +15,6 @@ class UserAuth implements UserAuthInterface {
 
 	protected $users;
 
-	public function __construct(UserInterface $user)
-	{
-		$this->user = $user;
-	}
-
 	/**
 	 * Check user's credentials and log them in as an admin if they pass
 	 *
@@ -33,13 +28,14 @@ class UserAuth implements UserAuthInterface {
 		{
 			return false;
 		}
-		if ($user = \Users_m::findByEmail($email))
+		if ($user_details = \Users_m::findByEmail($email))
 		{
-			$this->user->setUser($user);
-			if ($this->user->user_data['active'] && $this->user->hasAccessPrivileges('CMS'))
+			$user = new User($user_details->toArray());
+			if ($user->details['active'] && $user->hasAccessPrivileges('CMS'))
 			{
 				if (\Auth::attempt(array('email' => $email, 'password' => $password), false))
 				{
+					$user_details->updateUsersLoginTime();
 					return true;
 				}
 			}
@@ -66,14 +62,10 @@ class UserAuth implements UserAuthInterface {
 	{
 		if (\Auth::check())
 		{
-			$this->user->user_data = \Auth::user()->toArray();
-			if ($this->user->user_data['active'] && $this->user->hasAccessPrivileges('CMS'))
+			$user = new User(\Auth::user()->toArray());
+			if ($user->details['active'] && $user->hasAccessPrivileges('CMS'))
 			{
-				return $this->user;
-			}
-			else
-			{
-				$this->logout();
+				return $user;
 			}
 		}
 		return false;

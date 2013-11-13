@@ -13,9 +13,9 @@ use Illuminate\Support\ServiceProvider;
 abstract class ModuleServiceProvider extends ServiceProvider {
 
 	/**
-	 * Bootstrap the application events.
+	 * Bootstrap the application events
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function boot()
 	{
@@ -26,9 +26,9 @@ abstract class ModuleServiceProvider extends ServiceProvider {
 	}
 
 	/**
-	 * Register the service provider.
+	 * Register the service provider
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function register()
 	{
@@ -48,12 +48,11 @@ abstract class ModuleServiceProvider extends ServiceProvider {
 	 * Get the first argument passed to the function and return it
 	 * as the module name
 	 *
-	 * @return	mixed
+	 * @return	String / Boolean
 	 */
 	public function getModule($args)
     {
-        $module = (isset($args[0]) and is_string($args[0])) ? $args[0] : null;
+        $module = (isset($args[0]) and is_string($args[0])) ? $args[0] : false;
         return $module;
     }
-
 }

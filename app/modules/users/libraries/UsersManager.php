@@ -2,7 +2,7 @@
 /**
  * User Manager
  *
- * Library for managing users and user groups
+ * Library for preforming out CRUD actions on users and user groups
  *
  * @author Arran Jacques
  */

@@ -2,8 +2,7 @@
 /**
  * Users AJAX
  *
- * Library of functions for the users module specifically for mapping
- * ajax requests to
+ * Library of functions for mapping AJAX requests to
  *
  * @author Arran Jacques
  */
@@ -55,7 +54,7 @@ class UsersAJAX {
 	}
 
 	/**
-	 * Switches a group's active status around
+	 * Switches a user group's active status around
 	 *
 	 * @param	Array
 	 * @return	JSON

@@ -1,17 +1,24 @@
 <?php namespace App\Modules\Messages;
 /**
- * Message
+ * Messages
  *
- * Library for managing global app messages 
+ * Library for managing system messages
  *
  * @author Arran Jacques
  */
 
+use App\Modules\Messages\Contracts\MessagesInterface;
 use Illuminate\Support\MessageBag;
 
-class Messages implements Contracts\MessagesInterface {
+class Messages implements MessagesInterface {
 
+	/**
+	 * Instance's messages
+	 *
+	 * @var		Illuminate\Support\MessageBag
+	 */
 	protected $messages;
+
 
 	public function __construct()
 	{
@@ -19,14 +26,14 @@ class Messages implements Contracts\MessagesInterface {
 	}
 
 	/**
-	 * Return object's messages
+	 * Return instance's messages
 	 *
 	 * @return	Illuminate\Support\MessageBag
 	 */
 	public function getMessages()
 	{
 		// Check if messages have been flashed to the session. If they have
-		// merge them into the objects message set
+		// merge them into the instance's message set
 		if (\Session::has('messages'))
 		{
 			$flash_messages = \Session::get('messages');
@@ -48,10 +55,10 @@ class Messages implements Contracts\MessagesInterface {
 	}
 
 	/**
-	 * Add messages to the object's message set
+	 * Add messages to the instance's message set
 	 *
-	 * @param	array
-	 * @return	self
+	 * @param	Array
+	 * @return	Self
 	 *
 	 * Use:
 	 * setMessages(array(
@@ -77,9 +84,9 @@ class Messages implements Contracts\MessagesInterface {
 	}
 
 	/**
-	 * Flash object's messages set to session
+	 * Flash instance's messages set to session
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function flash()
 	{

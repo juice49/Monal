@@ -5,7 +5,7 @@
 	<script>
 		var
 			_USER_GROUP = {{ $user_group['id'] }},
-			_CURRENT_USER_GROUP = {{ $current_user['group'] }};
+			_CURRENT_USER_GROUP = {{ $current_user->details['group'] }};
 	</script>
 @stop
 
@@ -40,7 +40,7 @@
 
 		<h2 class="well-title">Group Privileges</h2>
 		<div class="well">
-			@if($user_group['id'] == $current_user['group'])
+			@if($user_group['id'] == $current_user->details['group'])
 			<div class="messagebox error">
 				<h6>WARNING</h6>
 				You are editing a user group that YOU are part of. Changing privileges for this user group will directly effect your privileges and may result in you being logged out and unable to regain access, or loosing access to privileges you currently have with no way of reverting  them back.

@@ -9,11 +9,11 @@
 
 use App\Modules\Users\Contracts\UserAuthInterface;
 use App\Modules\Messages\Contracts\MessagesInterface;
-use App\Modules\Module\Contracts\ModuleManagerInterface;
+use App\Modules\Modules\Contracts\ModulesManagerInterface;
 
 class AdminController extends BaseController {
 
-	public function __construct(UserAuthInterface $auth, MessagesInterface $message, ModuleManagerInterface $module)
+	public function __construct(UserAuthInterface $auth, MessagesInterface $message, ModulesManagerInterface $modules)
 	{
 		$this->auth = $auth;
 		$this->data = Input::all();
@@ -23,9 +23,9 @@ class AdminController extends BaseController {
 		}
 		if ($this->user = $this->auth->adminLoggedIn())
 		{
-			$this->module = $module;
-			$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->module->installedModules());
-			View::share('current_user', $this->user->user_data);
+			$this->modules = $modules;
+			$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->modules->getInstalledModules());
+			View::share('current_user', $this->user);
 			View::share('control_panel', $this->controlPanelNavigation);
 		}
 		$this->message = $message;
@@ -34,7 +34,7 @@ class AdminController extends BaseController {
 	/**
 	 * Controls and displays CMS login page
 	 *
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function login()
 	{
@@ -74,7 +74,7 @@ class AdminController extends BaseController {
 	/**
 	 * Controls and displays CMS main dashboard
 	 *
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function dashboard()
 	{
@@ -83,7 +83,7 @@ class AdminController extends BaseController {
 			return Redirect::route('admin.login');
 		}
 		$messages = $this->message->getMessages();
-		$user = $this->user->user_data;
+		$user = $this->user;
 		return View::make('theme::sections.dashboard', compact('messages', 'user'));
 	}
 
@@ -101,16 +101,18 @@ class AdminController extends BaseController {
 		{
 			if (isset($module['details']['has_backend']) && $module['details']['has_backend'] && $this->user->hasAccessPrivileges($module['slug']))
 			{
-				if (isset($module['details']['control_panel_heading']) && !empty($module['details']['control_panel_heading']))
+				if (isset($module['details']['control_panel_menu']) && !empty($module['details']['control_panel_menu']))
 				{
-					$submenu = (isset($module['details']['control_panel_sub_menu']) && is_array($module['details']['control_panel_sub_menu'])) ? $module['details']['control_panel_sub_menu'] : array();
-					if (!isset($navigation_tree[$module['details']['control_panel_heading']]))
+					foreach ($module['details']['control_panel_menu'] as $menu_heading => $submenu)
 					{
-						$navigation_tree[$module['details']['control_panel_heading']] = $submenu;
-					}
-					else
-					{
-						$navigation_tree[$module['details']['control_panel_heading']] = array_merge($navigation_tree[$module['details']['control_panel_heading']], $submenu);
+						if (!isset($navigation_tree[$menu_heading]))
+						{
+							$navigation_tree[$menu_heading] = $submenu;
+						}
+						else
+						{
+							$navigation_tree[$menu_heading] = array_merge($navigation_tree[$menu_heading], $submenu);
+						}
 					}
 				}
 			}

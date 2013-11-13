@@ -1,22 +1,22 @@
-<?php namespace App\Modules\Module;
+<?php namespace App\Modules\Modules;
 /**
- * Module
+ * Modules Manager
  *
- * Library for managing cms modules 
+ * Library for managing CMS modules 
  *
  * @author Arran Jacques
  */
 
-use Illuminate\Support\MessageBag;
+use App\Modules\Modules\Contracts\ModulesManagerInterface;
 
-class ModuleManager implements Contracts\ModuleManagerInterface {
+class ModulesManager implements ModulesManagerInterface {
 
 	/**
-	 * Return all installed modules
+	 * Get all installed modules
 	 *
-	 * @return	array
+	 * @return	Array
 	 */
-	public function installedModules()
+	public function getInstalledModules()
 	{
 		$modules = \Modules_m::select('*')->orderBy('module')->get()->toArray();
 		foreach ($modules as &$item)

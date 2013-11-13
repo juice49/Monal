@@ -3,13 +3,13 @@
 interface UserInterface {
 
 	/**
-	 * Set the user data for the object's instance
+	 * Initialise user object
 	 *
-	 * @param	Array
-	 * @return	Void
+	 * @param	Array		The details of the user to initialise the
+	 *						instance with
 	 */
-	public function setUser($data);
-
+	public function __construct($details);
+	
 	/**
 	 * Check user has privileges to access an area of the CMS
 	 *

@@ -1,6 +1,10 @@
 <?php 
 /**
+ * User Group
  *
+ * Model for the user_groups table
+ *
+ * @author Arran Jacques
  */
 
 class UserGroups_m extends Eloquent {
@@ -8,15 +12,15 @@ class UserGroups_m extends Eloquent {
 	/**
 	 * The database table used by the model
 	 *
-	 * @var		string
+	 * @var		String
 	 */
 	protected $table = 'user_groups';
 
 	/**
 	 * Find a user group by its name
 	 *
-	 * @param	string
-	 * @return	mixed
+	 * @param	String
+	 * @return	Mixed
 	 */
 	public static function findByName($name)
 	{

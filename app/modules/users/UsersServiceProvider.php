@@ -2,7 +2,7 @@
 /**
  * Users Module Service Provider
  * 
- * Registers the Messages module with Laravel and set its IOC bindings
+ * Registers the Users module with Laravel and set its IOC bindings
  *
  * @author Arran Jacques
  */
@@ -13,16 +13,16 @@ use \App\Core\Contracts\ServiceProviderInterface;
 class UsersServiceProvider extends ModuleServiceProvider implements ServiceProviderInterface {
 
 	/**
-	 * Indicates if loading of the provider is deferred.
+	 * Indicates if loading of the provider is deferred
 	 *
-	 * @var		bool
+	 * @var		Boolean
 	 */
 	protected $defer = false;
 
 	/**
-	 * Bootstrap the application events.
+	 * Bootstrap the application events
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
     public function boot()
     {
@@ -30,9 +30,9 @@ class UsersServiceProvider extends ModuleServiceProvider implements ServiceProvi
     }
 
     /**
-	 * Register the service provider.
+	 * Register the service provider
 	 *
-	 * @return	void
+	 * @return	Void
 	 */
 	public function register()
     {
@@ -41,10 +41,6 @@ class UsersServiceProvider extends ModuleServiceProvider implements ServiceProvi
         $this->app->bind('App\Modules\Users\Contracts\UsersManagerInterface', function()
 			{
 				return new \App\Modules\Users\UsersManager();
-			});
-		$this->app->bind('\App\Modules\Users\Contracts\UserInterface', function()
-			{
-				return new \App\Modules\Users\User();
 			});
 		$this->app->bind('App\Modules\Users\Contracts\UserAuthInterface', function()
 			{

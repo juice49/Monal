@@ -3,8 +3,6 @@
 use App\Modules\Users\Contracts\UserInterface;
 
 interface UserAuthInterface {
-
-	public function __construct(UserInterface $user);
 	
 	/**
 	 * Check user's credentials and log them in as an admin if they pass

@@ -1,13 +1,13 @@
 <?php
 /**
- * Users Module
+ * Modules Module
  *
  * @author Arran Jacques
  */
 
 use App\Core\Contracts;
 
-class Module_Users extends Module implements ModuleInterface {
+class Module_Modules extends Module implements ModuleInterface {
 
 	/**
 	 * Return module's details
@@ -17,15 +17,14 @@ class Module_Users extends Module implements ModuleInterface {
 	public function info()
 	{
 		return array(
-				'name' => 'Users',
+				'name' => 'Modules',
 				'description' => array(
-						'en' => 'Create, read, update, delete and manage system users and user groups',
+						'en' => 'Install, unistall and update system modules',
 					),
 				'has_backend' => true,
 				'control_panel_menu' => array(
-						'Users' => array(
-								'Users' => '/users',
-								'User Groups' => '/users/groups',
+						'System' => array(
+								'Modules' => '/moudles',
 							),
 					),
 			);

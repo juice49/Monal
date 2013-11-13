@@ -8,22 +8,22 @@
  */
 
 use App\Modules\Users\Contracts\UserAuthInterface;
-use App\Modules\Messages\Contracts\MessagesInterface;
-use App\Modules\Module\Contracts\ModuleManagerInterface;
 use App\Modules\Users\Contracts\UsersManagerInterface;
+use App\Modules\Messages\Contracts\MessagesInterface;
+use App\Modules\Modules\Contracts\ModulesManagerInterface;
 
 class UsersController extends AdminController {
 
-	public function __construct(UsersManagerInterface $users, UserAuthInterface $auth, MessagesInterface $message, ModuleManagerInterface $module)
+	public function __construct(UsersManagerInterface $users, UserAuthInterface $auth, MessagesInterface $message, ModulesManagerInterface $modules)
 	{
-		parent::__construct($auth, $message, $module);
+		parent::__construct($auth, $message, $modules);
 		$this->users = $users;
 	}
 
 	/**
 	 * Controls and displays users page
 	 *
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function users()
 	{
@@ -44,7 +44,7 @@ class UsersController extends AdminController {
 	/**
 	 * Controls and displays add user page
 	 *
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function addUser()
 	{
@@ -107,7 +107,7 @@ class UsersController extends AdminController {
 	 * Controls and displays edit user page
 	 *
 	 * @param	Int
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function editUser($user_id)
 	{
@@ -189,7 +189,7 @@ class UsersController extends AdminController {
 	/**
 	 * Controls and displays user groups page
 	 *
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function userGroups()
 	{
@@ -210,7 +210,7 @@ class UsersController extends AdminController {
 	/**
 	 * Controls and displays add user group page
 	 *
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function addUserGroup()
 	{
@@ -267,7 +267,7 @@ class UsersController extends AdminController {
 	 * Controls and displays edit user group page
 	 *
 	 * @param	Int
-	 * @return	\Illuminate\View\View
+	 * @return	Illuminate\View\View
 	 */
 	public function editUserGroup($group_id)
 	{
@@ -318,7 +318,7 @@ class UsersController extends AdminController {
 				}
 			}
 			$privileges = $this->users->getGroupPrivileges($group_id);
-			$modules = $this->module->installedModules();
+			$modules = $this->modules->getInstalledModules();
 			$messages = $this->message->getMessages();
 			return View::make('users::edit_user_group', compact('messages', 'user_group', 'privileges', 'modules'));
 		}
