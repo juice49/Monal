@@ -31,6 +31,7 @@ return array(
     'Module_Messages' => $baseDir . '/app/modules/messages/details.php',
     'Module_Modules' => $baseDir . '/app/modules/modules/details.php',
     'Module_Users' => $baseDir . '/app/modules/users/details.php',
+    'ModulesController' => $baseDir . '/app/modules/modules/controllers/Modules.php',
     'Modules_m' => $baseDir . '/app/modules/modules/models/Module_m.php',
     'SessionHandlerInterface' => $vendorDir . '/symfony/http-foundation/Symfony/Component/HttpFoundation/Resources/stubs/SessionHandlerInterface.php',
     'TestCase' => $baseDir . '/app/tests/TestCase.php',

@@ -24,7 +24,7 @@ class Module_Modules extends Module implements ModuleInterface {
 				'has_backend' => true,
 				'control_panel_menu' => array(
 						'System' => array(
-								'Modules' => '/moudles',
+								'Modules' => '/modules',
 							),
 					),
 			);
