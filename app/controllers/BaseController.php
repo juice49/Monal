@@ -3,7 +3,7 @@
 class BaseController extends Controller {
 
 	/**
-	 * Setup the layout used by the controller
+	 * Setup the layout used by the controller.
 	 *
 	 * @return	Void
 	 */
@@ -14,5 +14,4 @@ class BaseController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
-
 }

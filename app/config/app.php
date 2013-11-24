@@ -80,7 +80,6 @@ return array(
 
 	'providers' => array(
 
-		// Laravel 4 dependency service provider
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
 		'Illuminate\Auth\AuthServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
@@ -114,11 +113,8 @@ return array(
 		'Illuminate\Validation\ValidationServiceProvider',
 		'Illuminate\View\ViewServiceProvider',
 		'Illuminate\Workbench\WorkbenchServiceProvider',
-
-		// Fructose CMS core service provider
-		'App\Modules\Users\UsersServiceProvider',
-		'App\Modules\Messages\MessagesServiceProvider',
-		'App\Modules\Modules\ModulesServiceProvider',
+		'Fruitful\Users\UsersServiceProvider',
+		'Fruitful\Packages\PackagesServiceProvider',
 
 	),
 

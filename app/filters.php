@@ -15,6 +15,11 @@ App::before(function($request)
 {
 	View::addLocation(app('path').'/theme/templates');
     View::addNamespace('theme', app('path').'/theme/templates');
+
+    App::singleton('Fruitful\Core\Contracts\GatewayInterface', function()
+	{
+		return new Fruitful\Core\Gateway();
+	});
 });
 
 
@@ -34,15 +39,13 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('auth', function()
+Route::filter('admin', function()
 {
-	if (Auth::guest()) return Redirect::guest('login');
-});
-
-
-Route::filter('auth.basic', function()
-{
-	return Auth::basic();
+    $gateway = new Fruitful\Core\Gateway;
+    if (!$gateway->isAdminUserLoggedIn())
+    {
+    	return Redirect::route('admin.login');
+    }
 });
 
 /*

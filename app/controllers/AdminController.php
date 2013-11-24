@@ -2,108 +2,119 @@
 /**
  * Admin Controller
  *
- * Base controller for CMS admin pages
+ * Base controller for system admin pages,
  *
- * @author Arran Jacques
+ * @author	Arran Jacques
  */
 
-use App\Modules\Users\Contracts\UserAuthInterface;
-use App\Modules\Messages\Contracts\MessagesInterface;
-use App\Modules\Modules\Contracts\ModulesManagerInterface;
+use Fruitful\Core\Contracts\GatewayInterface;
 
 class AdminController extends BaseController {
 
-	public function __construct(UserAuthInterface $auth, MessagesInterface $message, ModulesManagerInterface $modules)
+	/**
+	 * Instance of the gateway class into the Fruitful system.
+	 *
+	 * @var		Fruitful\Core\SystemPackages
+	 */
+	protected $system;
+
+	/**
+	 * Input data
+	 *
+	 * @var		Array
+	 */
+	public $input;
+
+	/**
+	 * Initialise controller.
+	 *
+	 * @return	Void
+	 */
+	public function __construct(GatewayInterface $system_gateway)
 	{
-		$this->auth = $auth;
-		$this->data = Input::all();
-		if (isset($this->data['logout']))
+		$this->system = $system_gateway;
+		$this->input = Input::all();
+
+		View::share('system_user', $this->system->user);
+
+		if ($this->system->isAdminUserLoggedIn())
 		{
-			$this->auth->logout();
+			$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getInstalledPackages());
+			View::share('control_panel', $this->control_panel_navigation);
 		}
-		if ($this->user = $this->auth->adminLoggedIn())
-		{
-			$this->modules = $modules;
-			$this->controlPanelNavigation = $this->buildControlPanelNavigation($this->modules->getInstalledModules());
-			View::share('current_user', $this->user);
-			View::share('control_panel', $this->controlPanelNavigation);
-		}
-		$this->message = $message;
 	}
 
 	/**
-	 * Controls and displays CMS login page
+	 * Controls and displays admin login page.
 	 *
 	 * @return	Illuminate\View\View
 	 */
 	public function login()
 	{
-		if ($this->user)
+		if ($this->system->isAdminUserLoggedIn())
 		{
-			return Redirect::route('admin');
+			return Redirect::to('admin');
 		}
-
-		if ($this->data)
+		if ($this->input)
 		{
-			$validation = Validator::make($this->data,
+			$validation = Validator::make($this->input,
 				array(
 					'email' => 'required|email',
 					'password' => 'required',
 					)
 				);
 
-			if (!$validation->fails())
+			if ($validation->passes())
 			{
-				if ($this->auth->adminLogin($this->data['email'], $this->data['password']))
+				if ($this->system->setSystemUser($this->input['email']) AND $this->system->user->hasAccessPrivileges('admin'))
 				{
-					return Redirect::route('admin');
+					if ($this->system->loginSystemUser($this->input['password']))
+					{
+						return Redirect::route('admin');
+					}
 				}
 			}
-
-			$this->message->setMessages(array(
+			$this->system->messages->setMessages(array(
 					'error' => array(
 						'Invalid login details',
-						)
-					));
+						),
+					)
+				);
 		}
-		$messages = $this->message->getMessages();
-		$data = $this->data;
-		return View::make('theme::login', compact('messages', 'data'));
+		$messages = $this->system->messages->getMessages();
+		$input = $this->input;
+		return View::make('theme::login', compact('messages', 'input'));
 	}
 
 	/**
-	 * Controls and displays CMS main dashboard
+	 * Controls and displays admin main dashboard.
 	 *
 	 * @return	Illuminate\View\View
 	 */
 	public function dashboard()
 	{
-		if (!$this->user)
-		{
-			return Redirect::route('admin.login');
-		}
-		$messages = $this->message->getMessages();
-		$user = $this->user;
+		$messages = $this->system->messages->getMessages();
+		$user = $this->system->user;
 		return View::make('theme::sections.dashboard', compact('messages', 'user'));
 	}
 
 	/**
-	 * Processes array of installed modules into a structured array that
-	 * can be used to build the control panel navigation menu 
+	 * Processes array of installed packages into a structured array that
+	 * can be used to build the control panel navigation menu .
 	 *
 	 * @param	Array
 	 * @return	Array
 	 */
-	public function buildControlPanelNavigation(array $modules)
+	public function buildControlPanelNavigation(array $packages)
 	{
 		$navigation_tree = array();
-		foreach ($modules as $module)
+		foreach ($packages as $package)
 		{
-			if (isset($module['details']['has_backend']) && $module['details']['has_backend'] && $this->user->hasAccessPrivileges($module['slug']))
+			if (isset($package['details']['has_backend']) && $package['details']['has_backend'] && $this->system->user->hasAccessPrivileges($package['slug']))
 			{
-				if (isset($module['details']['control_panel_menu']) && !empty($module['details']['control_panel_menu']))
+				if (isset($package['details']['control_panel_menu']) && !empty($package['details']['control_panel_menu']))
 				{
-					foreach ($module['details']['control_panel_menu'] as $menu_heading => $submenu)
+					foreach ($package['details']['control_panel_menu'] as $menu_heading => $submenu)
 					{
 						if (!isset($navigation_tree[$menu_heading]))
 						{
