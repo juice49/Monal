@@ -115,6 +115,7 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
 		'Fruitful\Users\UsersServiceProvider',
 		'Fruitful\Packages\PackagesServiceProvider',
+		'Fruitful\Data\DataServiceProvider',
 
 	),
 

@@ -39,7 +39,7 @@ class AdminController extends BaseController {
 
 		if ($this->system->isAdminUserLoggedIn())
 		{
-			$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getInstalledPackages());
+			$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getAllPackageDetails());
 			View::share('control_panel', $this->control_panel_navigation);
 		}
 	}
@@ -110,7 +110,7 @@ class AdminController extends BaseController {
 		$navigation_tree = array();
 		foreach ($packages as $package)
 		{
-			if (isset($package['details']['has_backend']) && $package['details']['has_backend'] && $this->system->user->hasAccessPrivileges($package['slug']))
+			if (isset($package['details']['has_backend']) && $package['details']['has_backend'] && $this->system->user->hasAccessPrivileges($package['uri']))
 			{
 				if (isset($package['details']['control_panel_menu']) && !empty($package['details']['control_panel_menu']))
 				{

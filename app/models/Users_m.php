@@ -91,11 +91,36 @@ class Users_m extends Eloquent implements UserInterface {
 	public static function findByGroup($group_id)
 	{
 		$users = self::select('*')->where('users.group', '=', $group_id)->get();
-		if ($users && count($users) > 0)
-		{
-			return $users;
-		}
-		return false;
+		return ($users) ? $users : false;
+	}
+
+	/**
+	 * Find all active users.
+	 *
+	 * @return	Users_m / Boolean
+	 */
+	public static function findAllActive()
+	{
+		$users = self::select('*')->where('users.active', '=', 1)->get();
+		return ($users) ? $users : false;
+	}
+
+	/**
+	 * Save a new user to the database.
+	 *
+	 * @return	Users_m / Boolean
+	 */
+	public static function createUser(array $data)
+	{
+		$user = new self;
+		$user->first_name = isset($data['first_name']) ? $data['first_name'] : null;
+		$user->last_name = isset($data['last_name']) ? $data['last_name'] :  null;
+		$user->username = isset($data['username']) ? $data['username'] : null;
+		$user->email = isset($data['email']) ? $data['email'] : null;
+		$user->password = isset($data['password']) ? \Hash::make($data['password']) : null;
+		$user->group = isset($data['group']) ? $data['group'] : null;
+		$user->active = isset($data['active']) ? $data['active'] : 0;
+		return ($user->save()) ? $user : false;
 	}
 
 	/**

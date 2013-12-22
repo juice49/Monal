@@ -31,4 +31,18 @@ class UserGroups_m extends Eloquent {
 		}
 		return false;
 	}
+
+	/**
+	 * Save a new user group to the database.
+	 *
+	 * @param	Array
+	 * @return	UserGroups_m / Boolean
+	 */
+	public static function createUserGroup(array $data)
+	{
+		$user_group = new self;
+		$user_group->name = isset($data['name']) ? $data['name'] : null;
+		$user_group->active = isset($data['active']) ? $data['active'] : 0;
+		return ($user_group->save()) ? $user_group : false;
+	}
 }
