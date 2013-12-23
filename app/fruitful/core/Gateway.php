@@ -15,16 +15,24 @@ class Gateway extends \Fruitful implements GatewayInterface {
 	/**
 	 * Set the system user.
 	 *
-	 * @param	Mixed			The unique identifier to be used to
-	 *							retrieve the user from the system's
-	 *							database
+	 * @return	Void
+	 */
+	public function setSystemUser(array $user_details)
+	{
+		$this->user = new SystemUser($user_details);
+	}
+
+	/**
+	 * Set the system user by their email address.
+	 *
+	 * @param	String
 	 * @return	Boolean
 	 */
-	public function setSystemUser($identifier)
+	public function setSystemUserByEmail($email)
 	{
-		if ($user_details = $this->auth->userExists($identifier))
+		if ($user_details = $this->auth->userExistsByEmail($email))
 		{
-			$this->user = new SystemUser($user_details);
+			$this->setSystemUser($user_details->toArray());
 			return true;
 		}
 		return false;
@@ -37,9 +45,23 @@ class Gateway extends \Fruitful implements GatewayInterface {
 	 */
 	public function loginSystemUser($password)
 	{
-		if ($this->auth->login($this->user->email, $password))
+		return ($this->auth->login($this->user->email, $password)) ? true : false;
+	}
+
+	/**
+	 * Check if system user is logged in and has admin privileges
+	 *
+	 * @return	Boolean
+	 */
+	public function isAdminUserLoggedIn()
+	{
+		if ($user_details = $this->auth->currentUser())
 		{
-			return true;
+			$this->setSystemUser($user_details->toArray());
+			if ($this->user->isAdmin())
+			{
+				return true;
+			}
 		}
 		return false;
 	}

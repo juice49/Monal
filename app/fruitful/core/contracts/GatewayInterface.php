@@ -10,14 +10,12 @@
 interface GatewayInterface {
 
 	/**
-	 * Set the system user.
+	 * Set the system user by their email address.
 	 *
-	 * @param	Mixed			The unique identifier to be used to
-	 *							retrieve the user from the system's
-	 *							database
+	 * @param	String
 	 * @return	Boolean
 	 */
-	public function setSystemUser($identifier);
+	public function setSystemUserByEmail($email);
 
 	/**
 	 * Attempt to authenticate and login the system user.

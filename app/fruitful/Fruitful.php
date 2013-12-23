@@ -60,48 +60,5 @@ class Fruitful {
 		{
 			$this->auth->logout();
 		}
-
-		if (\Auth::check())
-		{
-			$user_details = \Auth::user();
-			if ($user_details['active'])
-			{
-				$this->user = new SystemUser($user_details->toArray());
-			}
-		}
-		else
-		{
-			$this->user = new SystemUser($this->auth->createGuestUser());
-		}
-	}
-	
-	/**
-	 * Check if system user is logged in
-	 *
-	 * @return	Boolean
-	 */
-	public function isUserLoggedIn()
-	{
-
-	}
-
-	/**
-	 * Check if system user is logged in and has admin privileges
-	 *
-	 * @return	Boolean
-	 */
-	public function isAdminUserLoggedIn()
-	{
-		if (\Auth::check())
-		{
-			if ($logged_in_user = \Auth::user())
-			{
-				if ($this->user->id == $logged_in_user['id'] AND $this->user->hasAccessPrivileges('admin'))
-				{
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 }

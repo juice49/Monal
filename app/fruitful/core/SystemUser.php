@@ -52,18 +52,11 @@ class SystemUser {
 	public $group_id;
 
 	/**
-	 * User's active state.
+	 * User's group name.
 	 *
-	 * @var		INT
+	 * @var		String
 	 */
-	public $active;
-
-	/**
-	 * Unix timestamp of users last successful login.
-	 *
-	 * @var		Int
-	 */
-	public $last_logged_in;
+	public $group_name;
 
 	/**
 	 * Timestamp of when user was first created and saved in the system's
@@ -82,62 +75,132 @@ class SystemUser {
 	public $updated_at;
 
 	/**
+	 * User's active state.
+	 *
+	 * @var		INT
+	 */
+	protected $active;
+
+	/**
+	 * User's group active state.
+	 *
+	 * @var		String
+	 */
+	protected $group_active;
+
+	/**
+	 * User group's permissions.
+	 *
+	 * @var		String
+	 */
+	protected $permissions;
+
+	/**
 	 * Initialise the instance.
 	 *
 	 * @return	Void
 	 */
 	public function __construct(array $details)
 	{
-		if (is_array($details) AND !empty($details))
-		{
-			$this->id = isset($details['id']) ? $details['id'] : null;
-			$this->first_name = isset($details['first_name']) ? $details['first_name'] : null;
-			$this->last_name = isset($details['last_name']) ? $details['last_name'] : null;
-			$this->username = isset($details['username']) ? $details['username'] : null;
-			$this->email = isset($details['email']) ? $details['email'] : null;
-			$this->group_id = isset($details['group']) ? $details['group'] : null;
-			$this->active = isset($details['active']) ? $details['active'] : null;
-			$this->last_logged_in = isset($details['last_logged_in']) ? $details['last_logged_in'] : null;
-			$this->created_at = isset($details['created_at']) ? $details['created_at'] : null;
-			$this->updated_at = isset($details['updated_at']) ? $details['updated_at'] : null;
-		}
+		$this->id = isset($details['id']) ? $details['id'] : null;
+		$this->first_name = isset($details['first_name']) ? $details['first_name'] : null;
+		$this->last_name = isset($details['last_name']) ? $details['last_name'] : null;
+		$this->username = isset($details['username']) ? $details['username'] : null;
+		$this->email = isset($details['email']) ? $details['email'] : null;
+		$this->group_id = isset($details['group']) ? $details['group'] : null;
+		$this->active = isset($details['active']) ? $details['active'] : null;
+		$this->created_at = isset($details['created_at']) ? $details['created_at'] : null;
+		$this->updated_at = isset($details['updated_at']) ? $details['updated_at'] : null;
+
+		$user_group = \UserGroups_m::find($this->group_id);
+		$this->group_name = isset($user_group['name']) ? $user_group['name'] : null;
+		$this->group_active = isset($user_group['active']) ? $user_group['active'] : null;
+
+		$permissions = \UserGroupPermissions_m::findByGroup($this->group_id);
+		$this->permissions = ($permissions) ? $permissions : null;
 	}
 
 	/**
-	 * Check user has privileges to access an area of the system.
+	 * Is the user active.
 	 *
 	 * @return	Boolean
 	 */
-	public function hasAccessPrivileges($area = null)
+	public function isUserActive()
 	{
-		if ($this->group_id == 1)
+		return ($this->active) ? true : false;
+	}
+
+	/**
+	 * Is the user active.
+	 *
+	 * @return	Boolean
+	 */
+	public function isUserGroupActive()
+	{
+		return ($this->group_active) ? true : false;
+	}
+
+	/**
+	 * Is the user and user group active.
+	 *
+	 * @return	Boolean
+	 */
+	public function isActive()
+	{
+		return ($this->isUserActive() AND $this->isUserGroupActive()) ? true : false;
+	}
+
+	/**
+	 * Is the user an admin.
+	 *
+	 * @return	Boolean
+	 */
+	public function isAdmin()
+	{
+		return ($this->permissions AND $this->permissions->admin) ? true : false;
+	}
+
+	/**
+	 * Return the user's admin permissions as an array.
+	 *
+	 * @return	Array
+	 */
+	public function adminPermissions()
+	{
+		if ($this->permissions)
 		{
-			return true;
+			return json_decode($this->permissions->admin_permissions, true);
 		}
-		$user_group = \UserGroups_m::find($this->group_id);
-		if (isset($user_group) && !empty($user_group))
+		return array();
+	}
+
+	/**
+	 * Check user's admin permissions.
+	 *
+	 * @return	Boolean
+	 */
+	public function hasAdminPermissions($hi_level = null, $low_level = null)
+	{
+		if ($hi_level)
 		{
-			if ($user_group->active)
+			if ($this->group_id == 1)
 			{
-				$group_privileges = \UserGroupPrivileges_m::findByGroup($user_group->id);
-				if ($group_privileges)
+				return true;
+			}
+			if ($this->isAdmin())
+			{
+				if ($hi_level == 'admin')
 				{
-					if ($area == 'admin' AND $group_privileges->admin == 1)
-					{
-						return true;
-					}
-					else
-					{
-						$package = \Packages_m::findBySlug($area);
-						if ($package)
-						{
-							$group_privileges->package_admin_access = json_decode($group_privileges->package_admin_access, true);
-							if (isset($group_privileges->package_admin_access[$package->id]) && $group_privileges->package_admin_access[$package->id])
-							{
-								return true;
-							}
-						}
-					}
+					return true;
+				}
+				$user_permissions = $this->adminPermissions();
+				if (!$low_level AND isset($user_permissions[$hi_level]))
+				{
+					return true;
+				}
+				else if (isset($user_permissions[$hi_level][$low_level]))
+				{
+					return true;
 				}
 			}
 		}

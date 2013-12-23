@@ -14,7 +14,7 @@ class AdminController extends BaseController {
 	/**
 	 * Instance of the gateway class into the Fruitful system.
 	 *
-	 * @var		Fruitful\Core\SystemPackages
+	 * @var		Fruitful\Core\GatewayInterface
 	 */
 	protected $system;
 
@@ -66,7 +66,7 @@ class AdminController extends BaseController {
 
 			if ($validation->passes())
 			{
-				if ($this->system->setSystemUser($this->input['email']) AND $this->system->user->hasAccessPrivileges('admin'))
+				if ($this->system->setSystemUserByEmail($this->input['email']) AND $this->system->user->hasAdminPermissions('admin'))
 				{
 					if ($this->system->loginSystemUser($this->input['password']))
 					{
@@ -110,19 +110,53 @@ class AdminController extends BaseController {
 		$navigation_tree = array();
 		foreach ($packages as $package)
 		{
-			if (isset($package['details']['has_backend']) && $package['details']['has_backend'] && $this->system->user->hasAccessPrivileges($package['uri']))
+			if (
+				isset($package['details']['has_backend']) AND
+				$package['details']['has_backend'] AND
+				isset($package['details']['control_panel_menu']) AND
+				!empty($package['details']['control_panel_menu'])
+				)
 			{
-				if (isset($package['details']['control_panel_menu']) && !empty($package['details']['control_panel_menu']))
+				foreach ($package['details']['control_panel_menu'] as $menu_main_heading => $submenu_item)
 				{
-					foreach ($package['details']['control_panel_menu'] as $menu_heading => $submenu)
+					foreach ($submenu_item as $submenu_heading => $submenu_details)
 					{
-						if (!isset($navigation_tree[$menu_heading]))
+						$permission_slugs = explode('|', $submenu_details['permissions']);
+						if (isset($permission_slugs[0]) AND !empty($permission_slugs[0]))
 						{
-							$navigation_tree[$menu_heading] = $submenu;
+							$hi_level_permission = $permission_slugs[0];
+							if (isset($permission_slugs[1]))
+							{
+								$show_menu_item = true;
+								$low_level_permission_slugs = explode(',', $permission_slugs[1]);
+								foreach ($low_level_permission_slugs as $low_level_perimssion)
+								{
+									if (!$this->system->user->hasAdminPermissions($hi_level_permission, $low_level_perimssion))
+									{
+										$show_menu_item = false;
+									}
+								}
+							}
+							else
+							{
+								$show_menu_item = ($this->system->user->hasAdminPermissions($hi_level_permission)) ? true : false;
+							}
 						}
 						else
 						{
-							$navigation_tree[$menu_heading] = array_merge($navigation_tree[$menu_heading], $submenu);
+							$show_menu_item = true;
+						}
+						if ($show_menu_item)
+						{
+							if (!isset($navigation_tree[$menu_main_heading]))
+							{
+								$navigation_tree[$menu_main_heading] = array();
+								$navigation_tree[$menu_main_heading][$submenu_heading] = $submenu_details['route'];
+							}
+							else
+							{
+								$navigation_tree[$menu_main_heading][$submenu_heading] = $submenu_details['route'];
+							}
 						}
 					}
 				}

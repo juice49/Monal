@@ -24,7 +24,7 @@ class UserGroupPermissions_m extends Eloquent {
 	 */
 	public static function findByGroup($group_id)
 	{
-		$user_group_permissions = self::select('*')->where('group', '=', $group_id)->first(); 
+		$user_group_permissions = self::select('*')->where('group', '=', $group_id)->first();
 		return ($user_group_permissions) ? $user_group_permissions : false;
 	}
 

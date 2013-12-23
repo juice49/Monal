@@ -15,11 +15,6 @@ App::before(function($request)
 {
 	View::addLocation(app('path').'/theme/templates');
     View::addNamespace('theme', app('path').'/theme/templates');
-
-    App::singleton('Fruitful\Core\Contracts\GatewayInterface', function()
-	{
-		return new Fruitful\Core\Gateway();
-	});
 });
 
 
@@ -41,12 +36,13 @@ App::after(function($request, $response)
 
 Route::filter('admin', function()
 {
-    $gateway = new Fruitful\Core\Gateway;
+    $gateway = App::make('Fruitful\Core\Contracts\GatewayInterface');
     if (!$gateway->isAdminUserLoggedIn())
     {
     	return Redirect::route('admin.login');
     }
 });
+Route::when('admin/*', 'admin');
 
 /*
 |--------------------------------------------------------------------------

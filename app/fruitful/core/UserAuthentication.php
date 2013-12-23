@@ -14,17 +14,17 @@ class UserAuthentication {
 	public $user;
 
 	/**
-	 * Check a user exists.
+	 * Check a user exists by their email address.
 	 *
-	 * @param	Mixed
-	 * @return	Array / Boolean
+	 * @param	String
+	 * @return	Users_m / Boolean
 	 */
-	public function userExists($identifier = null)
+	public function userExistsByEmail($email = null)
 	{
-		if ($identifier AND $user = \Users_m::findByEmail($identifier))
+		if ($email AND $user = \Users_m::findByEmail($email))
 		{
 			$this->user = $user;
-			return $this->user->toArray();
+			return $this->user;
 		}
 		return false;
 	}
@@ -42,7 +42,6 @@ class UserAuthentication {
 		{
 			if (\Auth::attempt(array('email' => $email, 'password' => $password), false))
 			{
-				$this->user->updateUsersLoginTime();
 				return true;
 			}
 		}
@@ -66,7 +65,7 @@ class UserAuthentication {
 	 */
 	public function createGuestUser()
 	{
-		$guest = array(
+		return array(
 			'id' => null,
 			'first_name' => 'Guest',
 			'last_name' => 'User',
@@ -78,6 +77,15 @@ class UserAuthentication {
 			'created_at' => null,
 			'updated_at' => null,
 			);
-		return $guest;
+	}
+
+	/**
+	 * Check if a user is logged in.
+	 *
+	 * @return Users_m / Boolean
+	 */
+	public function currentUser()
+	{
+		return (\Auth::check()) ? \Auth::user() : false;
 	}
 }
