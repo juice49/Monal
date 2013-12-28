@@ -13,8 +13,43 @@
 
 App::before(function($request)
 {
-	View::addLocation(app('path').'/theme/templates');
-    View::addNamespace('theme', app('path').'/theme/templates');
+	// Check if the installation files are present. If they arre then run
+	// the installation process
+	if (file_exists(app_path() . '/installation/routes.php'))
+	{
+		require app_path() . '/installation/routes.php';
+		require app_path() . '/installation/Installer.php';
+		require app_path() . '/installation/InstallationController.php';
+
+		View::addLocation(app('path') . '/installation/views');
+		View::addNamespace('installation', app('path') . '/installation/views');
+
+		$installer = new \Installer;
+		switch ($step = $installer->getInstallationStep())
+		{
+			case 'ERROR':
+				return 'There appears to be an error with the installation process';
+				break;
+			case 'step1':
+				if (Request::url() != URL::route('installation.database'))
+				{
+					return Redirect::route('installation.database');
+				}
+				break;
+			case 'step2':
+				if (Request::url() != URL::route('installation.user'))
+				{
+					return Redirect::route('installation.user');
+				}
+				break;
+			case 'step2':
+				if (Request::url() != URL::route('installation.remove'))
+				{
+					return Redirect::route('installation.remove');
+				}
+				break;
+		}
+	}
 });
 
 

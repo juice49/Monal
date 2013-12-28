@@ -19,7 +19,7 @@ class AdminController extends BaseController {
 	protected $system;
 
 	/**
-	 * Input data
+	 * Input data.
 	 *
 	 * @var		Array
 	 */

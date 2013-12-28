@@ -1,0 +1,104 @@
+
+base_unit = 16
+
+/* ============================================================
+ * Fonts
+=========================================================== */
+
+base_font_size = base_unit
+base_line_height = 1.5
+
+/*
+ * Font stacks
+ **************************************************/
+
+fonts = {}
+fonts['heading'] = "Helvetica Neue"\, Helvetica\, Arial\, sans-serif
+fonts['main'] = "HelveticaNeue-Light"\, "Helvetica Neue Light"\, "Helvetica Neue"\, Helvetica\, Arial\, sans-serif
+
+fontFamilyHeading()
+	font-family fonts['heading']
+	font-weight 700
+
+fontFamilyMain()
+	font-family fonts['main']
+	font-weight 300
+
+/*
+ * Font sizes
+ **************************************************/
+
+font_sizes = {}
+font_sizes['alpha'] = unit((base_font_size * 3), px)
+font_sizes['bravo'] = unit((base_font_size * 2.5), px)
+font_sizes['charlie'] = unit((base_font_size * 2), px)
+font_sizes['delta'] = unit((base_font_size * 1.5), px)
+font_sizes['echo'] = unit((base_font_size * 1.2), px)
+font_sizes['foxtrot'] = unit(base_font_size, px)
+font_sizes['gamma'] = unit((base_font_size * 0.875), px)
+
+line_heights = {}
+line_heights['alpha'] = unit(((base_font_size * 3) * base_line_height), px)
+line_heights['bravo'] = unit(((base_font_size * 2.5) * base_line_height), px)
+line_heights['charlie'] = unit(((base_font_size * 2) * base_line_height), px)
+line_heights['delta'] = unit(((base_font_size * 1.5) * base_line_height), px)
+line_heights['echo'] = unit(((base_font_size * 1.2) * base_line_height), px)
+line_heights['foxtrot'] = unit((base_font_size * base_line_height), px)
+line_heights['gamma'] = unit(((base_font_size * 0.875) * base_line_height), px)
+
+fontSizeAlpha()
+	margin-top base_unit
+	margin-bottom base_unit * 2
+	font-size font_sizes['alpha']
+	line-height line_heights['alpha']
+
+fontSizeCharlie()
+	margin-top base_unit * .5
+	margin-bottom base_unit * 1.5
+	font-size font_sizes['charlie']
+	line-height line_heights['charlie']
+
+fontSizeDelta()
+	margin-top base_unit * .25
+	margin-bottom base_unit * 1.25
+	font-size font_sizes['delta']
+	line-height line_heights['delta']
+
+fontSizeEcho()
+	margin-top base_unit
+	margin-bottom base_unit
+	font-size font_sizes['echo']
+	line-height line_heights['echo']
+
+fontSizeFoxtrot()
+	margin-top base_unit * .75
+	margin-bottom base_unit
+	font-size font_sizes['foxtrot']
+	line-height line_heights['foxtrot']
+
+fontSizeGamma()
+	margin-top base_unit * .5
+	margin-bottom base_unit * .5
+	font-size font_sizes['gamma']
+	line-height line_heights['gamma']
+
+
+/* ============================================================
+ * Colors
+=========================================================== */
+
+colors = {}
+colors['grey-vdark'] = #333333
+colors['grey-dark'] = #555555
+colors['grey-medium'] = #777777
+colors['grey-light'] = #999999
+colors['grey-vlight'] = #bbbbbb
+
+colors['tomato+6'] = #5f3024
+colors['tomato+5'] = #773b2e
+colors['tomato'] = #ee775c
+
+colors['turquoise+2'] = #0c9577
+colors['turquoise'] = #10ba95
+colors['turquoise-1'] = #21c1a0
+

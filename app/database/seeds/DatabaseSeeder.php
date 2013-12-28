@@ -3,15 +3,24 @@
 class DatabaseSeeder extends Seeder {
 
 	/**
-	 * Run the database seeds.
+	 * Run the core database seeds.
 	 *
-	 * @return void
+	 * @return	Void
 	 */
 	public function run()
 	{
 		Eloquent::unguard();
 
-		// $this->call('UserTableSeeder');
+		UserGroups_m::create(array(
+			'name' => 'Administrator',
+			'active' => '1'
+			));
+
+		UserGroupPermissions_m::create(array(
+			'group' => '1',
+			'admin' => '1',
+			'admin_permissions' => null,
+			));
 	}
 
 }

@@ -1,0 +1,12 @@
+{
+  "name": "fruitful_system-default_theme",
+  "version": "1.0.0",
+  "author": "Arran Jacques <arranjacques@gmail.com>",
+  "devDependencies": {
+    "grunt": "*",
+    "grunt-contrib-watch": "*",
+    "grunt-contrib-stylus": "0.10.x",
+    "grunt-autoprefixer": "*",
+    "grunt-contrib-cssmin": "*"
+  }
+}

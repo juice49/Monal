@@ -1,0 +1,348 @@
+@import config
+@import prefix_mixins
+@import resets
+
+inline_block()
+	display inline-block
+	*display inline
+	*zoom 1
+
+/* ============================================================
+ * Typography
+=========================================================== */
+
+*
+	-webkit-font-smoothing antialiased
+	font-smoothing antialiased
+	text-rendering optimizeLegibility
+
+html
+body
+input
+textarea
+button
+	fontFamilyMain()
+
+input
+textarea
+select
+button
+	fontFamilyMain()
+	font-size font_sizes['foxtrot']
+	line-height line_heights['foxtrot']
+
+.message_box
+	
+	h6
+		fontFamilyHeading()
+		fontSizeFoxtrot()
+
+label
+	fontFamilyMain()
+	fontSizeFoxtrot()
+
+.label--description
+	fontSizeGamma()
+
+.body__header
+
+	h1
+		fontFamilyHeading()
+		fontSizeAlpha()
+
+.well
+
+	h2
+		fontFamilyHeading()
+		fontSizeDelta()
+
+.fs--echo
+	fontSizeEcho()
+
+.fs--foxtrot
+	fontSizeFoxtrot()
+
+
+/* ============================================================
+ * Colors
+=========================================================== */
+
+.color--grey__dark
+	color colors['grey-dark']
+
+.color--grey__medium
+	color colors['grey-medium']
+
+.color--grey__light
+	color colors['grey-light']
+
+.color--grey__vlight
+	color colors['grey-vlight']
+
+.color--turquoise
+	color colors['turquoise']
+
+/* ============================================================
+ * Buttons
+=========================================================== */
+
+.button
+	inline_block()
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	font-weight bold
+	border none
+	prefix_border_radius(2px)
+	prefix_box_sizing(border-box)
+	cursor pointer
+
+.button--turquoise
+	color #ffffff
+	background-color colors['turquoise']
+
+	&:hover
+		background-color colors['turquoise-1']
+
+	&:active
+		background-color colors['turquoise+2']
+
+/* ============================================================
+ * Messages
+=========================================================== */
+
+.message_box
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	prefix_border_radius(2px)
+
+	ul
+	ol
+		padding 0
+		list-style none
+
+		li
+			padding 0
+			margin 0 0 (base_unit * .6) 0
+
+.message_box--tomato
+	color colors['tomato+6']
+	background-color colors['tomato']
+
+/* ============================================================
+ * Labels, Inputs and Selects
+=========================================================== */
+
+/*
+ * Labels
+ **************************************************/
+
+.well
+
+	label
+		color colors['grey-vdark']
+
+.label--block
+	display block
+
+.label--description
+	color colors['grey-light'] !important
+	font-style italic
+
+/*
+ * Inputs - text & email & tel & password
+ **************************************************/
+
+.input--text
+	width base_unit * 19
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	color colors['grey-medium']
+	border solid 2px colors['grey-light']
+	prefix_border_radius(2px)
+	prefix_box_sizing(border-box)
+
+	&:hover
+		color colors['grey-dark']
+		border-color colors['grey-medium']
+
+	&:focus
+		color colors['grey-vdark']
+		border-color colors['grey-dark']
+
+	@media screen and (max-width: 600px)
+		width 100%
+
+/*
+ * Inputs - number
+ **************************************************/
+
+.input--number__default::-webkit-outer-spin-button
+.input--number__default::-webkit-inner-spin-button
+	-webkit-appearance none
+	margin 0
+
+.input--number__default
+	@extend .input--text
+
+/*
+ * Inputs - checkbox & radio button
+ **************************************************/
+
+.input--checkbox
+	display none
+	padding 0
+	margin 0
+
+.input--checkbox:checked + label
+	border-color colors['grey-dark']
+	background-image url(../../images/checkbox--tick_@2x.png)
+	background-repeat no-repeat
+	background-position center center
+	prefix_background_size(16px, 16px)
+
+.input--checkbox__default
+	inline_block()
+	width 18px
+	height 18px
+	border solid 2px colors['grey-light']
+	prefix_border_radius(2px)
+
+	&:hover
+		border-color colors['grey-medium']
+
+
+/*
+ * Selects
+ **************************************************/
+
+.select
+	prefix_appearance(none)
+	cursor pointer
+
+.select__default
+	position relative
+
+	&:before
+		display block
+		position absolute
+		top 0
+		left unit((base_unit * 17.5), px)
+		z-index 2
+		width 16px
+		height 100%
+		padding-right base_unit
+		background-image url(../../images/select--arrow_down_@2x.png)
+		background-repeat no-repeat
+		background-position left center
+		prefix_background_size(16px, 16px)
+		content ''
+
+		@media screen and (max-width: 600px)
+			left auto
+			right 0
+			width 8px
+
+	.select
+		width base_unit * 19
+		padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+		color colors['grey-vdark']
+		border none
+		prefix_border_radius(2px)
+		prefix_box_sizing(border-box)
+		background-color colors['grey-vlight']
+
+		@media screen and (max-width: 600px)
+			width 100%
+			background-position right center
+
+
+/* ============================================================
+ * Master Template
+=========================================================== */
+
+html
+body
+	height auto
+	min-height 100%
+	background #eeeeee
+
+.body
+	height auto
+	min-height 100%
+	position relative
+
+.body__menu
+	position absolute
+	top 0
+	left 0
+	width base_unit * 14
+	height 100%
+
+.body__basic
+	max-width 1100px
+	padding-left base_unit * 11
+	padding-right base_unit * 4
+
+	@media screen and (max-width: 960px)
+		padding-left base_unit * 2
+		padding-right base_unit * 2
+
+	@media screen and (max-width: 600px)
+		padding-left base_unit
+		padding-right base_unit
+
+.body__sidemenu
+	padding-left base_unit * 15
+	padding-right base_unit * 4
+
+.body__main__content
+	min-height 100%
+
+.body__header
+	padding-top base_unit * 2
+
+		@media screen and (max-width: 600px)
+			padding-top base_unit * .5
+
+	p
+		color colors['grey-medium']
+
+.body__content
+	padding-bottom	base_unit * 4
+
+.body__footer
+	height base_unit * 3
+	margin-top - base_unit * 3
+	
+	p
+		padding-top base_unit * .5
+		color colors['grey-vlight'] 
+		font-size font_sizes['gamma']
+		line-height line_heights['gamma']
+		text-align right
+		border-top solid 1px colors['grey-vlight']
+
+
+/* ============================================================
+ * Wells
+=========================================================== */
+
+.well
+	padding base_unit
+	margin-top base_unit
+	margin-bottom base_unit
+	prefix_border_radius(2px)
+	background-color #ffffff
+
+	h2
+		color colors['grey-vdark']
+
+	p
+	ul
+	ol
+		color colors['grey-dark']
+		fontSizeFoxtrot()
+
+	.control_block
+		padding-top base_unit * .75
+		padding-bottom base_unit * .75
+
+	.control_block:first-of-type
+		padding-top base_unit * .25
