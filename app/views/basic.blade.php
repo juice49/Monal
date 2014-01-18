@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('master-body')
-<div class="body__basic">
+<div class="basic__body">
 	<div class="body__main__content">
 		<header class="body__header">
 			@yield('body-header')

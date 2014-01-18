@@ -11,17 +11,17 @@ inline_block()
  * Typography
 =========================================================== */
 
-*
-	-webkit-font-smoothing antialiased
-	font-smoothing antialiased
-	text-rendering optimizeLegibility
-
 html
 body
 input
 textarea
+select
 button
 	fontFamilyMain()
+	-webkit-font-smoothing antialiased
+	-moz-osx-font-smoothing grayscale
+	font-smoothing antialiased
+	text-rendering optimizeLegibility
 
 input
 textarea
@@ -31,36 +31,29 @@ button
 	font-size font_sizes['foxtrot']
 	line-height line_heights['foxtrot']
 
-.message_box
-	
-	h6
-		fontFamilyHeading()
-		fontSizeFoxtrot()
+.fs--alpha
+	font-size font_sizes['alpha']
+	line-height line_heights['alpha']
 
-label
-	fontFamilyMain()
-	fontSizeFoxtrot()
+.fs--bravo
+	font-size font_sizes['bravo']
+	line-height line_heights['bravo']
 
-.label--description
-	fontSizeGamma()
+.fs--charlie
+	font-size font_sizes['charlie']
+	line-height line_heights['charlie']
 
-.body__header
-
-	h1
-		fontFamilyHeading()
-		fontSizeAlpha()
-
-.well
-
-	h2
-		fontFamilyHeading()
-		fontSizeDelta()
+.fs--delta
+	font-size font_sizes['delta']
+	line-height line_heights['delta']
 
 .fs--echo
-	fontSizeEcho()
+	font-size font_sizes['echo']
+	line-height line_heights['echo']
 
 .fs--foxtrot
-	fontSizeFoxtrot()
+	font-size font_sizes['foxtrot']
+	line-height line_heights['foxtrot']
 
 
 /* ============================================================
@@ -68,16 +61,16 @@ label
 =========================================================== */
 
 .color--grey__dark
-	color colors['grey-dark']
+	color colors['grey-2']
 
 .color--grey__medium
-	color colors['grey-medium']
+	color colors['grey']
 
 .color--grey__light
-	color colors['grey-light']
+	color colors['grey-2']
 
 .color--grey__vlight
-	color colors['grey-vlight']
+	color colors['grey-4']
 
 .color--turquoise
 	color colors['turquoise']
@@ -89,21 +82,106 @@ label
 .button
 	inline_block()
 	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	margin 0
 	font-weight bold
 	border none
 	prefix_border_radius(2px)
 	prefix_box_sizing(border-box)
 	cursor pointer
 
+.button__dropdown__hover
+	inline_block()
+	position relative
+	margin 0
+	font-weight bold
+	prefix_border_radius(2px)
+
+	.button__dropdown__btn
+		display block
+		padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+		border none
+		prefix_border_radius(2px)
+		cursor pointer
+
+	.button__dropdown__container
+		display none
+		position absolute
+		top 100%
+		right 0
+		min-width 100%
+		padding-top base_unit * .75
+
+		.button__dropdown__list
+			position relative
+			padding 0
+			margin 0
+			z-index 2
+			list-style none
+			prefix_border_radius(2px)
+			prefix_box_shadow(0, 0, 3px, colors['grey-5'])
+
+			li
+				display block
+
+				form
+					padding 0
+					margin 0
+
+				.dropdown__list__button
+					display block
+					width 100%
+					padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+					margin 0
+					font-weight bold
+					text-align left
+					border none
+					background #ffffff
+					cursor pointer
+
+			&:after
+				display block
+				position absolute
+				bottom 100%
+				right base_unit
+				z-index 1
+				margin-right -1px
+				margin-bottom -4px
+				font-family Fruitful
+				text-shadow 0 0 3px colors['grey-5']
+				content '\e609'
+
+	&:hover
+
+		.button__dropdown__container
+			display block
+
 .button--turquoise
 	color #ffffff
 	background-color colors['turquoise']
+
+.button.button--turquoise
 
 	&:hover
 		background-color colors['turquoise-1']
 
 	&:active
 		background-color colors['turquoise+2']
+
+.button__dropdown__hover.button--turquoise
+
+	.button__dropdown__list
+		color colors['turquoise-6']
+		border solid 1px colors['turquoise-6']
+		background-color #ffffff
+
+		.dropdown__list__button
+			color colors['turquoise-3']
+
+			&:hover
+				color colors['turquoise']
+
+.button__icon--right
+	padding-left base_unit * .5
 
 /* ============================================================
  * Messages
@@ -112,6 +190,12 @@ label
 .message_box
 	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
 	prefix_border_radius(2px)
+
+	h6
+		margin-top base_unit * .5
+		fontFamilyHeading()
+		font-size font_sizes['foxtrot']
+		line-height line_heights['foxtrot']
 
 	ul
 	ol
@@ -134,16 +218,23 @@ label
  * Labels
  **************************************************/
 
-.well
-
-	label
-		color colors['grey-vdark']
+label
+	margin-top base_unit * .75
+	margin-bottom base_unit
+	color colors['grey+4']
+	fontFamilyMain()
+	font-size font_sizes['foxtrot']
+	line-height line_heights['foxtrot']
 
 .label--block
 	display block
 
 .label--description
-	color colors['grey-light'] !important
+	margin-top base_unit * .5
+	margin-bottom base_unit * .5
+	color colors['grey-2'] !important
+	font-size font_sizes['gamma']
+	line-height line_heights['gamma']
 	font-style italic
 
 /*
@@ -153,18 +244,20 @@ label
 .input--text
 	width base_unit * 19
 	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
-	color colors['grey-medium']
-	border solid 2px colors['grey-light']
+	margin 0
+	color colors['grey']
+	border solid 2px colors['grey-2']
 	prefix_border_radius(2px)
 	prefix_box_sizing(border-box)
+	background #ffffff
 
 	&:hover
-		color colors['grey-dark']
-		border-color colors['grey-medium']
+		color colors['grey-2']
+		border-color colors['grey']
 
 	&:focus
-		color colors['grey-vdark']
-		border-color colors['grey-dark']
+		color colors['grey+4']
+		border-color colors['grey-2']
 
 	@media screen and (max-width: 600px)
 		width 100%
@@ -191,7 +284,7 @@ label
 	margin 0
 
 .input--checkbox:checked + label
-	border-color colors['grey-dark']
+	border-color colors['grey-2']
 	background-image url(../../images/checkbox--tick_@2x.png)
 	background-repeat no-repeat
 	background-position center center
@@ -201,11 +294,11 @@ label
 	inline_block()
 	width 18px
 	height 18px
-	border solid 2px colors['grey-light']
+	border solid 2px colors['grey-2']
 	prefix_border_radius(2px)
 
 	&:hover
-		border-color colors['grey-medium']
+		border-color colors['grey']
 
 
 /*
@@ -242,11 +335,11 @@ label
 	.select
 		width base_unit * 19
 		padding (base_unit * .5) base_unit (base_unit * .5) base_unit
-		color colors['grey-vdark']
+		color colors['grey+4']
 		border none
 		prefix_border_radius(2px)
 		prefix_box_sizing(border-box)
-		background-color colors['grey-vlight']
+		background-color colors['grey-4']
 
 		@media screen and (max-width: 600px)
 			width 100%
@@ -254,31 +347,29 @@ label
 
 
 /* ============================================================
- * Master Template
+ * Admin
 =========================================================== */
+
+/*
+ * Master
+ **************************************************/
 
 html
 body
 	height auto
 	min-height 100%
-	background #eeeeee
+	background colors['grey-6']
 
 .body
 	height auto
 	min-height 100%
 	position relative
+	overflow hidden
 
-.body__menu
-	position absolute
-	top 0
-	left 0
-	width base_unit * 14
-	height 100%
+.body__main__content
+	min-height 100%
 
-.body__basic
-	max-width 1100px
-	padding-left base_unit * 11
-	padding-right base_unit * 4
+.body__main__content__wrap
 
 	@media screen and (max-width: 960px)
 		padding-left base_unit * 2
@@ -288,40 +379,343 @@ body
 		padding-left base_unit
 		padding-right base_unit
 
-.body__sidemenu
-	padding-left base_unit * 15
-	padding-right base_unit * 4
-
-.body__main__content
-	min-height 100%
-
 .body__header
-	padding-top base_unit * 2
+	padding-top base_unit
+
+	@media screen and (max-width: 960px)
+		padding-top 0
+
+	h1
+		margin-bottom base_unit * 1.5
+		fontFamilyHeading()
+		font-size font_sizes['alpha']
+		line-height line_heights['alpha']
+
+		@media screen and (max-width: 960px)
+			margin-bottom base_unit * 1.5
+			font-size font_sizes['bravo']
+			line-height line_heights['bravo']
 
 		@media screen and (max-width: 600px)
-			padding-top base_unit * .5
+			margin-bottom base_unit * 1.5
+			font-size font_sizes['charlie']
+			line-height line_heights['charlie']
 
 	p
-		color colors['grey-medium']
+		margin-top base_unit
+		margin-bottom base_unit
+		color colors['grey']
+		font-size font_sizes['echo']
+		line-height line_heights['echo']
+
+		@media screen and (max-width: 600px)
+			margin-top 0
+			font-size font_sizes['foxtrot']
+			line-height line_heights['foxtrot']
 
 .body__content
 	padding-bottom	base_unit * 4
 
+	p
+		margin-top base_unit * .75
+		margin-bottom base_unit
+		color colors['grey+4']
+		font-size font_sizes['foxtrot']
+		line-height line_heights['foxtrot']
+
+		&:first-child
+			margin-top 0
+
 .body__footer
 	height base_unit * 3
 	margin-top - base_unit * 3
+
+	@media screen and (max-width: 960px)
+		padding-left base_unit * 2
+		padding-right base_unit * 2
+
+	@media screen and (max-width: 600px)
+		padding-left base_unit
+		padding-right base_unit
 	
 	p
 		padding-top base_unit * .5
-		color colors['grey-vlight'] 
+		color colors['grey-4'] 
 		font-size font_sizes['gamma']
 		line-height line_heights['gamma']
 		text-align right
-		border-top solid 1px colors['grey-vlight']
+		border-top solid 1px colors['grey-5']
+
+/*
+ * Dashboard
+ **************************************************/
+
+.dashboard__menu__wrap
+	position absolute
+	top 0
+	left 0
+	z-index 1
+	width base_unit * 14
+	height 100%
+	background-color colors['grey-5']
+	overflow hidden
+
+	@media screen and (max-width: 960px)
+		left 0 - (base_unit * 14)
+
+.dashboard__menu--group_bkg
+	position absolute
+	top 0
+	left base_unit * 14
+	z-index 2
+	width base_unit * 14
+	height 100%
+	background colors['turquoise-4']
+
+	@media screen and (max-width: 960px)
+		display none
+
+.dashboard__logo
+	height base_unit * 9
+	margin-bottom base_unit
+	background-color #ffffff
+
+	@media screen and (max-width: 960px)
+		height base_unit * 6
+
+	@media screen and (max-width: 600px)
+		height auto
+		padding (base_unit * .5) base_unit
+		color #ffffff
+		font-size font_sizes['delta']
+		line-height 1
+		background-color colors['turquoise']
+
+		&:before
+			content "MENU"
+
+.dashboard__menu
+	position relative
+	padding 0 0 0 base_unit
+	margin 0
+	list-style none
+
+	@media screen and (max-width: 960px)
+		padding 0
+
+.dashboard__menu__group
+	display block
+
+.dashboard__menu__group--title
+	display block
+	margin-bottom base_unit *.125
+	color colors['grey+4']
+	font-weight bold
+	padding base_unit (base_unit * 2)
+	prefix_border_radius_top_left(2px)
+	prefix_border_radius_bottom_left(2px)
+	cursor pointer
+
+	&:hover
+		background-color colors['grey-4']
+
+	@media screen and (max-width: 960px)
+		padding (base_unit * .5) base_unit
+
+		&:hover
+			background-color transparent
+
+.dashboard__menu__group--list
+	display none
+	position absolute
+	top 0
+	left base_unit * 14
+	z-index 3
+	padding 0
+	margin 0
+	list-style none
+
+	@media screen and (max-width: 960px)
+		position static
+		padding-left base_unit
+
+.dashboard__menu__group--item
+	width base_unit * 14
+
+.dashboard__menu__group--link
+	display block
+	padding base_unit (base_unit * 2)
+	cursor pointer
+
+	@media screen and (max-width: 960px)
+		padding (base_unit * .5) base_unit
+
+.dashboard__menu__group--active
+	color colors['seafoam+6']
+
+	.dashboard__menu__group--title
+		background colors['turquoise-4']
+
+	.dashboard__menu__group--list
+		display block
+
+		@media screen and (max-width: 960px)
+			color colors['grey+3']
+			background colors['grey-4']
+
+.dashboard__body
+	padding-left base_unit * 15
+	padding-right base_unit * 4
+
+	@media screen and (max-width: 960px)
+		padding 0
+
+	.body__header
+		text-align right
+
+		@media screen and (max-width: 960px)
+			position relative
+			text-align left
+
+		.toggle_menu
+			display none
+
+		.profile
+
+			@media screen and (max-width: 960px)
+				position absolute
+				top 0
+				right 0
+				height 100%
+				right base_unit * 2
+				color #ffffff
+				font-weight bold
+				prefix_border_radius(0)
+				background-color colors['turquoise-3']
+				cursor pointer
+
+				.button__dropdown__btn
+					padding-top base_unit * .625
+					prefix_border_radius(0)
+
+
+			@media screen and (max-width: 600px)
+				right base_unit
+
+		@media screen and (max-width: 960px)
+			padding-left base_unit * 2
+			padding-right base_unit * 2
+			background-color colors['turquoise+2']
+
+			.toggle_menu
+				inline_block()
+				padding (base_unit * .5) base_unit
+				margin-left - base_unit
+				color #ffffff
+				font-size font_sizes['delta']
+				cursor pointer
+
+		@media screen and (max-width: 600px)
+			padding-left base_unit
+			padding-right base_unit
+
+	.dashboard__header
+
+		h1
+			margin-bottom base_unit * 1.5
+			fontFamilyHeading()
+			font-size font_sizes['alpha']
+			line-height line_heights['alpha']
+
+			@media screen and (max-width: 960px)
+				margin-bottom base_unit * 1.5
+				font-size font_sizes['bravo']
+				line-height line_heights['bravo']
+
+			@media screen and (max-width: 600px)
+				margin-bottom base_unit * 1.5
+				font-size font_sizes['charlie']
+				line-height line_heights['charlie']
+
+/*
+ * Basic
+ **************************************************/
+
+.basic__body
+	max-width 1100px
+	padding-left base_unit * 11
+	padding-right base_unit * 4
+
+	@media screen and (max-width: 960px)
+		padding 0
+
+	.body__main__content
+
+		@media screen and (max-width: 960px)
+			padding-left base_unit * 2
+			padding-right base_unit * 2
+
+		@media screen and (max-width: 600px)
+			padding-left base_unit
+			padding-right base_unit
+
+/*
+ * Login
+ **************************************************/
+
+.login__container
+	display flex
+	height auto
+	min-height 80%
+
+.login__box
+	margin auto
+
+	@media screen and (max-width: 600px)
+		width 100%
+
+	form
+		margin-left 0 - (base_unit * 5.5)
+
+		@media screen and (max-width: 960px)
+			margin-left 0
 
 
 /* ============================================================
- * Wells
+ * Walls & Tiles
+=========================================================== */
+	
+.wall__tiles
+	display block
+	padding 0 0 0 4px
+	margin 0 (0 - base_unit) 0 0
+	list-style none
+
+	@media screen and (max-width: 752px)
+		padding 0
+		margin 0
+
+	li.tile
+		inline_block()
+		width base_unit * 21
+		margin 0 base_unit base_unit -4px
+		vertical-align top
+		font-size 0
+		background #ffffff
+
+		@media screen and (max-width: 752px)
+			display block
+			width auto
+			margin 0 0 base_unit 0
+
+		.tile__content
+			padding base_unit
+			font-size font_sizes['foxtrot']
+			line-height line_heights['foxtrot']
+
+
+/* ============================================================
+ * Wells & Control Blocks
 =========================================================== */
 
 .well
@@ -332,13 +726,21 @@ body
 	background-color #ffffff
 
 	h2
-		color colors['grey-vdark']
+		color colors['grey+4']
+		margin-top base_unit * .25
+		margin-bottom base_unit * 1.25
+		fontFamilyHeading()
+		font-size font_sizes['delta']
+		line-height line_heights['delta']
 
 	p
 	ul
 	ol
-		color colors['grey-dark']
-		fontSizeFoxtrot()
+		color colors['grey-2']
+		margin-top base_unit * .75
+		margin-bottom base_unit
+		font-size font_sizes['foxtrot']
+		line-height line_heights['foxtrot']
 
 	.control_block
 		padding-top base_unit * .75
@@ -346,3 +748,9 @@ body
 
 	.control_block:first-of-type
 		padding-top base_unit * .25
+
+.block__y__top
+	padding-top base_unit * .75
+
+.block__y__bottom
+	padding-bottom base_unit * .75

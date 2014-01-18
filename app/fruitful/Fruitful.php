@@ -1,6 +1,6 @@
 <?php
 /**
- * Fruitful System
+ * Fruitful System.
  *
  * Base system class that ties everything together. Provides access
  * to the core system libraries required to connect to and interact
@@ -45,7 +45,7 @@ class Fruitful {
 	public $user;
 
 	/**
-	 * Initialise system.
+	 * Initialise class.
 	 *
 	 * @return	Void
 	 */
@@ -54,11 +54,5 @@ class Fruitful {
 		$this->auth = new UserAuthentication;
 		$this->packages = new SystemPackages;
 		$this->messages = new SystemMessages;
-		$this->input = \Input::all();
-
-		if (isset($this->input['logout']))
-		{
-			$this->auth->logout();
-		}
 	}
 }

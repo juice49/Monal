@@ -1,9 +1,9 @@
 <?php namespace Fruitful\Core;
 /**
- * System Gateway
+ * System Gateway.
  *
- * Acts as a gateway into the system for making authentication
- * requests.
+ * Gateway class for making authentication requests to login to the
+ * system.
  *
  * @author	Arran Jacques
  */
@@ -45,11 +45,21 @@ class Gateway extends \Fruitful implements GatewayInterface {
 	 */
 	public function loginSystemUser($password)
 	{
-		return ($this->auth->login($this->user->email, $password)) ? true : false;
+		return $this->auth->login($this->user->email, $password);
 	}
 
 	/**
-	 * Check if system user is logged in and has admin privileges
+	 * Logout current system user.
+	 *
+	 * @return	Void
+	 */
+	public function logoutSystemUser()
+	{
+		$this->auth->logout();
+	}
+
+	/**
+	 * Check if the current system user is an administrator.
 	 *
 	 * @return	Boolean
 	 */
@@ -58,10 +68,7 @@ class Gateway extends \Fruitful implements GatewayInterface {
 		if ($user_details = $this->auth->currentUser())
 		{
 			$this->setSystemUser($user_details->toArray());
-			if ($this->user->isAdmin())
-			{
-				return true;
-			}
+			return $this->user->isAdmin();
 		}
 		return false;
 	}

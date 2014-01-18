@@ -13,8 +13,8 @@
 
 App::before(function($request)
 {
-	// Check if the installation files are present. If they arre then run
-	// the installation process
+	// Check if the installation files are present. If they arr then run
+	// the installation process.
 	if (file_exists(app_path() . '/installation/routes.php'))
 	{
 		require app_path() . '/installation/routes.php';
@@ -42,7 +42,7 @@ App::before(function($request)
 					return Redirect::route('installation.user');
 				}
 				break;
-			case 'step2':
+			case 'step3':
 				if (Request::url() != URL::route('installation.remove'))
 				{
 					return Redirect::route('installation.remove');
@@ -74,7 +74,10 @@ Route::filter('admin', function()
     $gateway = App::make('Fruitful\Core\Contracts\GatewayInterface');
     if (!$gateway->isAdminUserLoggedIn())
     {
-    	return Redirect::route('admin.login');
+    	if (Request::url() != URL::route('admin.login'))
+		{
+			return Redirect::route('admin.login');
+		}
     }
 });
 Route::when('admin/*', 'admin');

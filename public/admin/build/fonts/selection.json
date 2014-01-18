@@ -1,0 +1,206 @@
+{
+	"IcoMoonType": "selection",
+	"icons": [
+		{
+			"icon": {
+				"paths": [
+					"M995.828 995.826c-37.566 37.564-98.45 37.564-136.016 0l-169.726-169.726c-69.776 44.764-152.26 71.434-241.318 71.434-247.83 0-448.768-200.908-448.768-448.768s200.938-448.766 448.768-448.766c247.862 0 448.768 200.904 448.768 448.766 0 89.028-26.704 171.542-71.436 241.352l169.728 169.726c37.562 37.564 37.562 98.418 0 135.982zM448.768 128.218c-177.022 0-320.548 143.494-320.548 320.546s143.526 320.548 320.548 320.548c177.052 0 320.548-143.496 320.548-320.548s-143.496-320.546-320.548-320.546z"
+				],
+				"tags": [
+					"search",
+					"find",
+					"lookup",
+					"magnifier"
+				],
+				"grid": 16
+			},
+			"properties": {
+				"order": 1,
+				"id": 11,
+				"prevSize": 16,
+				"code": 58880,
+				"name": "search",
+				"ligatures": ""
+			}
+		},
+		{
+			"icon": {
+				"paths": [
+					"M64 192h896v192h-896zM64 448h896v192h-896zM64 704h896v192h-896z"
+				],
+				"tags": [
+					"menu",
+					"list",
+					"items",
+					"lines",
+					"options"
+				],
+				"grid": 16
+			},
+			"properties": {
+				"order": 2,
+				"id": 185,
+				"prevSize": 16,
+				"code": 58881,
+				"name": "menu",
+				"ligatures": ""
+			}
+		},
+		{
+			"icon": {
+				"paths": [
+					"M832 448h-64v-192c0-141.384-114.616-256-256-256s-256 114.616-256 256v192h-64c-35.2 0-64 28.8-64 64v448c0 35.2 28.8 64 64 64h640c35.2 0 64-28.8 64-64v-448c0-35.2-28.8-64-64-64zM512 832c-35.346 0-64-28.654-64-64s28.654-64 64-64 64 28.654 64 64-28.654 64-64 64zM640 448h-256v-192c0-70.58 57.42-128 128-128s128 57.42 128 128v192z"
+				],
+				"tags": [
+					"lock",
+					"secure",
+					"private",
+					"encrypted"
+				],
+				"grid": 16
+			},
+			"properties": {
+				"order": 3,
+				"id": 137,
+				"prevSize": 32,
+				"code": 58882,
+				"name": "lock",
+				"ligatures": ""
+			}
+		},
+		{
+			"icon": {
+				"paths": [
+					"M716.749 276.48l0.051 471.040-409.6-235.52z"
+				],
+				"tags": [
+					"arrow-left",
+					"left",
+					"triangle",
+					"previous"
+				],
+				"grid": 20,
+				"defaultCode": 58887
+			},
+			"properties": {
+				"order": 4,
+				"id": 202,
+				"prevSize": 20,
+				"name": "arrow-left",
+				"ligatures": "",
+				"code": 58887
+			}
+		},
+		{
+			"icon": {
+				"paths": [
+					"M276.48 716.8h471.040l-235.571-409.6z"
+				],
+				"tags": [
+					"arrow-up",
+					"triangle",
+					"up",
+					"top"
+				],
+				"grid": 20,
+				"defaultCode": 58889
+			},
+			"properties": {
+				"order": 5,
+				"id": 204,
+				"prevSize": 20,
+				"name": "arrow-up",
+				"ligatures": "",
+				"code": 58889
+			}
+		},
+		{
+			"icon": {
+				"paths": [
+					"M307.251 276.48l-0.051 471.040 409.6-235.52z"
+				],
+				"tags": [
+					"arrow-right",
+					"triangle",
+					"right",
+					"next"
+				],
+				"grid": 20,
+				"defaultCode": 58890
+			},
+			"properties": {
+				"order": 6,
+				"id": 205,
+				"prevSize": 20,
+				"name": "arrow-right",
+				"ligatures": "",
+				"code": 58890
+			}
+		},
+		{
+			"icon": {
+				"paths": [
+					"M747.52 307.251l-471.040-0.051 235.52 409.6z"
+				],
+				"tags": [
+					"arrow-down",
+					"triangle",
+					"down",
+					"bottom"
+				],
+				"grid": 20,
+				"defaultCode": 58888
+			},
+			"properties": {
+				"order": 7,
+				"id": 203,
+				"prevSize": 20,
+				"name": "arrow-down",
+				"ligatures": "",
+				"code": 58888
+			}
+		}
+	],
+	"height": 1024,
+	"metadata": {
+		"name": "Fruitful"
+	},
+	"preferences": {
+		"fontPref": {
+			"prefix": "icon-",
+			"metadata": {
+				"fontFamily": "Fruitful"
+			},
+			"showGlyphs": true,
+			"metrics": {
+				"emSize": 1024,
+				"baseline": 6.25,
+				"whitespace": 50
+			},
+			"resetPoint": 58880,
+			"showQuickUse": true,
+			"quickUsageToken": false,
+			"showMetrics": true,
+			"showMetadata": false,
+			"embed": true,
+			"ie7": true,
+			"useClassSelector": true,
+			"classSelector": ".icon"
+		},
+		"imagePref": {
+			"color": 0,
+			"height": 32,
+			"columns": 16,
+			"margin": 16,
+			"png": false,
+			"sprites": true
+		},
+		"historySize": 100,
+		"showCodes": true,
+		"gridSize": 16,
+		"showLiga": false,
+		"showGrid": true,
+		"showGlyphs": true,
+		"showQuickUse": true
+	}
+}

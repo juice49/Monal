@@ -9,6 +9,16 @@ prefix_border_radius(a)
 	-moz-border-radius a
 	border-radius a
 
+prefix_border_radius_top_left(a)
+	-webkit-border-top-left-radius a
+	-moz-border-radius-topleft a
+	border-top-left-radius a
+
+prefix_border_radius_bottom_left(a)
+	-webkit-border-bottom-left-radius a
+	-moz-border-radius-topleft a
+	border-bottom-left-radius a
+
 prefix_background_size(x, y)
 	-webkit-background-size x y
 	-moz-background-size x y
@@ -18,3 +28,8 @@ prefix_box_sizing()
 	-webkit-box-sizing border-box
 	-moz-box-sizing border-box
 	box-sizing border-box
+
+prefix_box_shadow(x, y, a, c)
+	-webkit-box-shadow x y a c
+	-moz-box-shadow x y a c
+	box-shadow x y a c

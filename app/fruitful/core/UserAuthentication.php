@@ -1,6 +1,6 @@
 <?php namespace Fruitful\Core;
 /**
- * User Authentication
+ * User Authentication.
  *
  * Authenticate user details and log them into and out of the system.
  *
@@ -40,10 +40,7 @@ class UserAuthentication {
 	{
 		if ($this->user->active)
 		{
-			if (\Auth::attempt(array('email' => $email, 'password' => $password), false))
-			{
-				return true;
-			}
+			return (\Auth::attempt(array('email' => $email, 'password' => $password), false)) ? true : false;
 		}
 		return false;
 	}
