@@ -8,6 +8,9 @@
 
 		<script src="{{ URL::to('admin/build/js/libs/jquery-1.10.2.js') }}"></script>
 		<script src="{{ URL::to('admin/build/js/libs/jquery.conscious.js') }}"></script>
+		<script>
+			var _APP_BASEURL = '{{ URL::to('/') }}/';
+		</script>
 		@yield('master-head')
 	</head>
 	<body>

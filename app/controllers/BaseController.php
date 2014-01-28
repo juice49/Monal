@@ -36,6 +36,32 @@ class BaseController extends Controller {
 		$this->system = $system_gateway;
 		$this->input = Input::all();
 		View::share('system_user', $this->system->user);
+
+		// Allow alpha and space characters.
+		Validator::extend('alpha_space', function($attribute, $value, $parameters)
+		{
+			return (preg_match('/^[a-z ]+$/i', $value)) ? true : false;
+		});
+		// Allow numeric and space characters.
+		Validator::extend('num_space', function($attribute, $value, $parameters)
+		{
+			return (preg_match('/^[0-9 ]+$/', $value)) ? true : false;
+		});
+		// Allow alpha, numeric and space characters.
+		Validator::extend('alpha_num_space', function($attribute, $value, $parameters)
+		{
+			return (preg_match('/^[a-z0-9 ]+$/i', $value)) ? true : false;
+		});
+		// Allow alpha, numeric, hypens and space characters. Must also contain at least 1 letter.
+		Validator::extend('name', function($attribute, $value, $parameters)
+		{
+			return (preg_match('/^[a-z .\-]+$/i', $value) AND preg_match('/[a-zA-Z]/', $value)) ? true : false;
+		});
+		// Allow alpha, numeric, hypens, underscores and space characters.
+		Validator::extend('username', function($attribute, $value, $parameters)
+		{
+			return (preg_match('/^[a-z0-9 .\-_]+$/i', $value)) ? true : false;
+		});
 	}
 
 	/**

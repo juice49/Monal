@@ -96,6 +96,15 @@
 			$('.js--dashboard__menu__group').removeClass('dashboard__menu__group--active').data('open', false)
 			dashboard.menu_category_open = false;
 			dashboard.mobile.menu_open = false;
+		},
+
+		smoothLoad: function(collection, i){
+			i = (i === undefined) ? 0 : i;
+			if (i < $(collection).length){
+				$(collection).eq(i).fadeIn(100, null, function(){
+					dashboard.smoothLoad(collection, i + 1);
+				});
+			}
 		}
 
 	};

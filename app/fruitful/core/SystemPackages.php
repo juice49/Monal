@@ -10,27 +10,14 @@
 class SystemPackages {
 
 	/**
-	 * Return all installed packaged.
+	 * Return an package' details.
 	 *
 	 * @param	String
 	 * @return	Array
 	 */
-	public function getInstalledPackages($order = null)
+	public function getPackageDetails($pacakge)
 	{
-		$order_by = isset($order) ? $order : 'name';
-		$packages = \Packages_m::select('*')->orderBy($order_by)->get();
-		return ($packages) ? $packages->toArray() : array();
-	}
-
-	/**
-	 * Return an installed package's details.
-	 *
-	 * @param	String
-	 * @return	Array
-	 */
-	public function getPackageDetails($uri)
-	{
-		return isset($uri) ? \Config::get($uri . '::details') : array();
+		return \Config::get($pacakge . '::details');
 	}
 
 	/**
@@ -41,15 +28,14 @@ class SystemPackages {
 	 */
 	public function getAllPackageDetails($order = null)
 	{
-		$packages = $this->getInstalledPackages($order);
-		foreach ($packages as &$package)
+		$packages = array();
+		foreach (\Config::get('app.providers') as $provider)
 		{
-			$details = $this->getPackageDetails($package['uri']);
-			unset(
-				$details['name'],
-				$details['uri']
-				);
-			$package['details'] = $details;
+			$package_name = strtolower(explode('\\', $provider)[1]);
+			if ($package_details = \Config::get($package_name . '::details'))
+			{
+				array_push($packages, $package_details);
+			}
 		}
 		return $packages;
 	}

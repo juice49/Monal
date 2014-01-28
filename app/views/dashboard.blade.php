@@ -1,14 +1,20 @@
 @extends('master')
-
-@section('master-head')
-	<script src="{{ URL::to('admin/build/js/core.js') }}"></script>
-@stop
-
 @section('master-body')
 	<div class="js--dashboard__menu dashboard__menu__wrap">
 		<div class="dashboard__logo">
 		</div>
 		<ul class="dashboard__menu">
+			@if (!empty($control_panel))
+				@foreach ($control_panel as $group_title => $group_page)
+					<li class="js--dashboard__menu__group dashboard__menu__group"><span class="dashboard__menu__group--title">{{ $group_title }}</span>
+						<ul class="dashboard__menu__group--list">
+							@foreach($group_page as $page_name => $page_route)
+								<li class="dashboard__menu__group--item"><a href="{{ URL::to('admin' . $page_route) }}" class="dashboard__menu__group--link">{{ $page_name }}</a></li>
+							@endforeach
+						</ul>
+					</li>
+				@endforeach
+			@endif
 		</ul>
 		<div class="dashboard__menu--group_bkg"></div>
 	</div>
@@ -16,7 +22,7 @@
 		<div class="body__main__content">
 			<section class="body__header">
 				<span class="js--toggle_menu toggle_menu icon icon-menu"></span>
-				<div class="button__dropdown__hover button--turquoise profile">
+				<div class="button__dropdown__hover button--seafoam profile">
 					<span class="button__dropdown__btn">{{ $system_user->first_name }} <i class="button__icon--right icon icon-arrow-down"></i></span>
 					<div class="button__dropdown__container">
 						<ul class="button__dropdown__list">

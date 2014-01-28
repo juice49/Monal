@@ -22,8 +22,8 @@ class AdminController extends BaseController {
 
 		if ($this->system->isAdminUserLoggedIn())
 		{
-			//$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getAllPackageDetails());
-			//View::share('control_panel', $this->control_panel_navigation);
+			$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getAllPackageDetails());
+			View::share('control_panel', $this->control_panel_navigation);
 		}
 	}
 
@@ -103,13 +103,13 @@ class AdminController extends BaseController {
 		foreach ($packages as $package)
 		{
 			if (
-				isset($package['details']['has_backend']) AND
-				$package['details']['has_backend'] AND
-				isset($package['details']['control_panel_menu']) AND
-				!empty($package['details']['control_panel_menu'])
+				isset($package['has_backend']) AND
+				$package['has_backend'] AND
+				isset($package['control_panel_menu']) AND
+				!empty($package['control_panel_menu'])
 				)
 			{
-				foreach ($package['details']['control_panel_menu'] as $menu_main_heading => $submenu_item)
+				foreach ($package['control_panel_menu'] as $menu_main_heading => $submenu_item)
 				{
 					foreach ($submenu_item as $submenu_heading => $submenu_details)
 					{

@@ -67,8 +67,15 @@ class Gateway extends \Fruitful implements GatewayInterface {
 	{
 		if ($user_details = $this->auth->currentUser())
 		{
-			$this->setSystemUser($user_details->toArray());
-			return $this->user->isAdmin();
+			if ($user_details->active)
+			{
+				$this->setSystemUser($user_details->toArray());
+				return $this->user->isAdmin();
+			}
+			else
+			{
+				$this->logoutSystemUser();
+			}
 		}
 		return false;
 	}
