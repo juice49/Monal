@@ -151,6 +151,16 @@ class SystemUser {
 	}
 
 	/**
+	 * Is the user a global admin.
+	 *
+	 * @return	Boolean
+	 */
+	public function isGlobalAdmin()
+	{
+		return ($this->group_id == 1) ? true : false;
+	}
+
+	/**
 	 * Is the user an admin.
 	 *
 	 * @return	Boolean

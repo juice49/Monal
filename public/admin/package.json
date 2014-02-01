@@ -7,6 +7,9 @@
     "grunt-contrib-watch": "*",
     "grunt-contrib-stylus": "0.10.x",
     "grunt-autoprefixer": "*",
-    "grunt-contrib-cssmin": "*"
+    "grunt-contrib-cssmin": "*",
+    "browserify": "~2.35.4",
+    "grunt-browserify": "~1.2.11",
+    "grunt-contrib-uglify": "*"
   }
 }

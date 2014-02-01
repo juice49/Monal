@@ -1,0 +1,138 @@
+.freshalert-alert_cover {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 99998;
+	width: 100%;
+	height: 100%;
+	background-color: #000000;
+	opacity: 0.3;
+}
+
+.freshalert-alert_wrap {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 99999;
+	max-width: 500px;
+	width: 90%;
+}
+
+.freshalert-alert {
+	padding: 16px;
+	border-radius: 2px;
+	box-shadow: 0 0 3px #333333;
+}
+
+.freshalert-alert h1 {
+	margin: 0;
+	padding: 0;
+	font-size: 22px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.freshalert-alert p {
+	margin: 16px 0;
+	padding: 0;
+	font-size: 16px;
+	line-height: 24px;
+}
+
+.freshalert-alert form {
+	padding: 0;
+	margin: 0;
+}
+
+.freshalert-alert .freshalert-input {
+	width: 100%;
+	padding: 8px 10px;
+	margin: 0;
+	border-radius: 2px;
+	background-color: #ffffff;
+	box-sizing: border-box;
+}
+
+.freshalert-alert .freshalert-buttons {
+	padding-top: 16px;
+	text-align: right;
+}
+
+.freshalert-alert .freshalert-btn {
+	display: inline-block;
+	*display: inline;
+	*zoom: 1;
+	padding: 8px 16px;
+	margin: 0;
+	font-size: 16px;
+	font-weight: bold;
+	border: none;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+/* Danger */
+
+.freshalert-alert.freshalert-danger {
+	background-color: #ee775c;
+}
+
+.freshalert-alert.freshalert-danger h1, 
+.freshalert-alert.freshalert-danger p{
+	color: #5f3024;
+}
+
+.freshalert-alert.freshalert-danger .freshalert-input {
+	color: #555555;
+	border: solid 2px #a65340;
+}
+
+.freshalert-alert.freshalert-danger .freshalert-input:focus {
+	color: #333333;
+	border: solid 2px #773b2e;
+}
+
+.freshalert-alert.freshalert-danger .freshalert-cancel,
+.freshalert-alert.freshalert-danger .freshalert-ok {
+	color: #ffffff;
+	margin-right: 8px;
+	background-color: #be5f4a;
+}
+
+.freshalert-alert.freshalert-danger .freshalert-confirm {
+	color: #ffffff;
+	background-color: #a65340;
+}
+
+/* Warning */
+
+.freshalert-alert.freshalert-warning {
+	background-color: #e0b525;
+}
+
+.freshalert-alert.freshalert-warning h1, 
+.freshalert-alert.freshalert-warning p{
+	color: #5a490f;
+}
+
+.freshalert-alert.freshalert-warning .freshalert-input {
+	color: #555555;
+	border: solid 2px #9c7e1a;
+}
+
+.freshalert-alert.freshalert-warning .freshalert-input:focus {
+	color: #333333;
+	border: solid 2px #705a12;
+}
+
+.freshalert-alert.freshalert-warning .freshalert-cancel,
+.freshalert-alert.freshalert-warning .freshalert-ok {
+	color: #ffffff;
+	margin-right: 8px;
+	background-color: #b3911e;
+}
+
+.freshalert-alert.freshalert-warning .freshalert-confirm {
+	color: #ffffff;
+	background-color: #9c7e1a;
+}

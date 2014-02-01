@@ -41,37 +41,29 @@ class SystemPackages {
 	}
 
 	/**
-	 * Return an installed package's permission sets.
+	 * Return a package's permission sets.
 	 *
 	 * @param	String
 	 * @return	Array
 	 */
 	public function getPackagePermissionSets($uri)
 	{
-		if (isset($uri))
-		{
-			$package_details = $this->getPackageDetails($uri);
-			if (isset($package_details['permission_sets']) AND is_array($package_details['permission_sets']))
-			{
-				return $package_details['permission_sets'];
-			}
-		}
-		return array();
+		$package_details = $this->getPackageDetails($uri);
+		return (isset($package_details['permission_sets']) AND is_array($package_details['permission_sets'])) ? $package_details['permission_sets'] : array();
 	}
 
 	/**
-	 * Return the permission sets for each installed package.
+	 * Return the permission sets for all packages.
 	 *
 	 * @return	Array
 	 */
 	public function getAllPackagePermissionSets()
 	{
-		$packages = $this->getInstalledPackages('name');
 		$permissions = array();
-		foreach ($packages as $package)
+		foreach ($this->getAllPackageDetails() as $package)
 		{
 			$permissions[$package['name']] = $this->getPackagePermissionSets($package['uri']);
 		}
-		return isset($permissions) ? $permissions : array();
+		return $permissions;
 	}
 }

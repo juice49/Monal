@@ -360,15 +360,25 @@ button
  **************************************************/
 
 label
-	margin-top base_unit * .75
-	margin-bottom base_unit
 	color colors['grey+4']
 	fontFamilyMain()
 	font-size font_sizes['foxtrot']
-	line-height line_heights['foxtrot']
 
 .label--block
 	display block
+	margin-top base_unit * .75
+	margin-bottom base_unit
+	line-height line_heights['foxtrot']
+
+.label--inline
+	inline_block()
+	vertical-align middle 
+	padding-left base_unit
+	padding-right base_unit
+	margin-top base_unit * .75
+
+.label--strong
+	font-weight bold
 
 .label--description
 	margin-top base_unit * .5
@@ -431,10 +441,20 @@ label
 	background-position center center
 	prefix_background_size(16px, 16px)
 
+.input--checkbox:disabled + label
+	border-color colors['grey-4']
+	background-color colors['grey-5']
+
+.input--checkbox__inline
+	margin-top base_unit * .75
+
 .input--checkbox__default
 	inline_block()
+	vertical-align middle 
 	width 18px
 	height 18px
+	font-size 0
+	margin-right -4px
 	border solid 2px colors['grey-2']
 	prefix_border_radius(2px)
 
@@ -899,11 +919,19 @@ body
 
 	h2
 		color colors['grey+4']
-		margin-top base_unit * .25
+		margin-top base_unit * .5
 		margin-bottom base_unit * 1.25
 		fontFamilyHeading()
 		font-size font_sizes['delta']
 		line-height line_heights['delta']
+
+	h3
+		color colors['grey+4']
+		margin-top base_unit * .25
+		margin-bottom base_unit
+		fontFamilyHeading()
+		font-size font_sizes['echo']
+		line-height line_heights['echo']
 
 	p
 	ul

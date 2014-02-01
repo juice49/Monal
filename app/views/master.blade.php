@@ -5,9 +5,9 @@
 		<meta name="viewport" content="width=device-width">
 		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin/build/fonts/style.css') }}" media="screen">
 		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin/build/css/fruitful.css') }}" media="screen">
+		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin//js/libs/freshalert/css/styles.css') }}" media="screen">
 
-		<script src="{{ URL::to('admin/build/js/libs/jquery-1.10.2.js') }}"></script>
-		<script src="{{ URL::to('admin/build/js/libs/jquery.conscious.js') }}"></script>
+		<script src="{{ URL::to('admin/build/js/fruitful.js') }}"></script>
 		<script>
 			var _APP_BASEURL = '{{ URL::to('/') }}/';
 		</script>
