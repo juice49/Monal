@@ -705,11 +705,21 @@ body
 
 .dashboard__menu__group--link
 	display block
-	padding base_unit (base_unit * 2)
+	padding base_unit (base_unit * 2) base_unit base_unit
+	margin-left base_unit
+	prefix_border_radius_top_left(2px)
+	prefix_border_radius_bottom_left(2px)
 	cursor pointer
+
+	&:hover
+		background-color colors['seafoam-6']
 
 	@media screen and (max-width: 960px)
 		padding (base_unit * .5) base_unit
+		margin-left 0
+
+		&:hover
+			background-color transparent
 
 .dashboard__menu__group--active
 	color colors['mist+6']

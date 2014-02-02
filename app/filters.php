@@ -71,14 +71,14 @@ App::after(function($request, $response)
 
 Route::filter('admin', function()
 {
-    $gateway = App::make('Fruitful\Core\Contracts\GatewayInterface');
-    if (!$gateway->isAdminUserLoggedIn())
-    {
-    	if (Request::url() != URL::route('admin.login'))
+	if (Request::url() != URL::route('admin.login'))
+	{
+		$system = App::make('Fruitful\Core\Contracts\GatewayInterface');
+		if ($system->user->isGuest())
 		{
 			return Redirect::route('admin.login');
 		}
-    }
+	}
 });
 Route::when('admin/*', 'admin');
 

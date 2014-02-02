@@ -20,7 +20,7 @@ class AdminController extends BaseController {
 	{
 		parent::__construct($system_gateway);
 
-		if ($this->system->isAdminUserLoggedIn())
+		if (!$this->system->user->isGuest())
 		{
 			$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getAllPackageDetails());
 			View::share('control_panel', $this->control_panel_navigation);
@@ -34,7 +34,7 @@ class AdminController extends BaseController {
 	 */
 	public function login()
 	{
-		if ($this->system->isAdminUserLoggedIn())
+		if (!$this->system->user->isGuest())
 		{
 			return Redirect::route('admin.dashboard');
 		}

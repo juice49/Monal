@@ -121,6 +121,16 @@ class SystemUser {
 	}
 
 	/**
+	 * Is the user a guest.
+	 *
+	 * @return	Boolean
+	 */
+	public function isGuest()
+	{
+		return ($this->id == 'guest') ? true : false;
+	}
+
+	/**
 	 * Is the user active.
 	 *
 	 * @return	Boolean

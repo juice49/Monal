@@ -13,8 +13,34 @@ use Fruitful\Core\Contracts\GatewayInterface;
 class Gateway extends \Fruitful implements GatewayInterface {
 
 	/**
+	 * Constructor.
+	 *
+	 * @return	Void
+	 */
+	public function __construct()
+	{
+		parent::__construct();
+		if ($user_details = $this->auth->currentUser())
+		{
+			if ($user_details->active)
+			{
+				$this->setSystemUser($user_details->toArray());
+			}
+			else
+			{
+				$this->logoutSystemUser();
+			}
+		}
+		else
+		{
+			$this->setSystemUser(array('id' => 'guest'));
+		}
+	}
+
+	/**
 	 * Set the system user.
 	 *
+	 * @param	Array
 	 * @return	Void
 	 */
 	public function setSystemUser(array $user_details)
@@ -56,27 +82,5 @@ class Gateway extends \Fruitful implements GatewayInterface {
 	public function logoutSystemUser()
 	{
 		$this->auth->logout();
-	}
-
-	/**
-	 * Check if the current system user is an administrator.
-	 *
-	 * @return	Boolean
-	 */
-	public function isAdminUserLoggedIn()
-	{
-		if ($user_details = $this->auth->currentUser())
-		{
-			if ($user_details->active)
-			{
-				$this->setSystemUser($user_details->toArray());
-				return $this->user->isAdmin();
-			}
-			else
-			{
-				$this->logoutSystemUser();
-			}
-		}
-		return false;
 	}
 }
