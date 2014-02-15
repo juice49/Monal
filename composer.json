@@ -11,8 +11,9 @@
 			"app/commands",
 			"app/controllers",
 			"app/fruitful",
-			"app/models",
+			"app/helpers",
 			"app/database/migrations",
+			"app/repositories",
 			"app/database/seeds",
 			"app/tests/TestCase.php"
 		]

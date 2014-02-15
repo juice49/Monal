@@ -1,7 +1,7 @@
 @extends('../basic')
 
 @section('body-header')
-	<h1 class="color--turquoise">Installation Guide</h1>
+	<h1 class="color--teal">Installation Guide</h1>
 	<p class="fs--echo">Welcome. This guide will take you through 3 simple steps to install the Fruitful core system and get you up and running in a jiffy!</p>
 @stop
 
@@ -9,7 +9,7 @@
 
 	@if ($messages)
 		<div class="message_box message_box--tomato">
-			<h6>ERROR</h6>
+			<h6>Great Scott!</h6>
 			<ul>
 				@foreach($messages->all() as $message)
 					<li>{{ $message }}</li>
@@ -55,7 +55,7 @@
 				<label for="create" class="input--checkbox__default"></label>
 			</div>
 			<div class="control_block">
-				{{ Form::submit('Next Step', array('class' => 'button button--turquoise')) }}
+				{{ Form::submit('Next Step', array('class' => 'button button--teal')) }}
 			</div>
 		{{ Form::close() }}
 	</section>

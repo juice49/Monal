@@ -9,12 +9,12 @@
 
 use Fruitful\Core\Contracts\GatewayInterface;
 
-class BaseController extends Controller {
-
+class BaseController extends Controller
+{
 	/**
-	 * Instance of class that implements the GatewayInterface interface.
+	 * Instance of class implementing GatewayInterface.
 	 *
-	 * @var		Fruitful\Core\Contracts\GatewayInterface
+	 * @var		 Fruitful\Core\Contracts\GatewayInterface
 	 */
 	protected $system;
 
@@ -26,7 +26,7 @@ class BaseController extends Controller {
 	public $input;
 
 	/**
-	 * Initialise class.
+	 * Constructor.
 	 *
 	 * @param	Fruitful\Core\Contracts\GatewayInterface
 	 * @return	Void
@@ -71,8 +71,7 @@ class BaseController extends Controller {
 	 */
 	protected function setupLayout()
 	{
-		if (!is_null($this->layout))
-		{
+		if (!is_null($this->layout)) {
 			$this->layout = View::make($this->layout);
 		}
 	}

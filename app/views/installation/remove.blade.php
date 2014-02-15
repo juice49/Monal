@@ -1,7 +1,7 @@
 @extends('../basic')
 
 @section('body-header')
-	<h1 class="color--turquoise">Installation Guide</h1>
+	<h1 class="color--teal">Installation Guide</h1>
 	<p class="fs--echo">Welcome. This guide will take you through 3 simple steps to install the Fruitful core system and get you up and running in a jiffy!</p>
 @stop
 
@@ -9,7 +9,7 @@
 
 	@if ($messages)
 		<div class="message_box message_box--tomato">
-			<h6>ERROR</h6>
+			<h6>Great Scott!</h6>
 			<ul>
 				@foreach($messages->all() as $message)
 					<li>{{ $message }}</li>
@@ -27,7 +27,7 @@
 				<li>/app/views/installation</li>
 			</ul>
 			<p>You can do this manually or we can do this for you:</p>
-			{{ Form::input('submit', 'remove', 'Remove Installation Files', array('class' => 'button button--turquoise')) }}
+			{{ Form::input('submit', 'remove', 'Remove Installation Files', array('class' => 'button button--teal')) }}
 		{{ Form::close() }}
 	</section>
 @stop

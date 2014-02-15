@@ -2,28 +2,39 @@
 /**
  * Admin Controller.
  *
- * Base controller for system admin pages.
+ * Base controller for the system's admin dashboards.
  *
  * @author	Arran Jacques
  */
 
 use Fruitful\Core\Contracts\GatewayInterface;
 
-class AdminController extends BaseController {
-
+class AdminController extends BaseController
+{
 	/**
-	 * Initialise controller.
+	 * Constructor.
 	 *
+	 * @param	Fruitful\Core\Contracts\GatewayInterface
 	 * @return	Void
 	 */
 	public function __construct(GatewayInterface $system_gateway)
 	{
 		parent::__construct($system_gateway);
+		$this->control_panel_navigation = $this->buildDashboardMenu();
+		View::share('control_panel', $this->control_panel_navigation);
+	}
 
-		if (!$this->system->user->isGuest())
-		{
-			$this->control_panel_navigation = $this->buildControlPanelNavigation($this->system->packages->getAllPackageDetails());
-			View::share('control_panel', $this->control_panel_navigation);
+	/**
+	 * Redirect user to the dashboard or login page.
+	 *
+	 * @return	Illuminate\Http\RedirectResponse
+	 */
+	public function admin()
+	{
+		if ($this->system->user->isLoggedIn()) {
+			return \Redirect::route('admin.dashboard');
+		} else {
+			return \Redirect::route('admin.login');
 		}
 	}
 
@@ -34,37 +45,19 @@ class AdminController extends BaseController {
 	 */
 	public function login()
 	{
-		if (!$this->system->user->isGuest())
-		{
-			return Redirect::route('admin.dashboard');
+		if (!$this->system->user->isGuest()) {
+			return \Redirect::route('admin.dashboard');
 		}
-
-		if ($this->input)
-		{
-			$validation = Validator::make($this->input,
-				array(
-					'email' => 'required|email',
-					'password' => 'required',
-					)
-				);
-
-			if ($validation->passes())
-			{
-				if ($this->system->setSystemUserByEmail($this->input['email']) AND $this->system->user->hasAdminPermissions('admin'))
-				{
-					if ($this->system->loginSystemUser($this->input['password']))
-					{
-						return Redirect::route('admin.dashboard');
-					}
+		if ($this->input) {
+			$authentication = $this->system->newAuthRequest($this->input['email'], $this->input['password']);
+			if ($authentication->validates()) {
+				if ($authentication->attempt(true)) {
+					return \Redirect::route('admin.dashboard');
 				}
 			}
-			$this->system->messages->setMessages(array(
-				'error' => array(
-					'Sorry, invalid login details.',
-					),
-				));
+			$this->system->messages->add($authentication->messages->get()->toArray());
 		}
-		$messages = $this->system->messages->getMessages();
+		$messages = $this->system->messages->get();
 		return View::make('admin.login', compact('messages'));
 	}
 
@@ -75,7 +68,7 @@ class AdminController extends BaseController {
 	 */
 	public function logout()
 	{
-		$this->system->logoutSystemUser();
+		$this->system->revokeAuth();
 		return \Redirect::route('admin.login');
 	}
 
@@ -86,74 +79,49 @@ class AdminController extends BaseController {
 	 */
 	public function dashboard()
 	{
-		$messages = $this->system->messages->getMessages();
+		$messages = $this->system->messages->get();
 		return View::make('admin.dashboard', compact('messages'));
 	}
 
 	/**
-	 * Processes array of installed packages into a structured array that
-	 * can be used to build the control panel navigation menu.
+	 * Build the admin dashboard based on the system’s dashboard menu
+	 * options and the current system user’s permissions.
 	 *
-	 * @param	Array
 	 * @return	Array
 	 */
-	public function buildControlPanelNavigation(array $packages)
+	public function buildDashboardMenu()
 	{
-		$navigation_tree = array();
-		foreach ($packages as $package)
-		{
-			if (
-				isset($package['has_backend']) AND
-				$package['has_backend'] AND
-				isset($package['control_panel_menu']) AND
-				!empty($package['control_panel_menu'])
-				)
-			{
-				foreach ($package['control_panel_menu'] as $menu_main_heading => $submenu_item)
-				{
-					foreach ($submenu_item as $submenu_heading => $submenu_details)
-					{
-						$permission_slugs = explode('|', $submenu_details['permissions']);
-						if (isset($permission_slugs[0]) AND !empty($permission_slugs[0]))
-						{
-							$hi_level_permission = $permission_slugs[0];
-							if (isset($permission_slugs[1]))
-							{
-								$show_menu_item = true;
-								$low_level_permission_slugs = explode(',', $permission_slugs[1]);
-								foreach ($low_level_permission_slugs as $low_level_perimssion)
-								{
-									if (!$this->system->user->hasAdminPermissions($hi_level_permission, $low_level_perimssion))
-									{
-										$show_menu_item = false;
-									}
-								}
-							}
-							else
-							{
-								$show_menu_item = ($this->system->user->hasAdminPermissions($hi_level_permission)) ? true : false;
+		$dashboard_menu = array();
+		foreach ($this->system->dashboard->menu() as $category_title => $category_options) {
+			foreach ($category_options as $option_title => $option_details) {
+				$permission_slugs = explode('|', $option_details['permissions']);
+				if (isset($permission_slugs[0]) AND !empty($permission_slugs[0])) {
+					$hi_level_permission = $permission_slugs[0];
+					if (isset($permission_slugs[1])) {
+						$show_menu_item = true;
+						$low_level_permission_slugs = explode(',', $permission_slugs[1]);
+						foreach ($low_level_permission_slugs as $low_level_perimssion) {
+							if (!$this->system->user->hasAdminPermissions($hi_level_permission, $low_level_perimssion)) {
+								$show_menu_item = false;
 							}
 						}
-						else
-						{
-							$show_menu_item = true;
-						}
-						if ($show_menu_item)
-						{
-							if (!isset($navigation_tree[$menu_main_heading]))
-							{
-								$navigation_tree[$menu_main_heading] = array();
-								$navigation_tree[$menu_main_heading][$submenu_heading] = $submenu_details['route'];
-							}
-							else
-							{
-								$navigation_tree[$menu_main_heading][$submenu_heading] = $submenu_details['route'];
-							}
-						}
+					} else {
+						$show_menu_item = ($this->system->user->hasAdminPermissions($hi_level_permission)) ? true : false;
+					}
+				} else {
+					$show_menu_item = true;
+				}
+				if ($show_menu_item) {
+					if (!isset($dashboard_menu[$category_title])) {
+						$dashboard_menu[$category_title] = array();
+						$dashboard_menu[$category_title][$option_title] = $option_details['route'];
+					}
+					else{
+						$dashboard_menu[$category_title][$option_title] = $option_details['route'];
 					}
 				}
 			}
 		}
-		return $navigation_tree;
+		return $dashboard_menu;
 	}
 }

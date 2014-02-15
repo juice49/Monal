@@ -72,8 +72,8 @@ button
 .color--grey__vlight
 	color colors['grey-4']
 
-.color--seafoam
-	color colors['seafoam']
+.color--teal
+	color colors['teal']
 
 
 /* ============================================================
@@ -99,7 +99,7 @@ button
 
 .button
 	inline_block()
-	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	padding (base_unit * .5) base_unit
 	margin 0
 	font-size font_sizes['foxtrot']
 	line-height line_heights['foxtrot']
@@ -236,30 +236,30 @@ button
 		background-color colors['mustard+2']
 
 
-.button--seafoam
+.button--teal
 	color #ffffff
-	background-color colors['seafoam']
+	background-color colors['teal']
 
-.button.button--seafoam
+.button.button--teal
 
 	&:hover
-		background-color colors['seafoam-1']
+		background-color colors['teal-1']
 
 	&:active
-		background-color colors['seafoam+2']
+		background-color colors['teal+2']
 
-.button__dropdown__hover.button--seafoam
+.button__dropdown__hover.button--teal
 
 	.button__dropdown__list
-		color colors['seafoam-6']
-		border solid 1px colors['seafoam-6']
+		color colors['teal-6']
+		border solid 1px colors['teal-6']
 		background-color #ffffff
 
 		.dropdown__list__button
-			color colors['seafoam-3']
+			color colors['teal-3']
 
 			&:hover
-				color colors['seafoam']
+				color colors['teal']
 
 .button--wasabi
 	color #ffffff
@@ -286,6 +286,7 @@ button
 		fontFamilyHeading()
 		font-size font_sizes['foxtrot']
 		line-height line_heights['foxtrot']
+		text-transform uppercase
 
 	ul
 	ol
@@ -342,7 +343,7 @@ button
 		color colors['wasabi+6']
 
 /* ============================================================
- * Froms, Labels, Inputs and Selects
+ * Froms, Labels, Inputs, Textareas and Selects
 =========================================================== */
 
 /*
@@ -460,6 +461,29 @@ label
 
 	&:hover
 		border-color colors['grey']
+
+/*
+ * Textareas
+ **************************************************/
+
+.textarea--default
+	width base_unit * 39
+	max-width 100%
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	margin 0
+	color colors['grey']
+	border solid 2px colors['grey-2']
+	prefix_border_radius(2px)
+	prefix_box_sizing(border-box)
+	background #ffffff
+
+	&:hover
+		color colors['grey+2']
+		border-color colors['grey']
+
+	&:focus
+		color colors['grey+4']
+		border-color colors['grey+2']
 
 
 /*
@@ -631,7 +655,7 @@ body
 	z-index 2
 	width base_unit * 14
 	height 100%
-	background colors['seafoam-4']
+	background colors['teal-4']
 
 	@media screen and (max-width: 960px)
 		display none
@@ -650,7 +674,7 @@ body
 		color #ffffff
 		font-size font_sizes['delta']
 		line-height 1
-		background-color colors['seafoam']
+		background-color colors['teal']
 
 		&:before
 			content "MENU"
@@ -712,7 +736,7 @@ body
 	cursor pointer
 
 	&:hover
-		background-color colors['seafoam-6']
+		background-color colors['teal-6']
 
 	@media screen and (max-width: 960px)
 		padding (base_unit * .5) base_unit
@@ -725,7 +749,7 @@ body
 	color colors['mist+6']
 
 	.dashboard__menu__group--title
-		background colors['seafoam-4']
+		background colors['teal-4']
 
 	.dashboard__menu__group--list
 		display block
@@ -768,7 +792,7 @@ body
 				color #ffffff
 				font-weight bold
 				prefix_border_radius(0)
-				background-color colors['seafoam-3']
+				background-color colors['teal-3']
 				cursor pointer
 
 				.button__dropdown__btn
@@ -782,7 +806,7 @@ body
 		@media screen and (max-width: 960px)
 			padding-left base_unit * 2
 			padding-right base_unit * 2
-			background-color colors['seafoam+2']
+			background-color colors['teal+2']
 
 			.toggle_menu
 				inline_block()
@@ -964,3 +988,51 @@ body
 
 .block__y__bottom
 	padding-bottom base_unit * .75
+
+
+/* ============================================================
+ * Nav Bars
+=========================================================== */
+
+ul.navbar__menu
+	padding 0
+	margin 0
+	list-style none
+
+	li
+		inline_block()
+		padding 0
+		margin 0 -4px 0 0
+
+		.navbar__menu__link
+			display block
+			padding base_unit (base_unit * 2)
+			font-weight bold
+
+		&:first-child
+
+			.navbar__menu__link
+				border none
+				prefix_border_radius_top_left(2px)
+				prefix_border_radius_bottom_left(2px)
+
+		&:last-child
+
+			.navbar__menu__link
+				prefix_border_radius_top_right(2px)
+				prefix_border_radius_bottom_right(2px)
+
+ul.navbar__menu--dusk
+
+	li
+
+		.navbar__menu__link
+			color colors['mist+6']
+			border-left solid 1px colors['mist+1']
+			background-color colors['mist']
+
+			&:hover
+				background-color colors['mist-1']
+
+			&:active
+				background-color colors['mist-+2']

@@ -13,6 +13,9 @@
 
 App::before(function($request)
 {
+	$system = App::make('Fruitful\Core\Contracts\GatewayInterface');
+	$system->attemptAuthFromSession();
+
 	// Check if the installation files are present. If they arr then run
 	// the installation process.
 	if (file_exists(app_path() . '/installation/routes.php'))
@@ -74,7 +77,7 @@ Route::filter('admin', function()
 	if (Request::url() != URL::route('admin.login'))
 	{
 		$system = App::make('Fruitful\Core\Contracts\GatewayInterface');
-		if ($system->user->isGuest())
+		if (!$system->attemptAuthFromSession(true))
 		{
 			return Redirect::route('admin.login');
 		}

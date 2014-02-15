@@ -20,7 +20,7 @@
 				{{ Form::input('password', 'password', null, array('class' => 'input--text')) }}
 			</div>
 			<div class="block__y__top">
-				{{ Form::submit('Sign In', array('class' => 'button button--seafoam')) }}
+				{{ Form::submit('Sign In', array('class' => 'button button--teal')) }}
 			</div>
 		{{ Form::close() }}
 	</div>

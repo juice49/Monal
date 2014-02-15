@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'model' => 'Users_m',
+	'model' => 'EloquentAuthenticationRepository',
 
 	/*
 	|--------------------------------------------------------------------------

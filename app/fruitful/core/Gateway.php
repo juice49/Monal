@@ -1,86 +1,67 @@
-<?php namespace Fruitful\Core;
+<?php
+namespace Fruitful\Core;
 /**
- * System Gateway.
+ * Gateway.
  *
- * Gateway class for making authentication requests to login to the
- * system.
+ * Gateway class into the system. Provides methods for user
+ * authentication.
  *
  * @author	Arran Jacques
  */
 
+use Fruitful\FruitfulSystem;
 use Fruitful\Core\Contracts\GatewayInterface;
 
-class Gateway extends \Fruitful implements GatewayInterface {
-
+class Gateway extends FruitfulSystem implements GatewayInterface
+{
 	/**
-	 * Constructor.
-	 *
-	 * @return	Void
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-		if ($user_details = $this->auth->currentUser())
-		{
-			if ($user_details->active)
-			{
-				$this->setSystemUser($user_details->toArray());
-			}
-			else
-			{
-				$this->logoutSystemUser();
-			}
-		}
-		else
-		{
-			$this->setSystemUser(array('id' => 'guest'));
-		}
-	}
-
-	/**
-	 * Set the system user.
-	 *
-	 * @param	Array
-	 * @return	Void
-	 */
-	public function setSystemUser(array $user_details)
-	{
-		$this->user = new SystemUser($user_details);
-	}
-
-	/**
-	 * Set the system user by their email address.
+	 * Create a new authentication request.
 	 *
 	 * @param	String
+	 * @param	String
+	 * @return	Fruitful\Core\AuthenticationRequest
+	 */
+	public function newAuthRequest($email, $password)
+	{
+		$this->revokeAuth();
+		$authentication = \App::make('Fruitful\Core\Contracts\AuthenticationRequestInterface');
+		$authentication->setUser($email, $password);
+		return $authentication;
+	}
+
+	/**
+	 * Check if the current user has already been authenticated.
+	 *
+	 * @param	Boolean
 	 * @return	Boolean
 	 */
-	public function setSystemUserByEmail($email)
+	public function attemptAuthFromSession($is_admin = false)
 	{
-		if ($user_details = $this->auth->userExistsByEmail($email))
-		{
-			$this->setSystemUser($user_details->toArray());
-			return true;
+		$user = (\Auth::check()) ? \Auth::user() : false;
+		if ($user) {
+			if ($user->active) {
+				if ($is_admin) {
+					if ($user->GroupDetails->id != 1 AND !$user->GroupDetails->groupPermissions->admin) {
+						$this->user = new \Fruitful\Core\FruitfulUser();
+						return false;
+					}
+				}
+				$this->user = new \Fruitful\Core\FruitfulUser($user->toArray());
+				return true;
+			}
+			$this->revokeAuth();
 		}
+		$this->user = new \Fruitful\Core\FruitfulUser();
 		return false;
 	}
 
 	/**
-	 * Attempt to authenticate and login the system user.
-	 *
-	 * @return	Boolean
-	 */
-	public function loginSystemUser($password)
-	{
-		return $this->auth->login($this->user->email, $password);
-	}
-
-	/**
-	 * Logout current system user.
+	 * Revoke the current user’s authentication.
 	 *
 	 * @return	Void
 	 */
-	public function logoutSystemUser()
+	public function revokeAuth()
 	{
-		$this->auth->logout();
+		\Auth::logout();
 	}
 }

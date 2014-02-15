@@ -1,58 +1,50 @@
 <?php
 /**
- * Fruitful System.
+ * Fruitful.
  *
- * Base system class that ties everything together. Provides access
- * to the core system libraries required to connect to and interact
- * with the system.
+ * Static API for directly accessing core system classes.
  *
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\UserAuthentication;
-use Fruitful\Core\SystemUser;
-use Fruitful\Core\SystemPackages;
-use Fruitful\Core\SystemMessages;
-
-class Fruitful {
-
+class Fruitful
+{
 	/**
-	 * Instance of the system's user authentication library.
+	 * Return the current instance of the system gateway class.
 	 *
-	 * @var		Fruitful\Core\UserAuthentication
+	 * @return	Fruitful\Core\Contracts\GatewayInterface
 	 */
-	protected $auth;
+	private static function system()
+	{
+		return App::make('Fruitful\Core\Contracts\GatewayInterface');
+	}
 
 	/**
-	 * Instance of the system's packages library.
+	 * Register a new dashboard menu option.
 	 *
-	 * @var		Fruitful\Core\SystemPackages
-	 */
-	public $packages;
-
-	/**
-	 * Instance of the system's messages library.
-	 *
-	 * @var		Fruitful\Core\SystemPackages
-	 */
-	public $messages;
-
-	/**
-	 * System user.
-	 *
-	 * @var		Fruitful\Core\SystemUser
-	 */
-	public $user;
-
-	/**
-	 * Initialise class.
-	 *
+	 * @param	String
+	 * @param	String
+	 * @param	String
+	 * @param	String
 	 * @return	Void
 	 */
-	public function __construct()
+	public static function registerMenuOption($category, $title, $route, $permissions = null)
 	{
-		$this->auth = new UserAuthentication;
-		$this->packages = new SystemPackages;
-		$this->messages = new SystemMessages;
+		$system = self::system();
+		$system->dashboard->addMenuOption($category, $title, $route, $permissions);
+	}
+
+	/**
+	 * Register a new permission set.
+	 *
+	 * @param	String
+	 * @param	String
+	 * @param	Array
+	 * @return	Void
+	 */
+	public static function registerPermissionSet($name, $slug, array $permissions = array())
+	{
+		$system = self::system();
+		$system->permissions->addPermissionSet($name, $slug, $permissions);
 	}
 }

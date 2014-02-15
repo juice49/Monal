@@ -7,7 +7,16 @@
  * @author	Arran Jacques
  */
 
+use Illuminate\Database\Schema\Blueprint;
+
 class Installer {
+
+	/**
+	 * Instance of class implementing MessagesInterface.
+	 *
+	 * @var		 Fruitful\Core\Contracts\MessagesInterface
+	 */
+	protected $messages;
 
 	/**
 	 * Database management system.
@@ -24,29 +33,34 @@ class Installer {
 	private $connection;
 
 	/**
+	 * Constructor.
+	 *
+	 * @return	Void
+	 */
+	public function __construct()
+	{
+		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
+	}
+
+	/**
 	 * Work out where abouts the user is in the installation process.
 	 *
 	 * @return	String / Boolean.
 	 */
 	public function getInstallationStep()
 	{
-		if (file_exists(app_path() . '/config/database.blank.php'))
-		{
+		if (file_exists(app_path() . '/config/database.blank.php')) {
 			return 'step1';
 		}
-		else
-		{
+		else {
 			if (
 				file_exists(app_path() . '/config/database.php') AND
 				Schema::hasTable('users') AND
 				Schema::hasTable('user_groups') AND
 				Schema::hasTable('user_group_permissions')
-				)
-			{
-				return (!$user = \Users_m::find(1)) ? 'step2' : 'step3';
-			}
-			else
-			{
+			) {
+				return (!$user = \DB::table('users')->find(1)) ? 'step2' : 'step3';
+			} else {
 				return 'ERROR';
 			}
 		}
@@ -54,7 +68,204 @@ class Installer {
 	}
 
 	/**
-	 * Attempt to connect to database.
+	 * Return installation messages.
+	 *
+	 * @return	Illuminate\Support\MessageBag
+	 */
+	public function messages()
+	{
+		return $this->messages->get();
+	}
+
+	/**
+	 * Install the system's database.
+	 *
+	 * @param	Array
+	 * @param	Boolean
+	 * @return	Boolean
+	 */
+	public function installDatabase(array $config, $create_database = false)
+	{
+		$validation = Validator::make(
+			$config,
+			array(
+				'dbms' => 'required',
+				'host' => 'required',
+				'database' => 'required',
+				'username' => 'required',
+				'port' => 'required',
+			),
+			array(
+				'dbms.required' => 'You need to tell us what Database Management System you are using.',
+				'host.required' => 'You need to tell us the Host Name for your database management system.',
+				'database.required' => 'You need to tell us the Name of the database this installation will use.',
+				'username.required' => 'You need to tell us the Username to use when connecting to your database.',
+				'port.required' => 'You need to tell us the Port Number to use when connecting to your database.',
+			)
+		);
+		if ($validation->passes()) {
+			if ($this->connectToDatabase(
+				$config['dbms'],
+				$config['host'],
+				$config['port'],
+				$config['username'],
+				$config['password']
+			)) {
+				if ($create_database) {
+					if (!$this->createDatabase($config['database'])) {
+						$this->messages->add(
+							array(
+								'error' => array(
+									'There was an error creating the database ' . $config['database'] . '. You may need to create it manually.',
+								)
+							)
+						);
+						return false;
+					}
+				} else {
+					if (!$this->databaseExists($config['database'])) {
+						$this->messages->add(
+							array(
+								'error' => array(
+									'We can’t find a database with the name ' . $config['database'] . '. Tick the box at the bottom if you want us to create it for you.',
+								)
+							)
+						);
+						return false;
+					}
+				}
+				if (
+					$this->writeToDatabaseFile(
+						array(
+							'dbms' => $config['dbms'],
+							'host' => $config['host'],
+							'database' => $config['database'],
+							'username' => $config['username'],
+							'password' => $config['password'],
+							'port' => $config['port'],
+						)
+					) AND
+					$this->renameFile('database.blank.php', 'database.php')
+				) {
+					$this->createAndSeedTables();
+					return true;
+				} else {
+					$this->messages->add(
+						array(
+							'error' => array(
+								'We were unable to write to the "app/config/database.blank.php" file and rename it. Please check the write permissions for this file and the directory "app/config".'
+							)
+						)
+					);
+				}
+			} else {
+				$this->messages->add(
+					array(
+						'error' => array(
+							'We were unable to connect to the database using these settings. Please check the settings you have provided.'
+						)
+					)
+				);
+			}
+		} else {
+			$this->messages->add($validation->messages()->toArray());
+		}
+		return false;
+	}
+
+	/**
+	 * Create the system Admin user.
+	 *
+	 * @param	Array
+	 * @return	Boolean
+	 */
+	public function createUser(array $details)
+	{
+		$validation = Validator::make(
+			$details,
+			array(
+				'first_name' => 'required|name',
+				'last_name' => 'required|name',
+				'username' => 'required|min:2|username|unique:users',
+				'email' => 'required|email|unique:users',
+				'password' => 'required|min:6|confirmed',
+				),
+			array(
+				'first_name.required' => 'You need to provide a First Name for yourself.',
+				'first_name.name' => 'Your First Name can only contain letters, spaces or hyphens, and must contain at least one letter.',
+				'last_name.required' => 'You need to provide a Last Name for yourself.',
+				'last_name.name' => 'Your Last Name can only contain letters, spaces or hyphens, and must contain at least one letter.',
+				'username.required' => 'You need to provide a Username for yourself.',
+				'username.min' => 'Your Username must be at least two characters long.',
+				'username.unique' => 'Sorry, it looks like someone beat you to the punch as this Username is already taken.',
+				'username.username' => 'Your Username can only contain letters, numbers, spaces, underscores or hyphens.',
+				'email.required' => 'You need to provide an Email Address for yourself.',
+				'email.email' => 'Your Email Address doesn’t appear to be a valid email address.',
+				'email.unique' => 'Sorry, it looks like someone beat you to the punch as this Email Address is already taken.',
+				'password.required' => 'You need to provide a Password for your account.',
+				'password.min' => 'Your Password must be at least 6 characters long.',
+				'password.confirmed' => 'Your Passwords don’t appear to match.',
+				)
+		);
+		if ($validation->passes()) {
+			if ($this->writeEncryptionKey()) {
+				\DB::table('users')->insert(array(
+					'first_name' => $details['first_name'],
+					'last_name' => $details['last_name'],
+					'username' => $details['username'],
+					'email' => $details['email'],
+					'password' => \Hash::make($details['password']),
+					'group' => 1,
+					'active' => 1,
+					)
+				);
+				return true;
+			}
+			$this->messages->add(
+				array(
+					'error' => array(
+						'There was an error writing the encryption key to the "app/config/app" file. Please check the write permissions for this file and for the directory "app/config".'
+					)
+				)
+			);
+		} else {
+			$this->messages->add($validation->messages()->toArray());
+		}
+		return false;
+	}
+
+	/**
+	 * Delete the system's installation files.
+	 *
+	 * @return	Boolean
+	 */
+	public function deleteInstallationFiles()
+	{
+		if ($this->deleteFilesRecursively(app_path() . '/views/installation')) {
+			if ($this->deleteFilesRecursively(app_path() . '/installation')) {
+				return true;
+			}
+			$this->messages->add(
+				array(
+					'error' => array(
+						'We were unable to remove the directory "app/installation" and its sub directories and files. You may need to remove it manually.'
+					)
+				)
+			);
+		} else {
+			$this->messages->add(
+				array(
+					'error' => array(
+						'We were unable to remove the directory "app/views/installation" and its sub directories and files. You may need to remove it manually.'
+					)
+				)
+			);
+		}
+		return false;
+	}
+
+	/**
+	 * Connect to the database.
 	 *
 	 * @param	String
 	 * @param	String
@@ -75,38 +286,17 @@ class Installer {
 	}
 
 	/**
-	 * Close database connection.
+	 * Close the database connection.
 	 *
 	 * @return	Void
 	 */
 	public function closeDatabaseConnection()
 	{
-		if ($this->dbms == 'mysql')
-		{
+		if ($this->dbms == 'mysql') {
 			mysqli_close($this->connection);
 			$this->dbms = null;
 			$this->connection = null;
 		}
-	}
-
-	/**
-	 * Test a database connection.
-	 *
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @return	Boolean
-	 */
-	public function testDatabaseConnection($dbms, $host, $port, $username, $password)
-	{
-		if ($this->connectToDatabase($dbms, $host, $port, $username, $password))
-		{
-			$this->closeDatabaseConnection();
-			return true;
-		}
-		return false;
 	}
 
 	/**
@@ -115,14 +305,10 @@ class Installer {
 	 * @param	String
 	 * @return	Boolean
 	 */
-	public function databaseExists($database)
+	public function databaseExists($database_name)
 	{
-		if (isset($database))
-		{
-			if ($this->dbms == 'mysql')
-			{
-				return mysqli_select_db($this->connection, $database) ? true : false;
-			}
+		if ($this->dbms == 'mysql') {
+			return mysqli_select_db($this->connection, $database_name) ? true : false;
 		}
 		return false;
 	}
@@ -133,49 +319,80 @@ class Installer {
 	 * @param	String
 	 * @return	Boolean
 	 */
-	public function createDatabase($database)
+	public function createDatabase($database_name)
 	{
-		if (isset($database))
-		{
-			if ($this->dbms == 'mysql')
-			{
-				return mysqli_query($this->connection, 'CREATE DATABASE IF NOT EXISTS ' . $database) ? true : false;
-			}
+		if ($this->dbms == 'mysql') {
+			return mysqli_query($this->connection, 'CREATE DATABASE IF NOT EXISTS ' . $database_name) ? true : false;
 		}
 		return false;
 	}
 
 	/**
-	 * Run the migrations to create the core system tables.
+	 * Create the core system tables and seed them.
 	 *
-	 * @return	Boolean
+	 * @return	Void
 	 */
 	public function createAndSeedTables()
 	{
-		Artisan::call('migrate');
-		if (Schema::hasTable('users') AND Schema::hasTable('user_groups') AND Schema::hasTable('user_group_permissions'))
-		{
-			$seeder = new \DatabaseSeeder;
-			$seeder->run();
-			return true;
-		}
-		return false;
+		\Schema::create(
+			'users',
+			function(Blueprint $table) {
+				$table->increments('id');
+				$table->string('first_name', 255)->nullable();
+				$table->string('last_name', 255)->nullable();
+				$table->string('username', 255)->nullable()->unique();
+				$table->string('email', 255)->nullable()->unique();
+				$table->string('password', 255)->nullable();
+				$table->integer('group')->nullable();
+				$table->boolean('active')->nullable();
+				$table->timestamps();
+			}
+		);
+		\Schema::create(
+			'user_groups',
+			function(Blueprint $table) {
+				$table->increments('id');
+				$table->string('name', 255)->nullable();
+				$table->boolean('active')->nullable();
+				$table->timestamps();
+			}
+		);
+		\Schema::create(
+			'user_group_permissions',
+			function(Blueprint $table) {
+				$table->increments('id');
+				$table->integer('group')->nullable();
+				$table->boolean('admin')->nullable();
+				$table->text('admin_permissions')->nullable();
+				$table->timestamps();
+			}
+		);
+		\DB::table('user_groups')->insert(array(
+			'name' => 'Administrator',
+			'active' => '1',
+			)
+		);
+		\DB::table('user_group_permissions')->insert(array(
+			'group' => '1',
+			'admin' => '1',
+			'admin_permissions' => null,
+			)
+		);
 	}
 
 	/**
-	 * Write database connection details to the database.blank.php file.
+	 * Write the database connection details to the database.blank.php
+	 * file.
 	 *
 	 * @param	Array
 	 * @return	Boolean
 	 */
-	public function writeDatabaseFile(array $details)
+	public function writeToDatabaseFile(array $details)
 	{
 		$file = app_path() . '/config/database.blank.php';
-		if (is_writable($file))
-		{
+		if (is_writable($file)) {
 			$lines = file($file, FILE_IGNORE_NEW_LINES);
-			if ($details['dbms'] == 'mysql')
-			{
+			if ($details['dbms'] == 'mysql') {
 				$lines[28] = '    \'default\' => \'mysql\',';
 				$lines[56] = '            \'host\'      => \'' . $details['host'] . '\',';
 				$lines[57] = '            \'database\'  => \'' . $details['database'] . '\',';
@@ -184,36 +401,7 @@ class Installer {
 				$lines[63] = '            \'port\'      => \'' . $details['port'] . '\',';
 			}
 			$file_contents = '';
-			foreach ($lines as $line)
-			{
-				$file_contents .= $line . PHP_EOL;
-			}
-			return file_put_contents($file, $file_contents) ?  true : false;
-		}
-		return false;
-	}
-
-	/**
-	 * Generate random encryption key and write it to the app.php file.
-	 *
-	 * @return	Boolean
-	 */
-	public function writeEncryptionKey()
-	{
-		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@£$%^&*()_+-=[];\,./<>?:|{};';
-		$encryption_key = '';
-		for ($i = 0; $i < 32; $i++)
-		{
-			$encryption_key .= $characters[rand(0, (strlen($characters) - 1))];
-		}
-		$file = app_path() . '/config/app.php';
-		if (is_writable($file))
-		{
-			$lines = file($file, FILE_IGNORE_NEW_LINES);
-			$lines[67] = '    \'key\' => \'' . $encryption_key . '\',';
-			$file_contents = '';
-			foreach ($lines as $line)
-			{
+			foreach ($lines as $line) {
 				$file_contents .= $line . PHP_EOL;
 			}
 			return file_put_contents($file, $file_contents) ?  true : false;
@@ -232,6 +420,31 @@ class Installer {
 	}
 
 	/**
+	 * Generate random encryption key and write it to the app.php file.
+	 *
+	 * @return	Boolean
+	 */
+	public function writeEncryptionKey()
+	{
+		$characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@£$%^&*()_+-=[];\,./<>?:|{};';
+		$encryption_key = '';
+		for ($i = 0; $i < 32; $i++) {
+			$encryption_key .= $characters[rand(0, (strlen($characters) - 1))];
+		}
+		$file = app_path() . '/config/app.php';
+		if (is_writable($file)) {
+			$lines = file($file, FILE_IGNORE_NEW_LINES);
+			$lines[67] = '    \'key\' => \'' . $encryption_key . '\',';
+			$file_contents = '';
+			foreach ($lines as $line) {
+				$file_contents .= $line . PHP_EOL;
+			}
+			return file_put_contents($file, $file_contents) ?  true : false;
+		}
+		return false;
+	}
+
+	/**
 	 * Recurse into a directoy and delete all files and directories.
 	 *
 	 * @param	String
@@ -239,11 +452,9 @@ class Installer {
 	 */
 	public function deleteFilesRecursively($directoy)
 	{
-		if (is_dir($directoy))
-		{
+		if (is_dir($directoy)) {
 			$files = array_diff(scandir($directoy), array('.', '..')); 
-			foreach ($files as $file)
-			{ 
+			foreach ($files as $file) { 
 				(is_dir($directoy . '/' . $file)) ? deleteFilesRecursively($directoy . '/' . $file) : unlink($directoy . '/' . $file); 
 			} 
 			return rmdir($directoy) ? true : false;

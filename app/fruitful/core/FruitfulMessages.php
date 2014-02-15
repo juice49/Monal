@@ -1,32 +1,30 @@
-<?php namespace Fruitful\Core;
+<?php
+namespace Fruitful\Core;
 /**
- * System Messages
- *
- * Library for managing system messages.
+ * Fruitful Messages.
  *
  * @author	Arran Jacques
  */
 
-use Illuminate\Support\MessageBag;
+use Fruitful\Core\Contracts\MessagesInterface;
 
-class SystemMessages {
-
+class FruitfulMessages implements MessagesInterface
+{
 	/**
-	 * Instance's messages.
+	 * Message Bag.
 	 *
 	 * @var		Illuminate\Support\MessageBag
 	 */
 	protected $messages;
 
-
 	/**
-	 * Initialise instance.
+	 * Constructor.
 	 *
 	 * @return	Void
 	 */
 	public function __construct()
 	{
-		$this->messages = new MessageBag();
+		$this->messages = new \Illuminate\Support\MessageBag;
 	}
 
 	/**
@@ -34,35 +32,27 @@ class SystemMessages {
 	 *
 	 * @return	Illuminate\Support\MessageBag
 	 */
-	public function getMessages()
+	public function get()
 	{
 		// Check if messages have been flashed to the session. If they have
 		// merge them into the instance's message set
-		if (\Session::has('messages'))
-		{
+		if (\Session::has('messages')) {
 			$flash_messages = \Session::get('messages');
-
 			$flash_messages = $flash_messages->toArray();
-			foreach ($flash_messages as $key => $flash_message)
-			{
-				foreach ($flash_message as $msg)
-				{
+			foreach ($flash_messages as $key => $flash_message) {
+				foreach ($flash_message as $msg) {
 					$this->messages->add($key, $msg);
 				}
 			}
 		}
-		if ($this->messages->count() > 0)
-		{
-			return $this->messages;
-		}
-		return false;
+		return ($this->messages->count() > 0) ? $this->messages: false;
 	}
 
 	/**
 	 * Add messages to the instance's message set.
 	 *
 	 * @param	Array
-	 * @return	Self
+	 * @return	FruitfulMessages
 	 *
 	 * Use:
 	 * setMessages(array(
@@ -72,16 +62,11 @@ class SystemMessages {
 	 *		)
 	 *	))
 	 */
-	public function setMessages($messages = array())
+	public function add(array $messages)
 	{
-		if (is_array($messages) && !empty($messages))
-		{
-			foreach ($messages as $key => $message_set)
-			{
-				foreach ($message_set as $message)
-				{
-					$this->messages->add($key, $message);
-				}
+		foreach ($messages as $key => $message_set) {
+			foreach ($message_set as $message) {
+				$this->messages->add($key, $message);
 			}
 		}
 		return $this;
@@ -94,9 +79,6 @@ class SystemMessages {
 	 */
 	public function flash()
 	{
-		if (isset($this->messages))
-		{
-			\Session::flash('messages', $this->messages);
-		}
+		\Session::flash('messages', $this->messages);
 	}
 }

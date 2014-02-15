@@ -1,26 +1,36 @@
-<?php namespace Fruitful\Core\Contracts;
+<?php
+namespace Fruitful\Core\Contracts;
 /**
- * System Gateway Interface
+ * Gateway.
  *
- * Contract for all system gateway classes to abide to.
+ * Class for making authentication requests to the system.
  *
  * @author	Arran Jacques
  */
 
-interface GatewayInterface {
-
+interface GatewayInterface
+{
 	/**
-	 * Set the system user by their email address.
+	 * Create a new authentication request.
 	 *
 	 * @param	String
-	 * @return	Boolean
+	 * @param	String
+	 * @return	Fruitful\Core\AuthenticationRequest
 	 */
-	public function setSystemUserByEmail($email);
+	public function newAuthRequest($email, $password);
 
 	/**
-	 * Attempt to authenticate and login the system user.
+	 * Check if the current user has already been authenticated.
 	 *
+	 * @param	Boolean
 	 * @return	Boolean
 	 */
-	public function loginSystemUser($password);
+	public function attemptAuthFromSession($is_admin = false);
+
+	/**
+	 * Revoke the current user’s authentication.
+	 *
+	 * @return	Void
+	 */
+	public function revokeAuth();
 }
