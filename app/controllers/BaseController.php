@@ -57,11 +57,6 @@ class BaseController extends Controller
 		{
 			return (preg_match('/^[a-z .\-]+$/i', $value) AND preg_match('/[a-zA-Z]/', $value)) ? true : false;
 		});
-		// Allow alpha, numeric, hypens, underscores and space characters.
-		Validator::extend('username', function($attribute, $value, $parameters)
-		{
-			return (preg_match('/^[a-z0-9 .\-_]+$/i', $value)) ? true : false;
-		});
 	}
 
 	/**

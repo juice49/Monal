@@ -86,6 +86,10 @@ button
 .align--center
 	text-align center
 
+.node__y
+	padding-top base_unit
+	padding-bottom base_unit
+
 .node__y--top
 	padding-top base_unit
 
@@ -401,7 +405,7 @@ label
 	border solid 2px colors['grey-2']
 	prefix_border_radius(2px)
 	prefix_box_sizing(border-box)
-	background #ffffff
+	background-color #ffffff
 
 	&:hover
 		color colors['grey+2']
@@ -413,6 +417,18 @@ label
 
 	@media screen and (max-width: 600px)
 		width 100%
+
+.input--text.input--disabled
+	border-color colors['grey-3']
+	background-color colors['grey-5']
+
+	&:hover
+		color colors['grey']
+		border-color colors['grey-3']
+
+	&:focus
+		color colors['grey']
+		border-color colors['grey-3']
 
 /*
  * Inputs - number
@@ -921,6 +937,7 @@ body
 	border-color transparent
 
 	td
+		vertical-align top
 		padding-top base_unit * .5
 		padding-bottom base_unit * .5
 		color colors['grey+4']

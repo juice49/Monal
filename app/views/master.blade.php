@@ -6,8 +6,10 @@
 		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin/build/fonts/style.css') }}" media="screen">
 		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin/build/css/fruitful.css') }}" media="screen">
 		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin//js/libs/freshalert/css/styles.css') }}" media="screen">
+		<link rel="stylesheet" type="text/css" href="{{ URL::to('packages/fruitful/data/js/redactor/redactor.css') }}" />
 
 		<script src="{{ URL::to('admin/build/js/fruitful.js') }}"></script>
+		<script src="{{ URL::to('packages/fruitful/data/js/redactor/redactor.min.js') }}"></script>
 		<script>
 			var _APP_BASEURL = '{{ URL::to('/') }}/';
 		</script>

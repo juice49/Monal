@@ -1,5 +1,32 @@
 (function(window, $, conscious){
 
+	/* ==================================================
+	 * Global helper functions.
+	 ================================================== */
+
+	/**
+	 * Convert a string to snake_case allowing only alpha, underscore
+	 * and space characters.
+	 */
+	window.snakeCaseString = function(str) {
+		snake_case = str;
+		snake_case = $.trim(snake_case);
+		// Strip all characters except alpha, hypen, underscore and spaces.
+		snake_case = snake_case.replace(/[^A-Za-z-_ ]+/g, '');
+		// Convert hyphens to spaces.
+		snake_case = snake_case.replace(/[-]/g, ' ');
+		// Replace mutiple spaces with one space.
+		snake_case = snake_case.replace(/ +(?= )/g,'');
+		// Convert spaces to underscores.
+		snake_case = snake_case.replace(/[ ]/g, '_');
+		// Covert characters to lowercase.
+		snake_case = snake_case.toLowerCase();
+		return snake_case;
+	}
+
+	/* ==================================================
+	 * UI setup and control.
+	 ================================================== */
 	conscious.maxscreen = 'desktop';
 	conscious.setState({
 		'mobile': 600,
