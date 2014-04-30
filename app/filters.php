@@ -58,7 +58,7 @@ App::before(function($request)
 
 App::after(function($request, $response)
 {
-
+	//
 });
 
 /*
@@ -83,7 +83,7 @@ Route::filter('admin', function()
 		}
 	}
 });
-Route::when('admin/*', 'admin');
+Route::when('admin/*', 'admin');;
 
 /*
 |--------------------------------------------------------------------------
