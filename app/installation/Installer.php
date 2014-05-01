@@ -181,6 +181,40 @@ class Installer {
 	 */
 	public function createUser(array $details)
 	{
+		// Allow alpha, spaces and hypen characters. Must also contain at
+		// least 1 letter, and cannot begin or end with a space or hyphen.
+		Validator::extend('name', function($attribute, $value, $parameters)
+		{
+			if (
+				preg_match('/^[a-z \-]+$/i', $value) AND
+				preg_match('/[a-zA-Z]/', $value) AND
+				$value[0] != ' ' AND
+				$value[0] != '-' AND
+				substr($value, -1) != ' ' AND
+				substr($value, -1) != '-'
+			) {
+				return true;
+			}
+			return false;
+		});
+		// Allow alpha, numeric, spaces, hypens and underscore characters.
+		// Must also contain at least 1 letter or number, and cannot begin or
+		// end with a space.
+		Validator::extend('username', function($attribute, $value, $parameters)
+		{
+			if (
+				preg_match('/^[a-z0-9 ._\-]+$/i', $value) AND
+				(
+					preg_match('/[a-zA-Z]/', $value) OR
+					preg_match('/[0-9]/', $value)
+				) AND
+				$value[0] != ' ' AND
+				substr($value, -1) != ' '
+			) {
+				return true;
+			}
+			return false;
+		});
 		$validation = Validator::make(
 			$details,
 			array(
@@ -192,15 +226,15 @@ class Installer {
 				),
 			array(
 				'first_name.required' => 'You need to provide a First Name for yourself.',
-				'first_name.name' => 'Your First Name can only contain letters, spaces or hyphens, and must contain at least one letter.',
+				'first_name.name' => 'Your First Name doesn’t look like a name. It can only contain letters, spaces and hyphens, and must contain at least 1 letter. It cannot begin or end with a space or underscore.',
 				'last_name.required' => 'You need to provide a Last Name for yourself.',
-				'last_name.name' => 'Your Last Name can only contain letters, spaces or hyphens, and must contain at least one letter.',
+				'last_name.name' => 'Your Last Name doesn’t look like a name. It can only contain letters, spaces and hyphens, and must contain at least 1 letter. It cannot begin or end with a space or underscore.',
 				'username.required' => 'You need to provide a Username for yourself.',
 				'username.min' => 'Your Username must be at least two characters long.',
 				'username.unique' => 'Sorry, it looks like someone beat you to the punch as this Username is already taken.',
-				'username.username' => 'Your Username can only contain letters, numbers, spaces, underscores or hyphens.',
+				'username.username' => 'Your Username is invalid. It can only contain letters, numbers, spaces, underscores and hyphens. It must contain at least 1 letter or number and cannot begin or end with spaces.',
 				'email.required' => 'You need to provide an Email Address for yourself.',
-				'email.email' => 'Your Email Address doesn’t appear to be a valid email address.',
+				'email.email' => 'Your Email Address doesn’t look like a valid email address.',
 				'email.unique' => 'Sorry, it looks like someone beat you to the punch as this Email Address is already taken.',
 				'password.required' => 'You need to provide a Password for your account.',
 				'password.min' => 'Your Password must be at least 6 characters long.',
@@ -217,6 +251,8 @@ class Installer {
 					'password' => \Hash::make($details['password']),
 					'group' => 1,
 					'active' => 1,
+					'created_at' => date('Y-m-d H:i:s'),
+					'updated_at' => date('Y-m-d H:i:s'),
 					)
 				);
 				return true;
@@ -345,6 +381,7 @@ class Installer {
 				$table->string('password', 255)->nullable();
 				$table->integer('group')->nullable();
 				$table->boolean('active')->nullable();
+				$table->string('remember_token', 255)->nullable();
 				$table->timestamps();
 			}
 		);
@@ -353,7 +390,6 @@ class Installer {
 			function(Blueprint $table) {
 				$table->increments('id');
 				$table->string('name', 255)->nullable();
-				$table->boolean('active')->nullable();
 				$table->timestamps();
 			}
 		);
@@ -370,12 +406,16 @@ class Installer {
 		\DB::table('user_groups')->insert(array(
 			'name' => 'Administrator',
 			'active' => '1',
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s'),
 			)
 		);
 		\DB::table('user_group_permissions')->insert(array(
 			'group' => '1',
 			'admin' => '1',
 			'admin_permissions' => null,
+			'created_at' => date('Y-m-d H:i:s'),
+			'updated_at' => date('Y-m-d H:i:s'),
 			)
 		);
 	}
@@ -434,7 +474,7 @@ class Installer {
 		$file = app_path() . '/config/app.php';
 		if (is_writable($file)) {
 			$lines = file($file, FILE_IGNORE_NEW_LINES);
-			$lines[67] = '    \'key\' => \'' . $encryption_key . '\',';
+			$lines[80] = '    \'key\' => \'' . $encryption_key . '\',';
 			$file_contents = '';
 			foreach ($lines as $line) {
 				$file_contents .= $line . PHP_EOL;

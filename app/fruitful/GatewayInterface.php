@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Core\Contracts;
+namespace Fruitful;
 /**
  * Gateway.
  *
@@ -13,11 +13,9 @@ interface GatewayInterface
 	/**
 	 * Create a new authentication request.
 	 *
-	 * @param	String
-	 * @param	String
 	 * @return	Fruitful\Core\AuthenticationRequest
 	 */
-	public function newAuthRequest($email, $password);
+	public function newAuthRequest();
 
 	/**
 	 * Check if the current user has already been authenticated.

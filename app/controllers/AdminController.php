@@ -7,14 +7,14 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\Contracts\GatewayInterface;
+use Fruitful\GatewayInterface;
 
 class AdminController extends BaseController
 {
 	/**
 	 * Constructor.
 	 *
-	 * @param	Fruitful\Core\Contracts\GatewayInterface
+	 * @param	Fruitful\GatewayInterface
 	 * @return	Void
 	 */
 	public function __construct(GatewayInterface $system_gateway)
@@ -49,7 +49,8 @@ class AdminController extends BaseController
 			return \Redirect::route('admin.dashboard');
 		}
 		if ($this->input) {
-			$authentication = $this->system->newAuthRequest($this->input['email'], $this->input['password']);
+			$authentication = $this->system->newAuthRequest();
+			$authentication->setUser($this->input['email'], $this->input['password']);
 			if ($authentication->validates()) {
 				if ($authentication->attempt(true)) {
 					return \Redirect::route('admin.dashboard');

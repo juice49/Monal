@@ -13,13 +13,9 @@
 
 App::before(function($request)
 {
-	$system = App::make('Fruitful\Core\Contracts\GatewayInterface');
-	$system->attemptAuthFromSession();
-
-	// Check if the installation files are present. If they arr then run
+	// Check if the installation files are present. If they are then run
 	// the installation process.
-	if (file_exists(app_path() . '/installation/routes.php'))
-	{
+	if (file_exists(app_path() . '/installation/routes.php')) {
 		require app_path() . '/installation/routes.php';
 		require app_path() . '/installation/Installer.php';
 		require app_path() . '/installation/InstallationController.php';
@@ -28,30 +24,31 @@ App::before(function($request)
 		View::addNamespace('installation', app('path') . '/installation/views');
 
 		$installer = new \Installer;
-		switch ($step = $installer->getInstallationStep())
-		{
+		switch ($step = $installer->getInstallationStep()) {
 			case 'ERROR':
-				return 'There appears to be an error with the installation process';
+				return 'There appears to be an error with the installation process.';
 				break;
 			case 'step1':
-				if (Request::url() != URL::route('installation.database'))
-				{
+				if (Request::url() != URL::route('installation.database')) {
 					return Redirect::route('installation.database');
 				}
 				break;
 			case 'step2':
-				if (Request::url() != URL::route('installation.user'))
-				{
+				if (Request::url() != URL::route('installation.user')) {
 					return Redirect::route('installation.user');
 				}
 				break;
 			case 'step3':
-				if (Request::url() != URL::route('installation.remove'))
-				{
+				if (Request::url() != URL::route('installation.remove')) {
 					return Redirect::route('installation.remove');
 				}
 				break;
 		}
+	}
+	// Check if the the Router class intercepts the route and returns a
+	// view.
+	if ($view = Router::intercept(Request::segments())) {
+		return $view;
 	}
 });
 
@@ -72,18 +69,6 @@ App::after(function($request, $response)
 |
 */
 
-Route::filter('admin', function()
-{
-	if (Request::url() != URL::route('admin.login'))
-	{
-		$system = App::make('Fruitful\Core\Contracts\GatewayInterface');
-		if (!$system->attemptAuthFromSession(true))
-		{
-			return Redirect::route('admin.login');
-		}
-	}
-});
-Route::when('admin/*', 'admin');;
 
 /*
 |--------------------------------------------------------------------------

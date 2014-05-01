@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Core;
+namespace Fruitful;
 /**
  * Gateway.
  *
@@ -9,24 +9,17 @@ namespace Fruitful\Core;
  * @author	Arran Jacques
  */
 
-use Fruitful\FruitfulSystem;
-use Fruitful\Core\Contracts\GatewayInterface;
-
-class Gateway extends FruitfulSystem implements GatewayInterface
+class Gateway extends System implements GatewayInterface
 {
 	/**
 	 * Create a new authentication request.
 	 *
-	 * @param	String
-	 * @param	String
 	 * @return	Fruitful\Core\AuthenticationRequest
 	 */
-	public function newAuthRequest($email, $password)
+	public function newAuthRequest()
 	{
 		$this->revokeAuth();
-		$authentication = \App::make('Fruitful\Core\Contracts\AuthenticationRequestInterface');
-		$authentication->setUser($email, $password);
-		return $authentication;
+		return \App::make('Fruitful\Models\AuthenticationRequest');
 	}
 
 	/**
@@ -42,16 +35,16 @@ class Gateway extends FruitfulSystem implements GatewayInterface
 			if ($user->active) {
 				if ($is_admin) {
 					if ($user->GroupDetails->id != 1 AND !$user->GroupDetails->groupPermissions->admin) {
-						$this->user = new \Fruitful\Core\FruitfulUser();
+						$this->user = new \Fruitful\Models\SystemUser();
 						return false;
 					}
 				}
-				$this->user = new \Fruitful\Core\FruitfulUser($user->toArray());
+				$this->user = new \Fruitful\Models\SystemUser($user->toArray());
 				return true;
 			}
 			$this->revokeAuth();
 		}
-		$this->user = new \Fruitful\Core\FruitfulUser();
+		$this->user = new \Fruitful\Models\SystemUser();
 		return false;
 	}
 

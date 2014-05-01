@@ -5,9 +5,7 @@
  * @author Arran Jacques
  */
 
-use Fruitful\Repositories\Contracts\UserGroupsRepository;
-
-class EloquentUserGroupsRepository extends \Eloquent implements UserGroupsRepository
+class EloquentUserGroupsRepository extends \Eloquent
 {
 	/**
 	 * The database table used by the repository.
@@ -31,24 +29,5 @@ class EloquentUserGroupsRepository extends \Eloquent implements UserGroupsReposi
 	public function groupPermissions()
 	{
 		return $this->hasOne('EloquentUserGroupPermissionsRepository', 'group');
-	}
-
-	/**
-	 * Retrieve an instance/s from the repository.
-	 *
-	 * @param	Integer
-	 * @return	Illuminate\Support\Collection / MYSQLUserGroupsRepository
-	 */
-	public function retrieve($key = null)
-	{
-	}
-
-	/**
-	 * Write an instance to the repository.
-	 *
-	 * @return	MYSQLUserGroupsRepository
-	 */
-	public function write()
-	{
 	}
 }

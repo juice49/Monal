@@ -5,7 +5,7 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\Contracts\GatewayInterface;
+use Fruitful\GatewayInterface;
 
 class InstallationController extends BaseController
 {
@@ -19,7 +19,7 @@ class InstallationController extends BaseController
 	/**
 	 * Constructor.
 	 *
-	 * @param	Fruitful\Core\Contracts\GatewayInterface
+	 * @param	Fruitful\GatewayInterface
 	 * @param	Installer
 	 * @return	Void
 	 */

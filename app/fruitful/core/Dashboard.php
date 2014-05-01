@@ -1,16 +1,14 @@
 <?php
 namespace Fruitful\Core;
 /**
- * Fruitful Dashboard.
+ * Dashboard.
  *
  * Add to and expand the Admin dashboard.
  *
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\Contracts\DashboardInterface;
-
-class FruitfulDashboard implements DashboardInterface
+class Dashboard
 {
 	/**
 	 * Dashboard menu options in Array form.

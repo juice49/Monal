@@ -1,7 +1,7 @@
 <?php
-namespace Fruitful\Core;
+namespace Fruitful\Models;
 /**
- * Fruitful User.
+ * System User.
  *
  * User class for the current system user. Provides methods for
  * working with the current system user.
@@ -9,7 +9,7 @@ namespace Fruitful\Core;
  * @author	Arran Jacques
  */
 
-class FruitfulUser
+class SystemUser
 {
 	/**
 	 * User's ID.

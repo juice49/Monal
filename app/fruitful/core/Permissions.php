@@ -1,7 +1,7 @@
 <?php
 namespace Fruitful\Core;
 /**
- * Fruitful Permissions.
+ * Permissions.
  *
  * Set and read system permission and permission sets. Permission
  * can be granted to objects allowing them to interact with parts of
@@ -10,9 +10,7 @@ namespace Fruitful\Core;
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\Contracts\PermissionsInterface;
-
-class FruitfulPermissions implements PermissionsInterface
+class Permissions
 {
 	/**
 	 * System permssion sets.

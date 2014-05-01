@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-    'default' => 'mysql',
+	'default' => 'mysql',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -54,14 +54,14 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-            'host'      => '',
-            'database'  => '',
-            'username'  => '',
-            'password'  => '',
+			'host'      => 'localhost',
+			'database'  => 'database',
+			'username'  => 'root',
+			'password'  => '',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
-            'port'      => '',
+			'port'		=> ''
 		),
 
 		'pgsql' => array(
@@ -93,7 +93,7 @@ return array(
 	|
 	| This table keeps track of all the migrations that have already run for
 	| your application. Using this information, we can determine which of
-	| the migrations on disk have not actually be run in the databases.
+	| the migrations on disk haven't actually been run in the database.
 	|
 	*/
 
@@ -112,7 +112,7 @@ return array(
 
 	'redis' => array(
 
-		'cluster' => true,
+		'cluster' => false,
 
 		'default' => array(
 			'host'     => '127.0.0.1',

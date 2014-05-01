@@ -1,14 +1,14 @@
 <?php
 namespace Fruitful;
 /**
- * Fruitful System.
+ * System.
  *
  * Base system class that ties everything together.
  *
  * @author	Arran Jacques
  */
 
-class FruitfulSystem
+class System
 {
 	/**
 	 * Instance of class implementing DashboardInterface.
@@ -45,8 +45,8 @@ class FruitfulSystem
 	 */
 	public function __construct()
 	{
-		$this->dashboard = \App::make('Fruitful\Core\Contracts\DashboardInterface');
-		$this->permissions = \App::make('Fruitful\Core\Contracts\PermissionsInterface');
+		$this->dashboard = \App::make('Fruitful\Core\Dashboard');
+		$this->permissions = \App::make('Fruitful\Core\Permissions');
 		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
 	}
 }

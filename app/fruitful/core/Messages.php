@@ -1,14 +1,14 @@
 <?php
 namespace Fruitful\Core;
 /**
- * Fruitful Messages.
+ * Messages.
  *
  * @author	Arran Jacques
  */
 
 use Fruitful\Core\Contracts\MessagesInterface;
 
-class FruitfulMessages implements MessagesInterface
+class Messages implements MessagesInterface
 {
 	/**
 	 * Message Bag.

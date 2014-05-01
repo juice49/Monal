@@ -5,10 +5,9 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\Repositories\Contracts\AuthenticationRepository;
 use Illuminate\Auth\UserInterface;
 
-class EloquentAuthenticationRepository extends \Eloquent implements AuthenticationRepository, UserInterface
+class EloquentAuthenticationRepository extends \Eloquent implements UserInterface
 {
 	/**
 	 * The database table used by the repository.
@@ -62,6 +61,37 @@ class EloquentAuthenticationRepository extends \Eloquent implements Authenticati
 	}
 
 	/**
+	 * Get the token value for the "remember me" session.
+	 *
+	 * @return	String
+	 */
+	public function getRememberToken()
+	{
+		return $this->remember_token;
+	}
+
+	/**
+	 * Set the token value for the "remember me" session.
+	 *
+	 * @param	String
+	 * @return	Void
+	 */
+	public function setRememberToken($value)
+	{
+		$this->remember_token = $value;
+	}
+
+	/**
+	 * Get the column name for the "remember me" token.
+	 *
+	 * @return	String
+	 */
+	public function getRememberTokenName()
+	{
+		return 'remember_token';
+	}
+
+	/**
 	 * Return the e-mail address where password reminders are sent.
 	 *
 	 * @return	String
@@ -79,8 +109,9 @@ class EloquentAuthenticationRepository extends \Eloquent implements Authenticati
 	 */
 	public function retrieve($email)
 	{
-		$user = self::where('email',  '=', $email)->first();
-		$user->group_details->group_permissions->admin_permissions = json_decode($user->group_details->group_permissions->admin_permissions, true);
+		if ($user = self::where('email', '=', $email)->first()) {
+			$user->group_details->group_permissions->admin_permissions = json_decode($user->group_details->group_permissions->admin_permissions, true);
+		}
 		return $user;
 	}
 }

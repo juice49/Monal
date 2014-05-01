@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Core;
+namespace Fruitful\Models;
 /**
  * Authentication Request.
  *
@@ -9,9 +9,7 @@ namespace Fruitful\Core;
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\Contracts\AuthenticationRequestInterface;
-
-class AuthenticationRequest implements AuthenticationRequestInterface
+class AuthenticationRequest
 {
 	/**
 	 * Instance of class implementing MessagesInterface
@@ -49,7 +47,7 @@ class AuthenticationRequest implements AuthenticationRequestInterface
 	public function __construct()
 	{
 		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
-		$this->repository = \App::make('Fruitful\Repositories\Contracts\AuthenticationRepository');
+		$this->repository = \App::make('EloquentAuthenticationRepository');
 	}
 
 	/**
@@ -84,7 +82,13 @@ class AuthenticationRequest implements AuthenticationRequestInterface
 			)
 		);
 		if (!$validation->passes()) {
-			$this->messages->add($validation->messages()->toArray());
+			$this->messages->add(
+				array(
+					'error' => array(
+						'Login failed.'
+					)
+				)
+			);
 			return false;
 		}
 		return true;
