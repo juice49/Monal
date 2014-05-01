@@ -9,7 +9,7 @@
 					<li class="js--dashboard__menu__group dashboard__menu__group"><span class="dashboard__menu__group--title">{{ $group_title }}</span>
 						<ul class="dashboard__menu__group--list">
 							@foreach($group_page as $page_name => $page_route)
-								<li class="dashboard__menu__group--item"><a href="{{ URL::to('admin/' . $page_route) }}" class="dashboard__menu__group--link">{{ $page_name }}</a></li>
+								<li class="dashboard__menu__group--item"><a href="{{ URL::to(Config::get('admin.slug') . '/' . $page_route) }}" class="dashboard__menu__group--link">{{ $page_name }}</a></li>
 							@endforeach
 						</ul>
 					</li>
