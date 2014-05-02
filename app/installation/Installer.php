@@ -403,6 +403,15 @@ class Installer {
 				$table->timestamps();
 			}
 		);
+		\Schema::create(
+			'settings',
+			function(Blueprint $table) {
+				$table->increments('id');
+				$table->string('key', 255)->nullable();
+				$table->string('value', 255)->nullable();
+				$table->timestamps();
+			}
+		);
 		\DB::table('user_groups')->insert(array(
 			'name' => 'Administrator',
 			'created_at' => date('Y-m-d H:i:s'),
