@@ -7,14 +7,14 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\GatewayInterface;
+use Monal\GatewayInterface;
 
 class BaseController extends Controller
 {
 	/**
 	 * Instance of class implementing GatewayInterface.
 	 *
-	 * @var		 Fruitful\GatewayInterface
+	 * @var		 Monal\GatewayInterface
 	 */
 	protected $system;
 
@@ -28,7 +28,7 @@ class BaseController extends Controller
 	/**
 	 * Constructor.
 	 *
-	 * @param	Fruitful\GatewayInterface
+	 * @param	Monal\GatewayInterface
 	 * @return	Void
 	 */
 	public function __construct(GatewayInterface $system_gateway)

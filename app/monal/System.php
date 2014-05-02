@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful;
+namespace Monal;
 /**
  * System.
  *
@@ -13,28 +13,28 @@ class System
 	/**
 	 * Instance of class implementing DashboardInterface.
 	 *
-	 * @var		 Fruitful\Core\Contracts\DashboardInterface
+	 * @var		 Monal\Core\Contracts\DashboardInterface
 	 */
 	public $dashboard;
 
 	/**
 	 * Instance of class implementing PermissionsInterface.
 	 *
-	 * @var		 Fruitful\Core\Contracts\PermissionsInterface
+	 * @var		 Monal\Core\Contracts\PermissionsInterface
 	 */
 	public $permissions;
 
 	/**
 	 * Instance of class implementing MessagesInterface.
 	 *
-	 * @var		 Fruitful\Core\Contracts\MessagesInterface
+	 * @var		 Monal\Core\Contracts\MessagesInterface
 	 */
 	public $messages;
 
 	/**
 	 * System user.
 	 *
-	 * @var		Fruitful\Core\SystemUser
+	 * @var		Monal\Core\SystemUser
 	 */
 	public $user;
 
@@ -45,8 +45,8 @@ class System
 	 */
 	public function __construct()
 	{
-		$this->dashboard = \App::make('Fruitful\Core\Dashboard');
-		$this->permissions = \App::make('Fruitful\Core\Permissions');
-		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
+		$this->dashboard = \App::make('Monal\Core\Dashboard');
+		$this->permissions = \App::make('Monal\Core\Permissions');
+		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
 	}
 }

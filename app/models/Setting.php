@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Models;
+namespace Monal\Models;
 /**
  * Setting.
  *
@@ -13,7 +13,7 @@ class Setting
 	/**
 	 * The model's messages.
 	 *
-	 * @var		 Fruitful\Core\Contracts\MessagesInterface
+	 * @var		 Monal\Core\Contracts\MessagesInterface
 	 */
 	protected $messages;
 
@@ -45,7 +45,7 @@ class Setting
 	 */
 	public function __construct()
 	{
-		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
+		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
 	}
 
 	/**

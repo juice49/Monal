@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Models;
+namespace Monal\Models;
 /**
  * System User.
  *

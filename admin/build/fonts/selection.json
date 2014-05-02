@@ -163,13 +163,13 @@
 	],
 	"height": 1024,
 	"metadata": {
-		"name": "Fruitful"
+		"name": "Monal"
 	},
 	"preferences": {
 		"fontPref": {
 			"prefix": "icon-",
 			"metadata": {
-				"fontFamily": "Fruitful"
+				"fontFamily": "Monal"
 			},
 			"showGlyphs": true,
 			"metrics": {

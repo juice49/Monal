@@ -1,22 +1,22 @@
 <?php
 /**
- * Fruitful.
+ * Monal.
  *
  * Static API for directly accessing core system classes.
  *
  * @author	Arran Jacques
  */
 
-class Fruitful
+class Monal
 {
 	/**
 	 * Return the current instance of the system gateway class.
 	 *
-	 * @return	Fruitful\Core\Contracts\GatewayInterface
+	 * @return	Monal\Core\Contracts\GatewayInterface
 	 */
 	public static function instance()
 	{
-		return App::make('Fruitful\GatewayInterface');
+		return App::make('Monal\GatewayInterface');
 	}
 
 	/**

@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Core;
+namespace Monal\Core;
 /**
  * Dashboard.
  *

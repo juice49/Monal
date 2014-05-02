@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful;
+namespace Monal;
 /**
  * Gateway.
  *
@@ -13,7 +13,7 @@ interface GatewayInterface
 	/**
 	 * Create a new authentication request.
 	 *
-	 * @return	Fruitful\Core\AuthenticationRequest
+	 * @return	Monal\Core\AuthenticationRequest
 	 */
 	public function newAuthRequest();
 

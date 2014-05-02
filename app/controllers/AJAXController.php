@@ -4,7 +4,7 @@
  *
  * AJAX controller for AJAX requests to the system.
  *
- * @author Arran Jacques
+ * @author	Arran Jacques
  */
 
 class AJAXController extends BaseController

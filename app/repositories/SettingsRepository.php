@@ -7,7 +7,7 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\Models\Setting;
+use Monal\Models\Setting;
 
 class SettingsRepository
 {
@@ -21,7 +21,7 @@ class SettingsRepository
 	/**
 	 * The repository's messages.
 	 *
-	 * @var		 Fruitful\Core\Contracts\MessagesInterface
+	 * @var		 Monal\Core\Contracts\MessagesInterface
 	 */
 	protected $messages;
 
@@ -32,7 +32,7 @@ class SettingsRepository
 	 */
 	public function __construct()
 	{
-		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
+		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
 	}
 
 	/**
@@ -48,17 +48,17 @@ class SettingsRepository
 	/**
 	 * Return a new Settings model.
 	 *
-	 * @return	Fruitful\Data\Models\DataSet
+	 * @return	Monal\Data\Models\DataSet
 	 */
 	public function newModel()
 	{
-		return \App::make('Fruitful\Models\Setting');
+		return \App::make('Monal\Models\Setting');
 	}
 
 	/**
 	 * Check a Data Set model validates for storage.
 	 *
-	 * @param	Fruitful\Models\Setting
+	 * @param	Monal\Models\Setting
 	 * @return	Boolean
 	 */
 	public function validatesForStorage(Setting $setting)
@@ -92,7 +92,7 @@ class SettingsRepository
 	 * Encode a Setting model so it is ready to be stored in the
 	 * repository.
 	 *
-	 * @param	Fruitful\Models\Settings
+	 * @param	Monal\Models\Settings
 	 * @return	Array
 	 */
 	protected function encodeForStorage(Setting $setting)
@@ -107,7 +107,7 @@ class SettingsRepository
 	 * Decode a Settings repository entry into its model class.
 	 *
 	 * @param	stdClass
-	 * @return	Fruitful\Models\Setting
+	 * @return	Monal\Models\Setting
 	 */
 	protected function decodeFromStorage($result)
 	{
@@ -122,7 +122,7 @@ class SettingsRepository
 	 * Retrieve an instance/s from the repository.
 	 *
 	 * @param	Integer
-	 * @return	Illuminate\Database\Eloquent\Collection / Fruitful\Models\Setting
+	 * @return	Illuminate\Database\Eloquent\Collection / Monal\Models\Setting
 	 */
 	public function retrieve($key = null)
 	{
@@ -146,7 +146,7 @@ class SettingsRepository
 	 * Retrieve an instance from the repository using it's key.
 	 *
 	 * @param	String
-	 * @return	Fruitful\Models\Setting
+	 * @return	Monal\Models\Setting
 	 */
 	public function retrieveByKey($key)
 	{
@@ -159,7 +159,7 @@ class SettingsRepository
 	/**
 	 * Write a Setting model to the repository.
 	 *
-	 * @param	Fruitful\Models\Setting
+	 * @param	Monal\Models\Setting
 	 * @return	Boolean
 	 */
 	public function write(Setting $setting)

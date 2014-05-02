@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Models;
+namespace Monal\Models;
 /**
  * Authentication Request.
  *
@@ -14,14 +14,14 @@ class AuthenticationRequest
 	/**
 	 * Instance of class implementing MessagesInterface
 	 *
-	 * @var		Fruitful\Core\Contracts\MessagesInterface
+	 * @var		Monal\Core\Contracts\MessagesInterface
 	 */
 	public $messages;
 
 	/**
 	 * Instance of class implementing AuthenticationRepository.
 	 *
-	 * @var		 Fruitful\Repositories\Contracts\AuthenticationRepository
+	 * @var		 Monal\Repositories\Contracts\AuthenticationRepository
 	 */
 	protected $repository;
 
@@ -46,7 +46,7 @@ class AuthenticationRequest
 	 */
 	public function __construct()
 	{
-		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
+		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
 		$this->repository = \App::make('EloquentAuthenticationRepository');
 	}
 

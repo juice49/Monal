@@ -1,9 +1,9 @@
 <?php
 
 // Core Admin routes.
-Fruitful::registerAdminRoute('any', 'login', 'admin.login', 'AdminController@login');
-Fruitful::registerAdminRoute('any', 'logout', 'admin.logout', 'AdminController@logout');
-Fruitful::registerAdminRoute('any', 'dashboard', 'admin.dashboard', 'AdminController@dashboard');
+Monal::registerAdminRoute('any', 'login', 'admin.login', 'AdminController@login');
+Monal::registerAdminRoute('any', 'logout', 'admin.logout', 'AdminController@logout');
+Monal::registerAdminRoute('any', 'dashboard', 'admin.dashboard', 'AdminController@dashboard');
 
 // Ajax route.
 Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));

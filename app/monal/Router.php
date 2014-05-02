@@ -38,7 +38,7 @@ class Router
 			// Is the route trying to access the admin area of the system.
 			if ($url_segments[0] == $admin_slug) {
 				// If it is check the user is logged in and has valid credentials.
-				$system = \Fruitful::instance();
+				$system = \Monal::instance();
 				$grant_access = $system->attemptAuthFromSession(true);
 				if (count($url_segments) == 1) {
 					return $grant_access ? Redirect::route('admin.dashboard') : Redirect::route('admin.login');

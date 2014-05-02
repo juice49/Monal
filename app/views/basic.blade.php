@@ -11,7 +11,7 @@
 		</div>
 	</div>
 	<footer class="body__footer">
-		<p>Copyright &copy; 2013 Fruitful Digital LTD</p>
+		<p>&copy; 2013, Reveal Legion</p>
 	</footer>
 </div>
 @stop

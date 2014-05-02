@@ -2,7 +2,7 @@
 
 @section('body-header')
 	<h1 class="color--teal">Installation Guide</h1>
-	<p class="fs--echo">Welcome. This guide will take you through 3 simple steps to install the Fruitful core system and get you up and running in a jiffy!</p>
+	<p class="fs--echo">Welcome. This guide will take you through 3 simple steps to install the Monal core system and get you up and running in a jiffy!</p>
 @stop
 
 @section('body-content')

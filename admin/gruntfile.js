@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 					'include css': true
 				},
 				files: {
-					'build/css/fruitful.css': 'css/fruitful.styl'
+					'build/css/monal.css': 'css/monal.styl'
 				}
 			}
 		},
@@ -22,7 +22,7 @@ module.exports = function(grunt) {
 					browsers: ['last 2 version', '> 1%', 'ie 8', 'ie 7']
 				},
 				files: {
-					'build/css/fruitful.css': 'build/css/fruitful.css'
+					'build/css/monal.css': 'build/css/monal.css'
 				}
 			}
 		},
@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 		cssmin: {
 			compile: {
 				files: {
-					'build/css/fruitful.css': ['build/css/fruitful.css']
+					'build/css/monal.css': ['build/css/monal.css']
 				}
 			}
 		},
@@ -38,7 +38,7 @@ module.exports = function(grunt) {
 		browserify: {
 			dist: {
 				files: {
-					'build/js/fruitful.js' : ['js/core.js']
+					'build/js/monal.js' : ['js/core.js']
 				}
 			}
 		},
@@ -46,11 +46,11 @@ module.exports = function(grunt) {
 		uglify: {
 			compile: {
 				files: {
-					'build/js/fruitful.js': [
+					'build/js/monal.js': [
 						'js/libs/jquery-1.10.2.js',
 						'js/libs/jquery.conscious.js',
 						'js/libs/freshalert/freshalert.js',
-						'build/js/fruitful.js'
+						'build/js/monal.js'
 					]
 				}
 			}

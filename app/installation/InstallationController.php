@@ -5,7 +5,7 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\GatewayInterface;
+use Monal\GatewayInterface;
 
 class InstallationController extends BaseController
 {
@@ -19,7 +19,7 @@ class InstallationController extends BaseController
 	/**
 	 * Constructor.
 	 *
-	 * @param	Fruitful\GatewayInterface
+	 * @param	Monal\GatewayInterface
 	 * @param	Installer
 	 * @return	Void
 	 */

@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful;
+namespace Monal;
 /**
  * Gateway.
  *
@@ -14,12 +14,12 @@ class Gateway extends System implements GatewayInterface
 	/**
 	 * Create a new authentication request.
 	 *
-	 * @return	Fruitful\Core\AuthenticationRequest
+	 * @return	Monal\Core\AuthenticationRequest
 	 */
 	public function newAuthRequest()
 	{
 		$this->revokeAuth();
-		return \App::make('Fruitful\Models\AuthenticationRequest');
+		return \App::make('Monal\Models\AuthenticationRequest');
 	}
 
 	/**
@@ -35,16 +35,16 @@ class Gateway extends System implements GatewayInterface
 			if ($user->active) {
 				if ($is_admin) {
 					if ($user->GroupDetails->id != 1 AND !$user->GroupDetails->groupPermissions->admin) {
-						$this->user = new \Fruitful\Models\SystemUser();
+						$this->user = new \Monal\Models\SystemUser();
 						return false;
 					}
 				}
-				$this->user = new \Fruitful\Models\SystemUser($user->toArray());
+				$this->user = new \Monal\Models\SystemUser($user->toArray());
 				return true;
 			}
 			$this->revokeAuth();
 		}
-		$this->user = new \Fruitful\Models\SystemUser();
+		$this->user = new \Monal\Models\SystemUser();
 		return false;
 	}
 

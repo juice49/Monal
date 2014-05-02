@@ -1,5 +1,5 @@
 <?php
-namespace Fruitful\Core\Contracts;
+namespace Monal\Core\Contracts;
 /**
  * Messages Interaface.
  *

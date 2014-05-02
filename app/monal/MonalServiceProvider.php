@@ -1,16 +1,16 @@
 <?php
-namespace Fruitful;
+namespace Monal;
 /**
- * Fruitful Service Provider.
+ * Monal Service Provider.
  *
- * Bootstrap the Fruitful application.
+ * Bootstrap the Monal application.
  *
  * @author	Arran Jacques
  */
 
 use Illuminate\Support\ServiceProvider;
 
-class FruitfulServiceProvider extends ServiceProvider
+class MonalServiceProvider extends ServiceProvider
 {
 	/**
 	 * Bootstrap the application events.
@@ -29,15 +29,15 @@ class FruitfulServiceProvider extends ServiceProvider
 	public function register()
 	{
 		$this->app->singleton(
-			'Fruitful\GatewayInterface',
+			'Monal\GatewayInterface',
 			function() {
-				return new \Fruitful\Gateway;
+				return new \Monal\Gateway;
 			}
 		);
 		$this->app->bind(
-			'Fruitful\Core\Contracts\MessagesInterface',
+			'Monal\Core\Contracts\MessagesInterface',
 			function() {
-				return new \Fruitful\Core\Messages;
+				return new \Monal\Core\Messages;
 			}
 		);
 	}

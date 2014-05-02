@@ -2,7 +2,7 @@
 /**
  * Installer Library.
  *
- * Library for installing the core Fruitful System.
+ * Library for installing the core Monal System.
  *
  * @author	Arran Jacques
  */
@@ -14,7 +14,7 @@ class Installer {
 	/**
 	 * Instance of class implementing MessagesInterface.
 	 *
-	 * @var		 Fruitful\Core\Contracts\MessagesInterface
+	 * @var		 Monal\Core\Contracts\MessagesInterface
 	 */
 	protected $messages;
 
@@ -39,7 +39,7 @@ class Installer {
 	 */
 	public function __construct()
 	{
-		$this->messages = \App::make('Fruitful\Core\Contracts\MessagesInterface');
+		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
 	}
 
 	/**

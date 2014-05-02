@@ -7,14 +7,14 @@
  * @author	Arran Jacques
  */
 
-use Fruitful\GatewayInterface;
+use Monal\GatewayInterface;
 
 class AdminController extends BaseController
 {
 	/**
 	 * Constructor.
 	 *
-	 * @param	Fruitful\GatewayInterface
+	 * @param	Monal\GatewayInterface
 	 * @return	Void
 	 */
 	public function __construct(GatewayInterface $system_gateway)

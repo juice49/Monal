@@ -1,12 +1,12 @@
 <?php
-namespace Fruitful\Core;
+namespace Monal\Core;
 /**
  * Messages.
  *
  * @author	Arran Jacques
  */
 
-use Fruitful\Core\Contracts\MessagesInterface;
+use Monal\Core\Contracts\MessagesInterface;
 
 class Messages implements MessagesInterface
 {
@@ -52,7 +52,7 @@ class Messages implements MessagesInterface
 	 * Add messages to the instance's message set.
 	 *
 	 * @param	Array
-	 * @return	FruitfulMessages
+	 * @return	Messages
 	 *
 	 * Use:
 	 * setMessages(array(
