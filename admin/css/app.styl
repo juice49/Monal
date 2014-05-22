@@ -1,0 +1,896 @@
+@import colors
+@import config
+@import resets
+
+displayInlineBlock()
+	display inline-block
+	*display inline
+	*zoom 1
+
+/* ============================================================
+ * Typography
+=========================================================== */
+
+html
+body
+input
+textarea
+select
+button
+	font-family: fonts['main']
+	-webkit-font-smoothing antialiased
+	-moz-osx-font-smoothing grayscale
+	font-smoothing antialiased
+	text-rendering optimizeLegibility
+
+input
+textarea
+select
+button
+	font-family: fonts['main']
+	font-size: font_sizes['foxtrot']
+
+.fs--alpha
+	font-size: font_sizes['alpha']
+
+.fs--bravo
+	font-size: font_sizes['bravo']
+
+.fs--charlie
+	font-size: font_sizes['charlie']
+
+.fs--delta
+	font-size: font_sizes['delta']
+
+.fs--echo
+	font-size: font_sizes['echo']
+
+.fs--foxtrot
+	font-size: font_sizes['foxtrot']
+
+/* ============================================================
+ * Colors
+=========================================================== */
+
+.color--grey__dark
+	color: colors['grey+2']
+
+.color--grey__medium
+	color: colors['grey']
+
+.color--grey__light
+	color: colors['grey+2']
+
+.color--grey__vlight
+	color: colors['grey+4']
+
+.color--teal
+	color: colors['teal']
+
+/* ============================================================
+ * Aligns
+=========================================================== */
+
+.align--right
+	text-align right
+
+.align--center
+	text-align center
+
+.align--left
+	text-align left
+
+
+/* ============================================================
+ * Nodes
+=========================================================== */
+
+.node__y
+	padding-top base_unit
+	padding-bottom base_unit
+
+.node__y--top
+	padding-top base_unit
+
+.node__y--bottom
+	padding-bottom base_unit
+
+/* ============================================================
+ * Buttons
+=========================================================== */
+
+.button
+	displayInlineBlock()
+	box-sizing border-box
+	padding (base_unit * .5) (base_unit * .75)
+	margin 0
+	font-size: font_sizes['foxtrot']
+	font-weight bold
+	text-decoration none
+	border none
+	border-radius 2px
+	cursor pointer
+
+.button--small
+	font-size: font_sizes['gamma']
+	padding (base_unit * .125) (base_unit * .5)
+
+
+.button--cuban_heat
+	color #ffffff
+	background-color: colors['cuban_heat']
+
+.button.button--cuban_heat
+
+	&:hover
+		background-color: colors['cuban_heat+1']
+
+	&:active
+		background-color: colors['cuban_heat-2']
+
+.button--dusk
+	color #ffffff
+	background-color: colors['dusk']
+
+.button.button--dusk
+
+	&:hover
+		background-color: colors['dusk+1']
+
+	&:active
+		background-color: colors['dusk-2']
+
+.button--mist
+	color #ffffff
+	background-color: colors['mist']
+
+.button.button--mist
+
+	&:hover
+		background-color: colors['mist+1']
+
+	&:active
+		background-color: colors['mist-2']
+
+.button--mustard
+	color #ffffff
+	background-color: colors['mustard']
+
+.button.button--mustard
+
+	&:hover
+		background-color: colors['mustard+1']
+
+	&:active
+		background-color: colors['mustard-2']
+
+.button--teal
+	color #ffffff
+	background-color: colors['teal']
+
+.button.button--teal
+
+	&:hover
+		background-color: colors['teal+1']
+
+	&:active
+		background-color: colors['teal-2']
+
+.button--wasabi
+	color #ffffff
+	background-color: colors['wasabi']
+
+.button.button--wasabi
+
+	&:hover
+		background-color: colors['wasabi+1']
+
+	&:active
+		background-color: colors['wasabi-2']
+
+/* ============================================================
+ * Messages
+=========================================================== */
+
+.message_box
+	padding (base_unit * .5) base_unit
+	border-radius 2px
+
+	ul
+	ol
+		padding 0
+		list-style none
+
+		li
+			padding 0
+			margin 0 0 (base_unit * .6) 0
+			font-size: font_sizes['foxtrot']
+
+			&:last-child
+				margin 0
+
+.message_box__title
+	display block
+	margin-top base_unit * .5
+	font-size: font_sizes['foxtrot']
+	font-weight bold
+	text-transform uppercase
+
+.message_box--small
+	padding (base_unit * .25) (base_unit * .75)
+
+	.message_box__title
+		margin-top base_unit * .25
+		font-size: font_sizes['gamma']
+
+	ul
+	ol
+
+		li
+			margin 0 0 (base_unit * .4) 0
+			font-size: font_sizes['gamma']
+
+			&:last-child
+				margin 0
+
+.message_box--mustard
+	color: colors['mustard-6']
+	background-color: colors['mustard']
+
+	* 
+		color: colors['mustard-6']
+
+	a
+		font-weight bold
+
+.message_box--tomato
+	color: colors['tomato-6']
+	background-color: colors['tomato']
+
+	* 
+		color: colors['tomato-6']
+
+.message_box--wasabi
+	color: colors['wasabi-6'] !important
+	background-color: colors['wasabi']
+
+	* 
+		color: colors['wasabi-6']
+
+/* ============================================================
+ * Forms
+=========================================================== */
+
+.form__controls__right
+.form__controls__left
+	displayInlineBlock()
+	width 50%
+	margin-right -4px
+
+/**
+ * Labels
+ ============================================================ */
+
+.label
+	color: colors['grey-4']
+	font-size: font_sizes['foxtrot']
+
+.label--block
+	display block
+	padding-bottom base_unit * .75
+	margin 0
+
+.label--inline
+	displayInlineBlock()
+	vertical-align middle 
+	padding-left base_unit
+	padding-right base_unit
+	margin-top base_unit * .75
+
+.label--strong
+	font-weight bold
+
+.label--description
+	margin-top base_unit * .5
+	margin-bottom base_unit * .5
+	color: colors['grey+2'] !important
+	font-size: font_sizes['gamma']
+	font-style italic
+
+/**
+ * Inputs - Text
+ ============================================================ */
+
+.input__text
+	box-sizing border-box
+	width base_unit * 14
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	margin 0
+	color: colors['grey']
+	border: solid 2px colors['grey+2']
+	border-radius 2px
+	background-color #ffffff
+
+	&:hover
+		color: colors['grey-2']
+		border-color: colors['grey']
+
+	&:focus
+		color: colors['grey-4']
+		border-color: colors['grey-2']
+
+.input__text:disabled
+.input__text.input__text--disabled
+	border-color: colors['grey+3']
+	background-color: colors['grey+5']
+
+	&:hover
+		color: colors['grey']
+		border-color: colors['grey+3']
+
+	&:focus
+		color: colors['grey']
+		border-color: colors['grey+3']
+
+/**
+ * Inputs - Numbers
+ ============================================================ */
+
+.input__number::-webkit-outer-spin-button
+.input__number::-webkit-inner-spin-button
+	-webkit-appearance none
+	margin 0
+
+.input__number
+	@extend .input__text
+
+/**
+ * Inputs - Radio buttons and checkboxes
+ ============================================================ */
+
+.checkbox
+
+	&:hover
+
+		.checkbox__input
+			border: solid 2px colors['grey']
+
+	.checkbox__label
+		displayInlineBlock()
+		vertical-align middle 
+
+	.checkbox__input
+		-webkit-appearance none
+		-moz-appearance none
+		appearance none
+		displayInlineBlock()
+		vertical-align middle 
+		width 20px
+		height 20px
+		border: solid 2px colors['grey+2']
+		border-radius 2px
+		background-color #ffffff
+		background-size 16px, 16px
+		background-repeat no-repeat
+		background-position center center
+
+	.checkbox__input:checked
+		border-color: colors['grey']
+		background-image url(../images/checkbox--tick_@2x.png)
+
+	.checkbox__input:disabled
+		border-color: colors['grey+3']
+		background-color: colors['grey+5']
+
+/**
+ * Inputs - Textareas
+ ============================================================ */
+
+.textarea
+	box-sizing border-box
+	width base_unit * 24
+	max-width 100%
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	margin 0
+	color: colors['grey']
+	border: solid 2px colors['grey+2']
+	border-radius 2px
+	background #ffffff
+	resize none
+
+	&:hover
+		color: colors['grey-2']
+		border-color: colors['grey']
+
+	&:focus
+		color: colors['grey-4']
+		border-color: colors['grey-2']
+
+/**
+ * Inputs - Selects
+ ============================================================ */
+
+.select
+	-webkit-appearance none
+	-moz-appearance none
+	appearance none
+	box-sizing border-box
+	width base_unit * 14
+	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	margin 0
+	color: colors['grey-4']
+	font-weight bold
+	border none
+	border-radius 2px
+	background-color: colors['grey+4']
+	background-image url(../images/select--arrow_down.png)
+	background-repeat no-repeat
+	background-position right center
+	background-size 48px 24px
+	cursor pointer
+
+	&:hover
+		background-color: colors['grey+3']
+
+	&:focus
+		background-color: colors['grey+2']
+
+	@media only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+		background-image url(../images/select--arrow_down_@2x.png)
+
+/* ============================================================
+ * Admin
+=========================================================== */
+
+/**
+ * Master Admin Template
+ ============================================================ */
+
+html
+body
+	height auto
+	height 100%
+	background-color: colors['grey+6']
+
+.dashboard
+	height auto
+	height 100%
+	width 100%
+	overflow-x hidden
+
+.dashboard__footer
+	margin-top 0 - ((base_unit * 3) + 1)
+
+	span
+		display block
+		height base_unit * 2
+		margin 0 base_unit
+		padding (base_unit * .75) 0 0 0
+		color: colors['grey+2']
+		text-align right
+		border-top: solid 1px colors['grey+5']
+
+		@media screen and (max-width: 960px)
+			margin 0 base_unit
+
+/**
+ * Admin Login
+ ============================================================ */
+
+.login__container
+	display table
+	width 100%
+	height 100%
+	text-align center
+
+.login__box
+	display table-cell
+	vertical-align middle
+	height 100%
+
+	@media screen and (max-width: 600px)
+		padding-right base_unit
+		padding-left base_unit
+
+.login__form
+	displayInlineBlock()
+	text-align left
+	width base_unit * 14
+	padding-bottom base_unit * 4
+
+	@media screen and (max-width: 600px)
+		width 100%
+
+	@media screen and (max-height: 550px)
+		margin-top 0
+
+	.input__text
+		width base_unit * 14
+
+		@media screen and (max-width: 600px)
+			width 100%
+
+.login__form__remember
+	margin-left base_unit
+
+/**
+ * Admin Dashboard
+ ============================================================ */
+
+.dashboard__wrap
+	height 100%
+	padding-left base_unit * 11
+	transition padding .3s ease, margin .3s ease
+
+	@media screen and (max-width: 960px)
+		padding 0
+
+.dashboard__control_panel--open
+
+	.dashboard__wrap
+		padding-left base_unit * 22
+		overflow hidden
+		margin-right 0 - (base_unit * 12)
+
+		@media screen and (max-width: 960px)
+			padding-left base_unit * 11
+
+		@media screen and (max-width: 600px)
+			padding-left 60%
+			margin-right -60%
+
+.dashboard__body__wrap
+	position relative
+	min-height 100%
+	padding 0 base_unit
+	transition margin .3s ease
+
+.dashboard__header
+	position relative
+	height base_unit * 7
+
+	@media screen and (max-width: 960px)
+		height auto
+		padding-top base_unit * 3
+		padding-bottom base_unit
+
+.dashboard__title
+.dashboard__subtitle
+	position absolute
+	padding 0
+	margin 0
+
+	@media screen and (max-width: 960px)
+		position static
+		left auto
+		bottom auto
+
+.dashboard__title
+	bottom base_unit
+	color: colors['teal']
+	font-size: font_sizes['bravo']
+
+	@media screen and (max-width: 600px)
+		font-size: font_sizes['charlie']
+
+.dashboard__subtitle
+	bottom base_unit * 3.5
+	color: colors['grey+2']
+	font-size: font_sizes['charlie']
+
+	@media screen and (max-width: 600px)
+		font-size: font_sizes['delta']
+
+.dashboard__body
+	padding-bottom base_unit * 5
+
+/**
+ * Admin Dashboard Control Panel
+ ============================================================ */
+
+.dashboard__mobile__nav
+	display none
+
+	@media screen and (max-width: 960px)
+		display block
+		position absolute
+		top 0
+		left 0
+		z-index 2
+		width 100%
+		background-color: colors['teal']
+
+		.icon
+			displayInlineBlock()
+			padding (base_unit * .5) base_unit
+			color: #ffffff
+			font-size: font_sizes['delta']
+			cursor pointer
+
+.dashboard__control_panel
+	position fixed
+	top 0
+	left 0
+	z-index 1
+	width base_unit * 11
+	height 100%
+	background-color: colors['grey+5']
+	overflow hidden
+	transition padding .3s ease, left .3s ease
+
+	@media screen and (max-width: 960px)
+		left 0 - (base_unit * 11)
+
+	@media screen and (max-width: 600px)
+		width 60%
+		left -60%
+
+.dashboard__control_panel--open
+
+	.dashboard__control_panel
+		padding-right base_unit * 11
+
+		@media screen and (max-width: 960px)
+			left 0
+			padding-right 0
+
+.dashboard__logo
+	height base_unit * 7
+	margin-bottom (base_unit * .5)
+	background-color #ffffff
+
+	@media screen and (max-width: 960px)
+		height auto
+
+.dashboard__menu
+	padding 0 0 0 (base_unit * .5)
+	margin 0
+	list-style none
+
+	@media screen and (max-width: 960px)
+		padding 0
+
+.dashboard__menu__group
+	display block
+
+.menu__group__title
+	display block
+	margin 0 0 (base_unit * .125) 0
+	padding (base_unit * .75) (base_unit * 1.25)
+	color: colors['grey-4']
+	font-weight bold
+	border-top-left-radius 2px
+	border-bottom-left-radius 2px
+	cursor pointer
+
+	&:hover
+		background-color: colors['grey+4']
+
+	@media screen and (max-width: 960px)
+		padding (base_unit * .5) base_unit
+		background-color transparent
+
+		&:hover
+			background-color transparent
+
+.menu__group__title--active
+	background-color: colors['grey+4']
+
+.menu__group__options
+	display none
+	position absolute
+	top 0
+	left base_unit * 11
+	width base_unit * 11
+	height 100%
+	padding 0
+	margin 0
+	list-style none
+	background-color: colors['teal+4']
+
+	@media screen and (max-width: 960px)
+		position static
+		left auto
+		width auto
+		height auto
+		background-color transparent
+
+.menu__group__options--active
+	display block
+
+.menu__group__option
+	display block
+	padding 0
+	margin 0 0 0 (base_unit * .5)
+
+	&:first-child
+		margin-top base_unit * 7.5
+
+.dashboard__control_panel--open
+
+	.menu__group__option
+
+		@media screen and (max-width: 960px)
+			margin 0 0 0 (base_unit)
+
+.menu__group__link
+	display block
+	padding (base_unit * .75) 
+	margin 0 0 (base_unit * .125) 0
+	color: colors['mist-6']
+	font-weight bold
+	text-decoration none
+	border-top-left-radius 2px
+	border-bottom-left-radius 2px
+	cursor pointer
+
+	&:hover
+		background-color: colors['teal+6']
+
+.dashboard__control_panel--open
+
+	.menu__group__link
+
+		@media screen and (max-width: 960px)
+			color: colors['grey-4']
+			font-weight normal
+
+			&:hover
+				background-color transparent
+
+/* ============================================================
+ * Wall Tiles
+=========================================================== */
+	
+.wall__tiles
+	display block
+	padding 0 0 0 4px
+	margin 0 (0 - base_unit) 0 0
+	list-style none
+
+	@media screen and (max-width: 792px)
+		padding 0
+		margin 0
+
+.tile
+	displayInlineBlock()
+	vertical-align top
+	width base_unit * 15
+	margin 0 base_unit base_unit -4px
+	background #ffffff
+
+	@media screen and (max-width: 792px)
+		display block
+		width auto
+		margin 0 0 base_unit 0
+
+.tile__content
+	padding (base_unit * .75)
+	font-size: font_sizes['foxtrot']
+
+.tile__properties
+	padding 0
+	margin 0
+	list-style none
+
+.tile__property
+	display block
+	padding 0
+	margin (base_unit * .5) 0 0 0
+
+	&:first-child
+		margin 0
+
+.tile__property__key
+.tile__property__value
+	displayInlineBlock()
+	vertical-align top
+
+.tile__property__key
+	width base_unit * 4
+	color: colors['grey+2']
+
+.tile__property__value
+	color: colors['grey-4']
+	width base_unit * 9
+	margin-left -4px
+	padding-left base_unit * .5
+
+/* ============================================================
+ * Wells & Control Blocks
+=========================================================== */
+
+.well
+	padding base_unit
+	margin-top base_unit
+	margin-bottom base_unit
+	border-radius 2px
+	background-color #ffffff
+
+	h2
+		color: colors['grey-4']
+		margin-top base_unit * .5
+		margin-bottom base_unit * 1.25
+		fontFamilyHeading()
+		font-size: font_sizes['delta']
+
+	h3
+		color: colors['grey-4']
+		margin-top base_unit * .25
+		margin-bottom base_unit
+		fontFamilyHeading()
+		font-size: font_sizes['echo']
+
+	p
+	ul
+	ol
+		color: colors['grey+2']
+		margin-top base_unit * .75
+		margin-bottom base_unit
+		font-size: font_sizes['foxtrot']
+
+	.control_block
+		padding-top base_unit * .75
+		padding-bottom base_unit * .75
+
+		&:first-child
+			padding-top base_unit * .25
+
+.block__y__top
+	padding-top base_unit * .75
+
+.block__y__bottom
+	padding-bottom base_unit * .75
+
+
+/* ============================================================
+ * Nav Bars
+=========================================================== */
+
+.navbar__menu
+	padding base_unit * .25
+	margin 0
+	list-style none
+	border-radius 2px
+	background-color #ffffff
+
+.navbar__menu__option
+	displayInlineBlock()
+	padding 0
+	margin 0 0 0 -4px
+
+	&:first-child
+		margin 0
+
+.navbar__menu__link
+	display block
+	padding (base_unit * .25) (base_unit * .75)
+	margin-right base_unit * .25
+	color: colors['mist-6']
+	font-weight bold
+	text-decoration none
+	border-radius 2px
+	background-color: colors['mist']
+
+	&:hover
+		background-color: colors['mist+1']
+
+	&:active
+		background-color: colors['mist-1']
+
+/* ============================================================
+ * Installation
+=========================================================== */
+
+.installation__wrap
+	width base_unit * 42
+	height auto
+	min-height 100%
+	margin auto
+
+	h1
+		padding-top base_unit * 2
+		margin-top 0
+
+	.well
+		margin-bottom base_unit * 4

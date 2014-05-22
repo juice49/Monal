@@ -1,12 +1,30 @@
+/**
+ * Base
+ ============================================================ */
 
-base_unit = 16
-
-/* ============================================================
- * Fonts
-=========================================================== */
-
-base_font_size = base_unit
+base_font_size = 16px
 base_line_height = 1.5
+base_unit = base_font_size * base_line_height
+
+/**
+ * Colors
+ ============================================================ */
+
+colors['grey-4'] = #444444
+colors['grey-3'] = #555555
+colors['grey-2'] = #666666
+colors['grey-1'] = #777777
+colors['grey'] = #888888
+colors['grey+1'] = #999999
+colors['grey+2'] = #aaaaaa
+colors['grey+3'] = #bbbbbb
+colors['grey+4'] = #cccccc
+colors['grey+5'] = #dddddd
+colors['grey+6'] = #eeeeee
+
+/**
+ * Fonts
+ ============================================================ */
 
 /*
  * Font stacks
@@ -16,16 +34,8 @@ fonts = {}
 fonts['heading'] = "Helvetica Neue"\, Helvetica\, Arial\, sans-serif
 fonts['main'] = "HelveticaNeue-Light"\, "Helvetica Neue Light"\, "Helvetica Neue"\, Helvetica\, Arial\, sans-serif
 
-fontFamilyHeading()
-	font-family fonts['heading']
-	font-weight 700
-
-fontFamilyMain()
-	font-family fonts['main']
-	font-weight 300
-
 /*
- * Font sizes
+ * Font Sizes
  **************************************************/
 
 font_sizes = {}
@@ -36,72 +46,3 @@ font_sizes['delta'] = unit((base_font_size * 1.5), px)
 font_sizes['echo'] = unit((base_font_size * 1.2), px)
 font_sizes['foxtrot'] = unit(base_font_size, px)
 font_sizes['gamma'] = unit((base_font_size * 0.875), px)
-
-line_heights = {}
-line_heights['alpha'] = unit(((base_font_size * 3) * base_line_height), px)
-line_heights['bravo'] = unit(((base_font_size * 2.5) * base_line_height), px)
-line_heights['charlie'] = unit(((base_font_size * 2) * base_line_height), px)
-line_heights['delta'] = unit(((base_font_size * 1.5) * base_line_height), px)
-line_heights['echo'] = unit(((base_font_size * 1.2) * base_line_height), px)
-line_heights['foxtrot'] = unit((base_font_size * base_line_height), px)
-line_heights['gamma'] = unit(((base_font_size * 0.875) * base_line_height), px)
-
-
-/* ============================================================
- * Colors
-=========================================================== */
-
-colors = {}
-colors['grey+4'] = #333333
-colors['grey+3'] = #444444
-colors['grey+2'] = #555555
-colors['grey+1'] = #666666
-colors['grey'] = #777777
-colors['grey-1'] = #888888
-colors['grey-2'] = #999999
-colors['grey-3'] = #aaaaaa
-colors['grey-4'] = #bbbbbb
-colors['grey-5'] = #cccccc
-colors['grey-5'] = #dddddd
-colors['grey-6'] = #eeeeee
-
-colors['cuban_heat+2'] = #9e3a2a
-colors['cuban_heat'] = #c54835
-colors['cuban_heat-1'] = #cb5b4a
-
-colors['dusk+2'] = #43526f
-colors['dusk'] = #54678b
-colors['dusk-1'] = #657697
-
-colors['mist+6'] = #39585a
-colors['mist+2'] = #72b0b3
-colors['mist+1'] = #7fc6c9
-colors['mist'] = #8edce0
-colors['mist-1'] = #9ae0e3
-
-colors['mustard+6'] = #5a490f
-colors['mustard+3'] = #705a12
-colors['mustard+3'] = #9c7e1a
-colors['mustard+2'] = #b3911e
-colors['mustard'] = #e0b525
-colors['mustard-1'] = #e3bd3b
-
-colors['teal+2'] = #0c9577
-colors['teal'] = #10ba95
-colors['teal-1'] = #21c1a0
-colors['teal-3'] = #57cfb5
-colors['teal-4'] = #70d6bf
-colors['teal-6'] = #9fe3d5
-
-colors['tomato+6'] = #5f3024
-colors['tomato+5'] = #773b2e
-colors['tomato+3'] = #a65340
-colors['tomato+2'] = #be5f4a
-colors['tomato'] = #ee775c
-colors['tomato-2'] = #f1927d
-
-colors['wasabi+6'] = #465728
-colors['wasabi+2'] = #8bae4f
-colors['wasabi'] = #aed964
-colors['wasabi-1'] = #b6dd74
-

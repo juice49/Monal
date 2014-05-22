@@ -1,15 +1,21 @@
 {
-  "name": "monal_system-default_theme",
+  "name": "monal",
+  "title": "Monal",
+  "author": "Arran Jacques",
   "version": "1.0.0",
-  "author": "Arran Jacques <arranjacques@gmail.com>",
+  "private": true,
   "devDependencies": {
-    "grunt": "*",
-    "grunt-contrib-watch": "*",
-    "grunt-contrib-stylus": "0.10.x",
-    "grunt-autoprefixer": "*",
-    "grunt-contrib-cssmin": "*",
-    "browserify": "~2.35.4",
-    "grunt-browserify": "~1.2.11",
-    "grunt-contrib-uglify": "*"
+    "bower": "*",
+    "gulp": "~3.6.*",
+    "gulp-util": "^2.2.14",
+    "gulp-plumber": "^0.5.6",
+    "vinyl-source-stream": "^0.1.1",
+    "gulp-concat": "^2.1.7",
+    "gulp-stylus": "^0.1.0",
+    "gulp-csso": "~0.2.6",
+    "gulp-autoprefixer": "0.0.6",
+    "gulp-uglify": "^0.2.1",
+    "gulp-watch": "~0.5.2",
+    "gulp-streamify": "0.0.4"
   }
 }

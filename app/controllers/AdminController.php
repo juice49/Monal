@@ -22,6 +22,7 @@ class AdminController extends BaseController
 		parent::__construct($system_gateway);
 		$this->control_panel_navigation = $this->buildDashboardMenu();
 		View::share('control_panel', $this->control_panel_navigation);
+		View::share('system', $this->system);
 	}
 
 	/**
@@ -59,7 +60,7 @@ class AdminController extends BaseController
 			$this->system->messages->add($authentication->messages->get()->toArray());
 		}
 		$messages = $this->system->messages->get();
-		return View::make('admin.login', compact('messages'));
+		return View::make('login', compact('messages'));
 	}
 
 	/**

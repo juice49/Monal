@@ -1,51 +1,38 @@
 @extends('master')
 @section('master-body')
-	<div class="js--dashboard__menu dashboard__menu__wrap">
+	<div class="js--control_panel dashboard__control_panel">
 		<div class="dashboard__logo">
 		</div>
 		<ul class="dashboard__menu">
 			@if (!empty($control_panel))
 				@foreach ($control_panel as $group_title => $group_page)
-					<li class="js--dashboard__menu__group dashboard__menu__group"><span class="dashboard__menu__group--title">{{ $group_title }}</span>
-						<ul class="dashboard__menu__group--list">
+					<li class="dashboard__menu__group"><span class="js--menu__option menu__group__title">{{ $group_title }}</span>
+						<ul class="js--menu__options menu__group__options">
 							@foreach($group_page as $page_name => $page_route)
-								<li class="dashboard__menu__group--item"><a href="{{ URL::to(Config::get('admin.slug') . '/' . $page_route) }}" class="dashboard__menu__group--link">{{ $page_name }}</a></li>
+								<li class="menu__group__option">
+									<a href="{{ URL::to(Config::get('admin.slug') . '/' . $page_route) }}" class="menu__group__link">{{ $page_name }}</a>
+								</li>
 							@endforeach
 						</ul>
 					</li>
 				@endforeach
 			@endif
 		</ul>
-		<div class="dashboard__menu--group_bkg"></div>
 	</div>
-	<div class="js--dashboard__body dashboard__body">
-		<div class="body__main__content">
-			<section class="body__header">
-				<span class="js--toggle_menu toggle_menu icon icon-menu"></span>
-				<div class="button__dropdown__hover button--teal profile">
-					<span class="button__dropdown__btn">{{ $system_user->first_name }} <i class="button__icon--right icon icon-arrow-down"></i></span>
-					<div class="button__dropdown__container">
-						<ul class="button__dropdown__list">
-							<li>
-								<form action="{{ URL::route('admin.logout') }}" method="post">
-									<input type="submit" name="logout" value="Logout" class="dropdown__list__button" />
-								</form>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</section>
-			<section class="body__main__content__wrap">
-				<header class="dashboard__header">
-					@yield('body-header')
-				</header>
-				<div class="body__content">
-					@yield('body-content')
-				</div>
-			</section>
+	<div class="dashboard__wrap">
+		<div class="dashboard__body__wrap">
+			<div class="dashboard__mobile__nav">
+				<span class="js--mobile__nav icon icon-menu"></span>
+			</div>
+			<div class="dashboard__header">
+				@yield('body-header')
+			</div>
+			<div class="dashboard__body">
+				@yield('body-content')
+			</div>
 		</div>
-		<footer class="body__footer">
-			<p>&copy; 2013, Reveal Legion</p>
-		</footer>
+		<div class="dashboard__footer">
+			<span>&copy; 2013, Reveal Legion</span>
+		</div>
 	</div>
 @stop

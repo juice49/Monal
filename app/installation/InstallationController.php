@@ -27,6 +27,7 @@ class InstallationController extends BaseController
 	{
 		parent::__construct($system_gateway);
 		$this->installer = $installer;
+		View::share('system', $this->system);
 	}
 
 	/**
