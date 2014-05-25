@@ -3,8 +3,7 @@ namespace Monal\Models;
 /**
  * System User.
  *
- * User class for the current system user. Provides methods for
- * working with the current system user.
+ * A model for a system user.
  *
  * @author	Arran Jacques
  */
@@ -12,35 +11,35 @@ namespace Monal\Models;
 class SystemUser
 {
 	/**
-	 * User's ID.
+	 * The user's ID.
 	 *
 	 * @var		Int
 	 */
 	public $id;
 
 	/**
-	 * User's first name.
+	 * The user's first name.
 	 *
 	 * @var		String
 	 */
 	public $first_name;
 
 	/**
-	 * User's last name.
+	 * The user's last name.
 	 *
 	 * @var		String
 	 */
 	public $last_name;
 
 	/**
-	 * User's username.
+	 * The user's username.
 	 *
 	 * @var		String
 	 */
 	public $username;
 
 	/**
-	 * User's email address.
+	 * The usser's email address.
 	 *
 	 * @var		String
 	 */
@@ -54,7 +53,7 @@ class SystemUser
 	public $group_id;
 
 	/**
-	 * User's status.
+	 * The user's status.
 	 *
 	 * @var		Integer
 	 */
@@ -77,7 +76,7 @@ class SystemUser
 	public $updated_at;
 
 	/**
-	 * User's group details.
+	 * The user's group details.
 	 *
 	 * @var		String
 	 */

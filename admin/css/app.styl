@@ -91,8 +91,10 @@ button
 
 .node__y--top
 	padding-top base_unit
+	padding-bottom 0
 
 .node__y--bottom
+	padding-top 0
 	padding-bottom base_unit
 
 /* ============================================================
@@ -291,11 +293,16 @@ button
 	font-weight bold
 
 .label--description
-	margin-top base_unit * .5
-	margin-bottom base_unit * .5
-	color: colors['grey+2'] !important
+	color: colors['grey'] !important
 	font-size: font_sizes['gamma']
 	font-style italic
+
+	a
+		color: colors['grey-2']
+		text-decoration underline
+
+		&:hover
+			color: colors['grey-4']
 
 /**
  * Inputs - Text
@@ -459,14 +466,14 @@ body
 	overflow-x hidden
 
 .dashboard__footer
-	margin-top 0 - ((base_unit * 3) + 1)
+	margin-top 0 - (base_unit * 2)
 
 	span
 		display block
-		height base_unit * 2
 		margin 0 base_unit
-		padding (base_unit * .75) 0 0 0
+		padding (base_unit * .5) 0 0 0
 		color: colors['grey+2']
+		font-size: font_sizes['gamma']
 		text-align right
 		border-top: solid 1px colors['grey+5']
 
@@ -520,6 +527,7 @@ body
 .dashboard__wrap
 	height 100%
 	padding-left base_unit * 11
+	max-width base_unit * 49
 	transition padding .3s ease, margin .3s ease
 
 	@media screen and (max-width: 960px)
@@ -635,12 +643,25 @@ body
 			padding-right 0
 
 .dashboard__logo
-	height base_unit * 7
+	height base_unit * 4
+	padding base_unit * 1.5
 	margin-bottom (base_unit * .5)
+	text-align center
 	background-color #ffffff
 
 	@media screen and (max-width: 960px)
 		height auto
+		padding base_unit * .25
+		text-align left
+
+	img
+		width auto
+		max-width 100%
+		height auto
+		max-height 100%
+
+		@media screen and (max-width: 960px)
+			height base_unit * 1.25
 
 .dashboard__menu
 	padding 0 0 0 (base_unit * .5)
@@ -659,6 +680,7 @@ body
 	padding (base_unit * .75) (base_unit * 1.25)
 	color: colors['grey-4']
 	font-weight bold
+	text-decoration none
 	border-top-left-radius 2px
 	border-bottom-left-radius 2px
 	cursor pointer
@@ -739,6 +761,23 @@ body
 				background-color transparent
 
 /* ============================================================
+ * Installation
+=========================================================== */
+
+.installation__wrap
+	width base_unit * 42
+	height auto
+	min-height 100%
+	margin auto
+
+	h1
+		padding-top base_unit * 2
+		margin-top 0
+
+	.well
+		margin-bottom base_unit * 4
+
+/* ============================================================
  * Wall Tiles
 =========================================================== */
 	
@@ -807,6 +846,9 @@ body
 	border-radius 2px
 	background-color #ffffff
 
+	&:first-of-type
+		margin-top 0
+
 	h2
 		color: colors['grey-4']
 		margin-top base_unit * .5
@@ -871,26 +913,10 @@ body
 	text-decoration none
 	border-radius 2px
 	background-color: colors['mist']
+	cursor pointer
 
 	&:hover
 		background-color: colors['mist+1']
 
 	&:active
 		background-color: colors['mist-1']
-
-/* ============================================================
- * Installation
-=========================================================== */
-
-.installation__wrap
-	width base_unit * 42
-	height auto
-	min-height 100%
-	margin auto
-
-	h1
-		padding-top base_unit * 2
-		margin-top 0
-
-	.well
-		margin-bottom base_unit * 4

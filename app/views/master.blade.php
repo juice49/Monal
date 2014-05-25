@@ -17,6 +17,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width">
+		<title>Admin</title>
 		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin/build/app.css') }}" media="screen">
 		@foreach ($system->dashboard->css() as $css)
 			<link rel="stylesheet" type="text/css" href="{{ $css }}" media="screen">

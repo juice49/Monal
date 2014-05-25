@@ -3,7 +3,7 @@ namespace Monal\Models;
 /**
  * Setting.
  *
- * Model for a single system setting.
+ * A model of a system setting.
  *
  * @author	Arran Jacques
  */
@@ -11,9 +11,9 @@ namespace Monal\Models;
 class Setting
 {
 	/**
-	 * The model's messages.
+	 * The setting's messages.
 	 *
-	 * @var		 Monal\Core\Contracts\MessagesInterface
+	 * @var		Monal\Core\Contracts\MessagesInterface
 	 */
 	protected $messages;
 

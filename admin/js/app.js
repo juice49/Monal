@@ -2,11 +2,13 @@
 
 	$(document).ready(function(){
 
+		// Set break points for dashboard.
 		conscious.setState({
 			'600': 600,
 			'960': 960
 		});
 		
+		// Toggle the dashboard control panel menu open/closed.
 		$('.js--menu__option').on('click', function(){ 
 			if ($(this).data('open') === 'open') {
 				dashboard.hideControlPanelMenu($(this));
@@ -23,6 +25,8 @@
 			}
 		});
 
+		// Close the dashboard control panel menu each the window moves
+		// through a breakpoint.
 		conscious.stateChangeTo({
 			'600': function() {
 				dashboard.hideControlPanelMenu();
@@ -75,9 +79,9 @@
 	 * and space characters.
 	 */
 	window.snakeCaseString = function(str) {
-		snake_case = str;
+		var snake_case = str;
 		snake_case = $.trim(snake_case);
-		// Strip all characters except alpha, hypen, underscore and spaces.
+		// Strip all characters except alpha, hypens, underscores and spaces.
 		snake_case = snake_case.replace(/[^A-Za-z-_ ]+/g, '');
 		// Convert hyphens to spaces.
 		snake_case = snake_case.replace(/[-]/g, ' ');
@@ -88,6 +92,22 @@
 		// Covert characters to lowercase.
 		snake_case = snake_case.toLowerCase();
 		return snake_case;
+	}
+
+	window.slugify = function(str) {
+		var slug = str;
+		slug = $.trim(slug);
+		// Strip all characters except alpha, numberic, hypens and underscores.
+		slug = slug.replace(/[^A-Za-z0-9-_ ]+/g, '');
+		// Convert hyphens and underscores to spaces.
+		slug = slug.replace(/[-_]/g, ' ');
+		// Replace mutiple spaces with one space.
+		slug = slug.replace(/ +(?= )/g,'');
+		// Convert spaces to hyphens.
+		slug = slug.replace(/[ ]/g, '-');
+		// Covert characters to lowercase.
+		slug = slug.toLowerCase();
+		return slug;
 	}
 
 })(window, jQuery, conscious)

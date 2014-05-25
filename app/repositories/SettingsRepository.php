@@ -2,7 +2,9 @@
 /**
  * Settings Repository.
  *
- * Repository for storing System Settings.
+ * A repository for storing system settings. The class defines
+ * methods for reading, writing, updating and removing settings to
+ * the repository.
  *
  * @author	Arran Jacques
  */
@@ -56,7 +58,7 @@ class SettingsRepository
 	}
 
 	/**
-	 * Check a Data Set model validates for storage.
+	 * Check a Settings model validates for storage.
 	 *
 	 * @param	Monal\Models\Setting
 	 * @return	Boolean
@@ -89,7 +91,7 @@ class SettingsRepository
 	}
 
 	/**
-	 * Encode a Setting model so it is ready to be stored in the
+	 * Encode a Settings model so it is ready to be stored in the
 	 * repository.
 	 *
 	 * @param	Monal\Models\Settings

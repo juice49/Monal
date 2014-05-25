@@ -3,8 +3,7 @@ namespace Monal\Models;
 /**
  * Authentication Request.
  *
- * Authentication class for making making user authentication
- * requests to the system.
+ * A model for a authentication request to the system.
  *
  * @author	Arran Jacques
  */
@@ -12,16 +11,16 @@ namespace Monal\Models;
 class AuthenticationRequest
 {
 	/**
-	 * Instance of class implementing MessagesInterface
+	 * The authentication request's messages.
 	 *
 	 * @var		Monal\Core\Contracts\MessagesInterface
 	 */
 	public $messages;
 
 	/**
-	 * Instance of class implementing AuthenticationRepository.
+	 * The system's authentication repository.
 	 *
-	 * @var		 Monal\Repositories\Contracts\AuthenticationRepository
+	 * @var		Monal\Repositories\Contracts\AuthenticationRepository
 	 */
 	protected $repository;
 
@@ -51,7 +50,7 @@ class AuthenticationRequest
 	}
 
 	/**
-	 * Set the user to authenticate.
+	 * Set the user's authentication details.
 	 *
 	 * @param	String
 	 * @param	String

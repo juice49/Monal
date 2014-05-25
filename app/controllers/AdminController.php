@@ -2,7 +2,7 @@
 /**
  * Admin Controller.
  *
- * Base controller for the system's admin dashboards.
+ * Base controller for HTTP/S requests for the systems admin pages.
  *
  * @author	Arran Jacques
  */
@@ -40,7 +40,8 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Control and display admin login page.
+	 * Controller for HTTP/S requests for the admin login page. Mediates
+	 * the requests and outputs a response.
 	 *
 	 * @return	Illuminate\View\View / Illuminate\Http\RedirectResponse
 	 */
@@ -64,7 +65,8 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Control and display admin logout page.
+	 * Controller for HTTP/S requests for the admin logout page. Mediates
+	 * the requests and outputs a response.
 	 *
 	 * @return	Illuminate\Http\RedirectResponse
 	 */
@@ -75,9 +77,10 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Control and display admin main dashboard.
+	 * Controller for HTTP/S requests for the admin dashboard Mediates the
+	 * requests and outputs a response.
 	 *
-	 * @return	Illuminate\View\View
+	 * @return	Illuminate\View\View / Illuminate\Http\RedirectResponse
 	 */
 	public function dashboard()
 	{
@@ -86,8 +89,8 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Build the admin dashboard based on the system’s dashboard menu
-	 * options and the current system user’s permissions.
+	 * Create an array of menu options for the dashboard control panel
+	 * based on the current system user’s permissions.
 	 *
 	 * @return	Array
 	 */

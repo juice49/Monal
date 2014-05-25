@@ -1,4 +1,11 @@
 <?php
+/**
+ * Text.
+ *
+ * Helper functions for working with strings of text.
+ *
+ * @author	Arran Jacques
+ */
 
 class Text {
 
