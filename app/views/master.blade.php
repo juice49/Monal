@@ -18,15 +18,15 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width">
 		<title>Admin</title>
-		<link rel="stylesheet" type="text/css" href="{{ URL::to('admin/build/app.css') }}" media="screen">
+		<link rel="stylesheet" type="text/css" href="{{ URL::to('system_theme/build/app.css') }}" media="screen">
 		@foreach ($system->dashboard->css() as $css)
 			<link rel="stylesheet" type="text/css" href="{{ $css }}" media="screen">
 		@endforeach
 		<script>
 			var _APP_BASEURL = '{{ URL::to('/') }}/';
 		</script>
-		<script src="{{ URL::to('admin/components/jquery-1.11.0/index.js') }}"></script>
-		<script src="{{ URL::to('admin/build/app.js') }}"></script>
+		<script src="{{ URL::to('system_theme/components/jquery-1.11.0/index.js') }}"></script>
+		<script src="{{ URL::to('system_theme/build/app.js') }}"></script>
 		@foreach ($system->dashboard->scripts() as $script)
 			<script src="{{ $script }}"></script>
 		@endforeach
