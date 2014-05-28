@@ -2,7 +2,7 @@
 @section('master-body')
 	<div class="js--control_panel dashboard__control_panel">
 		<div class="dashboard__logo">
-			<img src="{{ URL::to('admin/images/logo.png') }}" alt="Monal" />
+			<img src="{{ URL::to('system_theme/images/logo.png') }}" alt="Monal" />
 		</div>
 		<ul class="dashboard__menu">
 			<li class="dashboard__menu__group"><a href="{{ URL::route('admin.dashboard') }}" class="menu__group__title">Dashboard</a>

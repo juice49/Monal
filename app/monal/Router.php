@@ -21,6 +21,12 @@ class Router
 				return $admin_route;
 			}
 		}
+		$system = \Monal::instance();
+		foreach ($system->route_logic as $route_logic) {
+			if ($matched = $route_logic($url_segments)) {
+				return $matched;
+			}
+		}
 		return false;
 	}
 
@@ -34,7 +40,7 @@ class Router
 	private static function adminRoute(array $url_segments)
 	{
 		$admin_slug = \Config::get('admin.slug');
-		if ($admin_slug AND preg_match('/^[a-z0-9 \-]+$/i', $admin_slug)) {
+		if ($admin_slug AND preg_match('/^[a-z0-9\-]+$/i', $admin_slug)) {
 			// Is the route trying to access the admin area of the system.
 			if ($url_segments[0] == $admin_slug) {
 				// If it is check the user is logged in and has valid credentials.

@@ -48,6 +48,18 @@ class Monal
 	}
 
 	/**
+	 * Register route logic.
+	 *
+	 * @param	Closure
+	 * @return	Void
+	 */
+	public static function registerFrontendRouteLogic($closure)
+	{
+		$system = self::instance();
+		array_push($system->route_logic, $closure);
+	}
+
+	/**
 	 * Register a new dashboard menu option.
 	 *
 	 * @param	String

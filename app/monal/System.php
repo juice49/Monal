@@ -11,32 +11,39 @@ namespace Monal;
 class System
 {
 	/**
-	 * Instance of class implementing DashboardInterface.
+	 * The system's messages.
 	 *
-	 * @var		 Monal\Core\Contracts\DashboardInterface
-	 */
-	public $dashboard;
-
-	/**
-	 * Instance of class implementing PermissionsInterface.
-	 *
-	 * @var		 Monal\Core\Contracts\PermissionsInterface
-	 */
-	public $permissions;
-
-	/**
-	 * Instance of class implementing MessagesInterface.
-	 *
-	 * @var		 Monal\Core\Contracts\MessagesInterface
+	 * @var		Monal\Core\Contracts\MessagesInterface
 	 */
 	public $messages;
 
 	/**
-	 * System user.
+	 * The system's dashboard class.
 	 *
-	 * @var		Monal\Core\SystemUser
+	 * @var		Monal\Core\Dashboard
+	 */
+	public $dashboard;
+
+	/**
+	 * The system's permissions class.
+	 *
+	 * @var		Monal\Core\Permissions
+	 */
+	public $permissions;
+
+	/**
+	 * The system's current user.
+	 *
+	 * @var		Monal\Models\SystemUser
 	 */
 	public $user;
+
+	/**
+	 * An array of closures to attempt upon each request to the system.
+	 *
+	 * @var		Array
+	 */
+	public $route_logic = array();
 
 	/**
 	 * Constructor.
