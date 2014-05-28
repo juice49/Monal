@@ -128,17 +128,22 @@ class SettingsRepository
 	 */
 	public function retrieve($key = null)
 	{
-		$query = \DB::table($this->table);
+		$cache_key = ($key) ? 'monal--setting-' . $key : 'monal--settings';
+		if (\Cache::has($cache_key)) {
+			return \Cache::get($cache_key);
+		}
 		if (!$key) {
-			$results = $query->select('*')->get();
 			$settings = \App::make('Illuminate\Database\Eloquent\Collection');
-			foreach ($results as $result) {
+			foreach (\DB::table($this->table)->select('*')->get() as $result) {
 				$settings->add($this->decodeFromStorage($result));
 			}
+			\Cache::forever($cache_key, $settings);
 			return $settings;
 		} else {
-			if ($result = $query->where('id', '=', $key)->first()) {
-				return $this->decodeFromStorage($result);
+			if ($result = \DB::table($this->table)->where('id', '=', $key)->first()) {
+				$setting = $this->decodeFromStorage($result);
+				\Cache::forever($cache_key, $setting);
+				return $setting;
 			}
 		}
 		return false;
@@ -152,8 +157,13 @@ class SettingsRepository
 	 */
 	public function retrieveByKey($key)
 	{
+		if (\Cache::has('monal--setting_key-' . $key)) {
+			return \Cache::get('monal--setting_key-' . $key);
+		}
 		if ($result = \DB::table($this->table)->where('key', '=', $key)->first()) {
-			return $this->decodeFromStorage($result);
+			$setting = $this->decodeFromStorage($result);
+			\Cache::forever('monal--setting_key-' . $key, $setting);
+			return $setting;
 		}
 		return false;
 	}
@@ -167,8 +177,11 @@ class SettingsRepository
 	public function write(Setting $setting)
 	{
 		if ($this->validatesForStorage($setting)) {
+			\Cache::forget('monal--settings');
+			\Cache::forget('monal--setting_key-' . $setting->key());
 			$encoded = $this->encodeForStorage($setting);
 			if ($setting->ID()) {
+				\Cache::forget('monal--setting-' . $setting->ID());
 				$encoded['updated_at'] = date('Y-m-d H:i:s');
 				\DB::table($this->table)->where('id', '=', $setting->ID())->update($encoded);
 				return true;
