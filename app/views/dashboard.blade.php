@@ -26,7 +26,17 @@
 			<div class="dashboard__mobile__nav">
 				<span class="js--mobile__nav icon icon-menu"></span>
 			</div>
-			<div class="dashboard__header">
+			<div class="js--dashboard__header dashboard__header">
+				<div class="dashboard__user">
+					<div class="js--dashboard__user dashboard__user__details">
+						<span class="icon icon-user"></span>
+						<span class="dashboard__header__name">{{ $system_user->first_name }}</span>
+						<span class="icon icon-triangle-down"></span>
+					</div>
+					<ul class="js--user__menu dashboard__user__menu">
+						<li><a href="{{ URL::route('admin.logout') }}">Logout</a></li>
+					</ul>
+				</div>
 				@yield('body-header')
 			</div>
 			<div class="dashboard__body">

@@ -25,7 +25,6 @@
 		<script>
 			var _APP_BASEURL = '{{ URL::to('/') }}/';
 		</script>
-		<script src="{{ URL::to('system_theme/components/jquery-1.11.0/index.js') }}"></script>
 		<script src="{{ URL::to('system_theme/build/app.js') }}"></script>
 		@foreach ($system->dashboard->scripts() as $script)
 			<script src="{{ $script }}"></script>

@@ -527,7 +527,6 @@ body
 .dashboard__wrap
 	height 100%
 	padding-left base_unit * 11
-	max-width base_unit * 49
 	transition padding .3s ease, margin .3s ease
 
 	@media screen and (max-width: 960px)
@@ -561,6 +560,106 @@ body
 		height auto
 		padding-top base_unit * 3
 		padding-bottom base_unit
+
+.dashboard__user
+	position absolute
+	top base_unit
+	right 0
+	text-align right
+
+	&:hover
+
+		span.icon-user
+			color: colors['teal']
+
+		span.dashboard__header__name
+			text-decoration underline
+
+	@media screen and (max-width: 960px)
+
+		&:hover
+
+			span.icon-user
+				color #ffffff
+
+			span.dashboard__header__name
+				text-decoration none
+
+
+	@media screen and (max-width: 960px)
+		top 0
+		z-index 10
+
+	span
+		displayInlineBlock()
+		vertical-align middle
+		line-height 1
+
+	span.icon-user
+		margin-right base_unit * .25
+		color: colors['grey+2']
+		font-size: font_sizes['echo']
+
+		@media screen and (max-width: 960px)
+			color #ffffff
+
+	span.dashboard__header__name
+		color: colors['grey-2']
+		font-weight bold
+
+		@media screen and (max-width: 960px)
+			color #ffffff
+
+	span.icon-triangle-down
+		color: colors['grey-2']
+
+		@media screen and (max-width: 960px)
+			color #ffffff
+
+.dashboard__user__details 
+	cursor pointer
+
+	@media screen and (max-width: 960px)
+		padding (base_unit * .5)
+		background-color: colors['teal+3']
+
+.dashboard__user__menu
+	display none
+	min-width base_unit * 5
+	padding 0
+	margin (base_unit * .5) 0 0 0
+	list-style none
+	text-align left
+	border-radius 2px
+	background-color: colors['teal']
+
+	@media screen and (max-width: 960px)
+		position absolute
+		top 100%
+		right 0
+		min-width 100%
+		margin 0
+		border-top-right-radius 0
+		border-top-left-radius 0
+		background-color: colors['teal+3']
+
+	li
+		display block
+		padding 0
+		margin 0
+
+		a
+			display block
+			padding (base_unit * .25) (base_unit * .5)
+			color: #ffffff
+			font-weight bold
+			text-decoration none
+
+			&:hover
+				color: colors['teal-6']
+
+			@media screen and (max-width: 960px)
+				padding (base_unit * .5)
 
 .dashboard__title
 .dashboard__subtitle

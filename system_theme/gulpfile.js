@@ -27,6 +27,7 @@ gulp.task('css', function() {
 	});
 
 	return gulp.src([
+			'/js/libs/jquery-ui-1.10.4/css/no-theme/jquery-ui-1.10.4.custom.css',
 			'./fonts/icons/style.css',
 			'./css/app.styl'
 		])
@@ -49,6 +50,8 @@ gulp.task('js', function() {
 		}
 	});
 	gulp.src([
+		'./components/jquery-1.11.0/index.js',
+		'./js/libs/jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.js',
 		'./components/html5shiv/dist/html5shiv.js',
 		'./components/conscious.js/src/conscious.js',
 		'./js/app.js'

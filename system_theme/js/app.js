@@ -25,17 +25,27 @@
 			}
 		});
 
+		$('.js--dashboard__user').on('click', function() {
+			$('.js--user__menu').slideToggle(100);
+		});
+		$('.js--dashboard__header').on('mouseleave', function() {
+			$('.js--user__menu').slideUp(100);
+		});
+
 		// Close the dashboard control panel menu each the window moves
 		// through a breakpoint.
 		conscious.stateChangeTo({
 			'600': function() {
 				dashboard.hideControlPanelMenu();
+				$('.js--user__menu').slideUp(100);
 			},
 			'960': function() {
 				dashboard.hideControlPanelMenu();
+				$('.js--user__menu').slideUp(100);
 			},
 			'maxscreen': function() {
 				dashboard.hideControlPanelMenu();
+				$('.js--user__menu').slideUp(100);
 			},
 		});
 	});
