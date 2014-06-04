@@ -51,10 +51,11 @@ class AdminController extends BaseController
 			return \Redirect::route('admin.dashboard');
 		}
 		if ($this->input) {
+			$remember = isset($this->input['remember_me']);
 			$authentication = $this->system->newAuthRequest();
 			$authentication->setUser($this->input['email'], $this->input['password']);
 			if ($authentication->validates()) {
-				if ($authentication->attempt(true)) {
+				if ($authentication->attempt($remember, true)) {
 					return \Redirect::route('admin.dashboard');
 				}
 			}

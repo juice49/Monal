@@ -99,17 +99,17 @@ class AuthenticationRequest
 	 * @param	Boolean
 	 * @return	Boolean
 	 */
-	public function attempt($as_admin = false)
+	public function attempt($remember = false, $as_admin = false)
 	{
 		$authenticated = false;
 		if ($user = $this->repository->retrieve($this->email)) {
 			if ($user->active) {
 				if ($as_admin) {
 					if ($user->group_details->group_permissions->admin) {
-						$authenticated = \Auth::attempt(array('email' => $this->email, 'password' => $this->password), false) ? true : false;
+						$authenticated = \Auth::attempt(array('email' => $this->email, 'password' => $this->password), $remember) ? true : false;
 					}
 				} else {
-					$authenticated = \Auth::attempt(array('email' => $this->email, 'password' => $this->password), false) ? true : false;
+					$authenticated = \Auth::attempt(array('email' => $this->email, 'password' => $this->password), $remember) ? true : false;
 				}
 			}
 		}
