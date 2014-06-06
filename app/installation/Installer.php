@@ -412,6 +412,14 @@ class Installer {
 				$table->timestamps();
 			}
 		);
+		\Schema::create(
+			'packages',
+			function(Blueprint $table) {
+				$table->increments('id');
+				$table->string('name', 255)->nullable();
+				$table->timestamps();
+			}
+		);
 		\DB::table('user_groups')->insert(array(
 			'name' => 'Administrator',
 			'created_at' => date('Y-m-d H:i:s'),

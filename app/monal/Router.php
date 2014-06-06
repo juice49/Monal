@@ -18,7 +18,7 @@ class Router
 	{
 		if (!empty($url_segments)) {
 			if ($admin_route = self::adminRoute($url_segments)) {
-				return $admin_route;
+				return ($admin_route === true) ? false : $admin_route;
 			}
 		}
 		$system = \Monal::instance();
@@ -53,6 +53,7 @@ class Router
 						return Redirect::route('admin.login');
 					}
 				}
+				return true;
 			}
 		}
 		return false;

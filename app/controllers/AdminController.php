@@ -85,8 +85,9 @@ class AdminController extends BaseController
 	 */
 	public function dashboard()
 	{
+		$uninstalled_packages = Packages::unistalledPackages();
 		$messages = $this->system->messages->get();
-		return View::make('admin.dashboard', compact('messages'));
+		return View::make('admin.dashboard', compact('messages', 'uninstalled_packages'));
 	}
 
 	/**

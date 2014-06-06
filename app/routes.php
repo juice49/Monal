@@ -4,6 +4,7 @@
 Monal::registerAdminRoute('any', 'login', 'admin.login', 'AdminController@login');
 Monal::registerAdminRoute('any', 'logout', 'admin.logout', 'AdminController@logout');
 Monal::registerAdminRoute('any', 'dashboard', 'admin.dashboard', 'AdminController@dashboard');
+Monal::registerAdminRoute('any', 'packages', 'admin.packages', 'PackagesController@packages');
 
 // Ajax route.
 Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));

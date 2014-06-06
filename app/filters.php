@@ -47,8 +47,8 @@ App::before(function($request)
 	}
 	// Check if the the Router class intercepts the route and returns a
 	// view.
-	if ($view = Router::intercept(Request::segments())) {
-		return $view;
+	if ($response = Router::intercept(Request::segments())) {
+		return $response;
 	}
 });
 

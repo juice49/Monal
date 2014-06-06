@@ -19,6 +19,7 @@ class MonalServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		\Monal::registerMenuOption('System', 'Packages', 'packages');
 	}
 
 	/**
@@ -28,6 +29,7 @@ class MonalServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
+		// Bind classes to the IOC container.
 		$this->app->singleton(
 			'Monal\GatewayInterface',
 			function() {
@@ -40,5 +42,42 @@ class MonalServiceProvider extends ServiceProvider
 				return new \Monal\Core\Messages;
 			}
 		);
+		$this->app->singleton(
+			'Monal\Repositories\PackagesRepository',
+			function() {
+				return new \Monal\Repositories\PackagesRepository;
+			}
+		);
+		$this->app->singleton(
+			'Monal\Repositories\SettingsRepository',
+			function() {
+				return new \Monal\Repositories\SettingsRepository;
+			}
+		);
+
+		// Register Facades
+		$this->app['packagesrepository'] = $this->app->share(function ($app) {
+				return \App::make('Monal\Repositories\PackagesRepository');
+		});
+		$this->app->booting(function () {
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('PackagesRepository', 'Monal\Repositories\Facades\PackagesRepository');
+		});
+
+		$this->app['settingsrepository'] = $this->app->share(function ($app) {
+				return \App::make('Monal\Repositories\SettingsRepository');
+		});
+		$this->app->booting(function () {
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('SettingsRepository', 'Monal\Repositories\Facades\SettingsRepository');
+		});
+
+		$this->app['apipackages'] = $this->app->share(function ($app) {
+				return \App::make('Monal\API\Packages');
+		});
+		$this->app->booting(function () {
+			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
+			$loader->alias('Packages', 'Monal\API\Facades\Packages');
+		});
 	}
 }
