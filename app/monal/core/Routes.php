@@ -11,46 +11,46 @@ namespace Monal\Core;
 
 class Routes
 {
-	/**
-	 * An array of closures to try for requests to non-admin routes.
-	 *
-	 * @var     Array
-	 */
-	public $frontend_closures = array();
+    /**
+     * An array of closures to try for requests to non-admin routes.
+     *
+     * @var     Array
+     */
+    public $frontend_closures = array();
 
-	/**
-	 * Add a new admin route.
-	 *
-	 * @param   String
-	 * @param   String
-	 * @param   String
-	 * @param   String
-	 * @return  Void
-	 */
-	public function addAdminRoute($type, $url, $name, $controller)
-	{
-		$route = \Config::get('admin.slug') . '/' .$url;
-		switch (strtolower($type)) {
-			case 'get':
-				\Route::get($route, array('as' => $name, 'uses' => $controller));
-				break;
-			case 'post':
-				\Route::post($route, array('as' => $name, 'uses' => $controller));
-				break;
-			case 'any':
-				\Route::any($route, array('as' => $name, 'uses' => $controller));
-				break;
-		}
-	}
+    /**
+     * Add a new admin route.
+     *
+     * @param   String
+     * @param   String
+     * @param   String
+     * @param   String
+     * @return  Void
+     */
+    public function addAdminRoute($type, $url, $name, $controller)
+    {
+        $route = \Config::get('admin.slug') . '/' .$url;
+        switch (strtolower($type)) {
+            case 'get':
+                \Route::get($route, array('as' => $name, 'uses' => $controller));
+                break;
+            case 'post':
+                \Route::post($route, array('as' => $name, 'uses' => $controller));
+                break;
+            case 'any':
+                \Route::any($route, array('as' => $name, 'uses' => $controller));
+                break;
+        }
+    }
 
-	/**
-	 * Add a new closure to call for all requests to non-admin routes.
-	 *
-	 * @param   Closure
-	 * @return  Void
-	 */
-	public function addFrontendRouteClosure($closure)
-	{
-		array_push($this->frontend_closures, $closure);
-	}
+    /**
+     * Add a new closure to call for all requests to non-admin routes.
+     *
+     * @param   Closure
+     * @return  Void
+     */
+    public function addFrontendRouteClosure($closure)
+    {
+        array_push($this->frontend_closures, $closure);
+    }
 }

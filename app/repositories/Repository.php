@@ -10,30 +10,30 @@ namespace Monal\Repositories;
 
 class Repository {
 
-	/**
-	 * The repository's message bag.
-	 *
-	 * @var     Illuminate\Support\MessageBag
-	 */
-	protected $messages;
+    /**
+     * The repository's message bag.
+     *
+     * @var     Illuminate\Support\MessageBag
+     */
+    protected $messages;
 
-	/**
-	 * Constructor.
-	 *
-	 * @return  Void
-	 */
-	public function __construct()
-	{
-		$this->messages = \App::make('Illuminate\Support\MessageBag');
-	}
+    /**
+     * Constructor.
+     *
+     * @return  Void
+     */
+    public function __construct()
+    {
+        $this->messages = \App::make('Illuminate\Support\MessageBag');
+    }
 
-	/**
-	 * Return the repository's message bag.
-	 *
-	 * @return  Illuminate\Support\MessageBag
-	 */
-	public function messages()
-	{
-		return $this->messages;
-	}
+    /**
+     * Return the repository's message bag.
+     *
+     * @return  Illuminate\Support\MessageBag
+     */
+    public function messages()
+    {
+        return $this->messages;
+    }
 }

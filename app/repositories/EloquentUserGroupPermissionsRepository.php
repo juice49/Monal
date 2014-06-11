@@ -8,10 +8,10 @@ namespace Monal\Repositories;
 
 class EloquentUserGroupPermissionsRepository extends \Eloquent
 {
-	/**
-	 * The database table used by the repository.
-	 *
-	 * @var		String
-	 */
-	protected $table = 'user_group_permissions';
+    /**
+     * The database table used by the repository.
+     *
+     * @var     String
+     */
+    protected $table = 'user_group_permissions';
 }

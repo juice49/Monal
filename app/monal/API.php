@@ -11,13 +11,13 @@ namespace Monal;
 
 class API
 {
-	/**
-	 * Return the current system instace.
-	 *
-	 * @return  Monal\Monal
-	 */
-	public static function systemInstance()
-	{
-		return \App::make('Monal\Monal');
-	}
+    /**
+     * Return the current system instace.
+     *
+     * @return  Monal\Monal
+     */
+    public static function systemInstance()
+    {
+        return \App::make('Monal\Monal');
+    }
 }

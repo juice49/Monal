@@ -8,27 +8,27 @@ namespace Monal\Repositories;
 
 class EloquentUserGroupsRepository extends \Eloquent
 {
-	/**
-	 * The database table used by the repository.
-	 *
-	 * @var		String
-	 */
-	protected $table = 'user_groups';
+    /**
+     * The database table used by the repository.
+     *
+     * @var     String
+     */
+    protected $table = 'user_groups';
 
-	/**
-	 * Relationships to eager load.
-	 *
-	 * @var		String
-	 */
-	protected $with = array('groupPermissions');
+    /**
+     * Relationships to eager load.
+     *
+     * @var     String
+     */
+    protected $with = array('groupPermissions');
 
-	/**
-	 * Table relationship.
-	 *
-	 * @return	Mixed
-	 */
-	public function groupPermissions()
-	{
-		return $this->hasOne('Monal\Repositories\EloquentUserGroupPermissionsRepository', 'group');
-	}
+    /**
+     * Table relationship.
+     *
+     * @return  Mixed
+     */
+    public function groupPermissions()
+    {
+        return $this->hasOne('Monal\Repositories\EloquentUserGroupPermissionsRepository', 'group');
+    }
 }
