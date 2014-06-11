@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'model' => 'EloquentAuthenticationRepository',
+	'model' => 'Monal\Repositories\EloquentAuthenticationRepository',
 
 	/*
 	|--------------------------------------------------------------------------

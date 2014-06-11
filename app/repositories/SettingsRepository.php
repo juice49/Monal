@@ -3,16 +3,14 @@ namespace Monal\Repositories;
 /**
  * Settings Repository.
  *
- * A repository for storing system settings. The class defines
- * methods for reading, writing, updating and removing settings to
- * the repository.
+ * This is a repository for storing Settings models.
  *
  * @author	Arran Jacques
  */
 
 use Monal\Models\Setting;
 
-class SettingsRepository
+class SettingsRepository extends Repository
 {
 	/**
 	 * The database table the repository uses.
@@ -20,33 +18,6 @@ class SettingsRepository
 	 * @var		String
 	 */
 	protected $table = 'settings';
-
-	/**
-	 * The repository's messages.
-	 *
-	 * @var		 Monal\Core\Contracts\MessagesInterface
-	 */
-	protected $messages;
-
-	/**
-	 * Constructor.
-	 *
-	 * @return	Void
-	 */
-	public function __construct()
-	{
-		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
-	}
-
-	/**
-	 * Return the repository's messages.
-	 *
-	 * @return	Illuminate\Support\MessageBag
-	 */
-	public function messages()
-	{
-		return $this->messages->get();
-	}
 
 	/**
 	 * Return a new Settings model.
@@ -86,7 +57,7 @@ class SettingsRepository
 		if ($setting->validates($validation_rules, $validation_messages)) {
 			return true;
 		} else {
-			$this->messages->add($setting->messages()->toArray());
+			$this->messages->merge($setting->messages());
 			return false;
 		}
 	}

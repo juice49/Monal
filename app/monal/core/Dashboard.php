@@ -3,9 +3,10 @@ namespace Monal\Core;
 /**
  * Dashboard.
  *
- * Add to and expand the Admin dashboard.
+ * This is Monal’s dashboard API to allow interaction with the
+ * system’s admin dashboard.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
 class Dashboard
@@ -13,38 +14,28 @@ class Dashboard
 	/**
 	 * An array of menu options for the dashboards control panel.
 	 *
-	 * @var		Array
+	 * @var     Array
 	 */
 	protected $menu = array();
 
 	/**
 	 * An array of CSS files to load for the dashboard.
 	 *
-	 * @var		Array
+	 * @var     Array
 	 */
 	protected $css = array();
 
 	/**
 	 * An array of JS files to load for the dashboard.
 	 *
-	 * @var		Array
+	 * @var     Array
 	 */
 	protected $scripts = array();
 
 	/**
-	 * Return the dashboard's menu options.
+	 * Return the collection of CSS files to load with the dashboard.
 	 *
-	 * @return	Array 
-	 */
-	public function menu()
-	{
-		return $this->menu;
-	}
-
-	/**
-	 * Return an array of CSS files to load into the dashboard.
-	 *
-	 * @return	Array 
+	 * @return  Array 
 	 */
 	public function css()
 	{
@@ -52,9 +43,9 @@ class Dashboard
 	}
 
 	/**
-	 * Return an array of JS files to load into the dashboard.
+	 * Return the collection of JS files to load with the dashboard.
 	 *
-	 * @return	Array 
+	 * @return  Array 
 	 */
 	public function scripts()
 	{
@@ -62,13 +53,45 @@ class Dashboard
 	}
 
 	/**
+	 * Return the dashboard's menu options.
+	 *
+	 * @return  Array 
+	 */
+	public function menu()
+	{
+		return $this->menu;
+	}
+
+	/**
+	 * Add a CSS file to be loaded with the dashboard.
+	 *
+	 * @param   String
+	 * @return  Void
+	 */
+	public function addCSS($uri)
+	{
+		array_push($this->css, \URL::to($uri));
+	}
+
+	/**
+	 * Add a JS file to be loaded with the dashboard.
+	 *
+	 * @param   String
+	 * @return  Void
+	 */
+	public function addScript($uri)
+	{
+		array_push($this->scripts, \URL::to($uri));
+	}
+
+	/**
 	 * Add a menu option to the dashboard.
 	 *
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @return	Void
+	 * @param   String
+	 * @param   String
+	 * @param   String
+	 * @param   String
+	 * @return  Void
 	 */
 	public function addMenuOption($category, $title, $route, $permissions = null)
 	{
@@ -79,27 +102,5 @@ class Dashboard
 			'route' => $route,
 			'permissions' => $permissions,
 		);
-	}
-
-	/**
-	 * Register a CSS file to loaded in the dashboard.
-	 *
-	 * @param	String
-	 * @return	Void
-	 */
-	public function addCSS($uri)
-	{
-		array_push($this->css, \URL::to($uri));
-	}
-
-	/**
-	 * Register a JavaScript file to loaded in the dashboard.
-	 *
-	 * @param	String
-	 * @return	Void
-	 */
-	public function addScript($uri)
-	{
-		array_push($this->scripts, \URL::to($uri));
 	}
 }

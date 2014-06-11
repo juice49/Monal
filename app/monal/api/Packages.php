@@ -1,109 +1,79 @@
 <?php
 namespace Monal\API;
 /**
- * Packages.
+ * Dashboad API.
  *
- * @author	Arran Jacques
+ * This providers a static interface to the systems Packages API.
+ *
+ * @author  Arran Jacques
  */
 
-class Packages
+use Monal\API;
+
+class Packages extends API
 {
 	/**
-	 * Return an array containing details all Monal system packages,
-	 * wether installed or not.
+	 * Return a collection of all Monal system packages, wether installed
+	 * or not.
 	 *
-	 * @return	Array
+	 * @return  Illuminate\Support\Collection
 	 */
-	public function systemPackages()
+	public static function monalPackages()
 	{
-		$packages = \App::make('Illuminate\Database\Eloquent\Collection');
-		foreach (\Config::get('app.providers') as $provider) {
-			$service_provider = \App::make($provider, array(\App::make('Illuminate\Foundation\Application')));
-			if ($service_provider instanceof \Monal\MonalPackageServiceProvider) {
-				$package = $service_provider->packageDetails();
-				$package['service_provider'] = $service_provider;
-				$packages->put($service_provider->packageNamespace(), $package);
-			}
-		}
-		return $packages;
+		return self::systemInstance()->packages->monalPackages();
 	}
 
 	/**
-	 * Return an array of all pacakges registered with the system but that
-	 * are not installed.
+	 * Return a collection of all uninstalled Monal system packages.
 	 *
-	 * @return	Array
+	 * @return  Illuminate\Support\Collection
 	 */
-	public function unistalledPackages()
+	public static function uninstalledPackages()
 	{
-		$packages = \App::make('Illuminate\Database\Eloquent\Collection');
-		foreach (\Config::get('app.providers') as $provider) {
-			$service_provider = \App::make($provider, array(\App::make('Illuminate\Foundation\Application')));
-			if ($service_provider instanceof \Monal\MonalPackageServiceProvider) {
-				if (!\PackagesRepository::retrieveByName($service_provider->packageNamespace())) {
-					$packages->put($service_provider->packageNamespace(), $service_provider->packageDetails());
-				}
-			}
-		}
-		return $packages;
+		return self::systemInstance()->packages->uninstalledPackages();
 	}
 
 	/**
-	 * Check if a package is installed.
+	 * Return a collection of all installed Monal system packages.
 	 *
-	 * @param	String
-	 * @return	Boolean
+	 * @return  Illuminate\Support\Collection
 	 */
-	public function isInstalled($package)
+	public static function installedPackages()
 	{
-		return (\PackagesRepository::retrieveByName($package)) ? true : false;
+		return self::systemInstance()->packages->installedPackages();
 	}
 
 	/**
-	 * Install a package to the system.
+	 * Check if a Monal system package is installed.
 	 *
-	 * @param	String
-	 * @return	Boolean
+	 * @param   String
+	 * @return  Boolean
 	 */
-	public function install($package)
+	public static function isInstalled($package_namespace)
 	{
-		$packages = $this->systemPackages();
-		if (isset($packages[$package])) {
-			try {
-				if ($packages[$package]['service_provider']->install()) {
-					$package_model = \PackagesRepository::newModel();
-					$package_model->setName($package);
-					if (\PackagesRepository::write($package_model)) {
-						return true;
-					}
-				}
-			} catch (Exception $e) {
-				return false;
-			}
-		}
-		return false;
+		return self::systemInstance()->packages->isInstalled($package_namespace);
 	}
 
 	/**
-	 * Publish a package's assets.
+	 * Install a Monal system package.
 	 *
-	 * @param	String
-	 * @param	String
-	 * @param	String
+	 * @param   String
+	 * @return  Boolean
+	 */
+	public static function install($package_namespace)
+	{
+		return self::systemInstance()->packages->install($package_namespace);
+	}
+
+	/**
+	 * Publish a Monal system package’s assets.
+	 *
+	 * @param   String
+	 * @param   String
+	 * @param   String
 	 */
 	public static function publishAssets($vendor, $package, $assets_dir)
 	{
-		$vendor = trim(strtolower($vendor), '/');
-		$package = trim(strtolower($package), '/');
-		if (!is_dir(public_path() . '/packages')) {
-			mkdir(public_path() . '/packages');
-		}
-		if (!is_dir(public_path() . '/packages/' . $vendor)) {
-			mkdir(public_path() . '/packages/' . $vendor);
-		}
-		if (!is_dir(public_path() . '/packages/' . $vendor . '/' . $package)) {
-			mkdir(public_path() . '/packages/' . $vendor . '/' . $package);
-		}
-		\Resource::cloneDirecotry($assets_dir, public_path() . '/packages/' . $vendor . '/' . $package);
+		return self::systemInstance()->packages->install($vendor, $package, $assets_dir);
 	}
 }

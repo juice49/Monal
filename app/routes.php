@@ -1,10 +1,10 @@
 <?php
 
 // Core Admin routes.
-Monal::registerAdminRoute('any', 'login', 'admin.login', 'AdminController@login');
-Monal::registerAdminRoute('any', 'logout', 'admin.logout', 'AdminController@logout');
-Monal::registerAdminRoute('any', 'dashboard', 'admin.dashboard', 'AdminController@dashboard');
-Monal::registerAdminRoute('any', 'packages', 'admin.packages', 'PackagesController@packages');
+Monal\API\Routes::addAdminRoute('any', 'login', 'admin.login', 'AdminController@login');
+Monal\API\Routes::addAdminRoute('any', 'logout', 'admin.logout', 'AdminController@logout');
+Monal\API\Routes::addAdminRoute('any', 'dashboard', 'admin.dashboard', 'AdminController@dashboard');
+Monal\API\Routes::addAdminRoute('any', 'packages', 'admin.packages', 'PackagesController@packages');
 
 // Ajax route.
 Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));

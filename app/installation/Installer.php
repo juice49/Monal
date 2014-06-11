@@ -2,19 +2,19 @@
 /**
  * Installer Library.
  *
- * Library for installing the core Monal System.
+ * This is the installer library to setup and install the core Monal application.
  *
  * @author	Arran Jacques
  */
 
 use Illuminate\Database\Schema\Blueprint;
 
-class Installer {
-
+class Installer
+{
 	/**
-	 * Instance of class implementing MessagesInterface.
+	 * The installer's messages
 	 *
-	 * @var		 Monal\Core\Contracts\MessagesInterface
+	 * @var		 Illuminate\Support\MessageBag
 	 */
 	protected $messages;
 
@@ -39,7 +39,17 @@ class Installer {
 	 */
 	public function __construct()
 	{
-		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
+		$this->messages = \App::make('Illuminate\Support\MessageBag');
+	}
+
+	/**
+	 * Return installer's messages.
+	 *
+	 * @return	Illuminate\Support\MessageBag
+	 */
+	public function messages()
+	{
+		return $this->messages;
 	}
 
 	/**
@@ -65,16 +75,6 @@ class Installer {
 			}
 		}
 		return false;
-	}
-
-	/**
-	 * Return installation messages.
-	 *
-	 * @return	Illuminate\Support\MessageBag
-	 */
-	public function messages()
-	{
-		return $this->messages->get();
 	}
 
 	/**
@@ -114,22 +114,16 @@ class Installer {
 				if ($create_database) {
 					if (!$this->createDatabase($config['database'])) {
 						$this->messages->add(
-							array(
-								'error' => array(
-									'There was an error creating the database ' . $config['database'] . '. You may need to create it manually.',
-								)
-							)
+							'error',
+							'There was an error creating the database ' . $config['database'] . '. You may need to create it manually.'
 						);
 						return false;
 					}
 				} else {
 					if (!$this->databaseExists($config['database'])) {
 						$this->messages->add(
-							array(
-								'error' => array(
-									'We can’t find a database with the name ' . $config['database'] . '. Tick the box at the bottom if you want us to create it for you.',
-								)
-							)
+							'error',
+							'We can’t find a database with the name ' . $config['database'] . '. Tick the box at the bottom if you want us to create it for you.'
 						);
 						return false;
 					}
@@ -151,24 +145,18 @@ class Installer {
 					return true;
 				} else {
 					$this->messages->add(
-						array(
-							'error' => array(
-								'We were unable to write to the "app/config/database.blank.php" file and rename it. Please check the write permissions for this file and the directory "app/config".'
-							)
-						)
+						'error',
+						'We were unable to write to the "app/config/database.blank.php" file and rename it. Please check the write permissions for this file and the directory "app/config".'
 					);
 				}
 			} else {
 				$this->messages->add(
-					array(
-						'error' => array(
-							'We were unable to connect to the database using these settings. Please check the settings you have provided.'
-						)
-					)
-				);
+					'error',
+					'We were unable to connect to the database using these settings. Please check the settings you have provided.'
+					);
 			}
 		} else {
-			$this->messages->add($validation->messages()->toArray());
+			$this->messages->merge($validation->messages());
 		}
 		return false;
 	}
@@ -258,14 +246,11 @@ class Installer {
 				return true;
 			}
 			$this->messages->add(
-				array(
-					'error' => array(
-						'There was an error writing the encryption key to the "app/config/app" file. Please check the write permissions for this file and for the directory "app/config".'
-					)
-				)
+				'error',
+				'There was an error writing the encryption key to the "app/config/app" file. Please check the write permissions for this file and for the directory "app/config".'
 			);
 		} else {
-			$this->messages->add($validation->messages()->toArray());
+			$this->messages->merge($validation->messages());
 		}
 		return false;
 	}
@@ -282,19 +267,13 @@ class Installer {
 				return true;
 			}
 			$this->messages->add(
-				array(
-					'error' => array(
-						'We were unable to remove the directory "app/installation" and its sub directories and files. You may need to remove it manually.'
-					)
-				)
+				'error',
+				'We were unable to remove the directory "app/installation" and its sub directories and files. You may need to remove it manually.'
 			);
 		} else {
 			$this->messages->add(
-				array(
-					'error' => array(
-						'We were unable to remove the directory "app/views/installation" and its sub directories and files. You may need to remove it manually.'
-					)
-				)
+				'error',
+				'We were unable to remove the directory "app/views/installation" and its sub directories and files. You may need to remove it manually.'
 			);
 		}
 		return false;

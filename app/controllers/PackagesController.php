@@ -2,9 +2,10 @@
 /**
  * Packages Controller.
  *
- * Controller for HTTP/S requests for system's package pages.
+ * This is the controller for requests to the system's packages
+ * dashboards.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
 use Monal\GatewayInterface;
@@ -12,31 +13,24 @@ use Monal\GatewayInterface;
 class PackagesController extends AdminController
 {
 	/**
-	 * Controller for HTTP/S requests for the systems Packages page.
-	 * Mediates the requests and outputs a response.
+	 * Process requests to the packages admin dashboard and output a
+	 * response.
 	 *
-	 * @return	Illuminate\View\View / Illuminate\Http\RedirectResponse
+	 * @return  Illuminate\View\View / Illuminate\Http\RedirectResponse
 	 */
 	public function packages()
 	{
 		if (isset($this->input['package'])){
-			if (Packages::install($this->input['package'])) {
-				$this->system->messages->add(array(
-					'success' => array(
-						'You successfully installed the package "' . $this->input['package'] . '"',
-					),
-				))->flash();
+			if (Monal\API\Packages::install($this->input['package'])) {
+				FlashMessages::flash('success', 'You successfully installed the package "' . $this->input['package'] . '"');
 			} else {
-				$this->system->messages->add(array(
-					'error' => array(
-						'There was an error installing the package "' . $this->input['package'] . '"',
-					),
-				))->flash();
+				FlashMessages::flash('error', 'There was an error installing the package "' . $this->input['package'] . '"');
 			}
 			return Redirect::route('admin.packages');
 		}
-		$uninstalled_packages = Packages::unistalledPackages();
-		$messages = $this->system->messages->get();
-		return \View::make('admin.packages', compact('messages', 'uninstalled_packages'));
+		$installed_packages = Monal\API\Packages::installedPackages();
+		$uninstalled_packages = Monal\API\Packages::uninstalledPackages();
+		$messages = $this->system->messages->merge(FlashMessages::all());
+		return \View::make('admin.packages', compact('messages', 'installed_packages', 'uninstalled_packages'));
 	}
 }

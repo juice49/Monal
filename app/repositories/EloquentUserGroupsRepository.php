@@ -1,4 +1,5 @@
-<?php 
+<?php
+namespace Monal\Repositories;
 /**
  * Eloquent User Groups Repository.
  *
@@ -28,6 +29,6 @@ class EloquentUserGroupsRepository extends \Eloquent
 	 */
 	public function groupPermissions()
 	{
-		return $this->hasOne('EloquentUserGroupPermissionsRepository', 'group');
+		return $this->hasOne('Monal\Repositories\EloquentUserGroupPermissionsRepository', 'group');
 	}
 }

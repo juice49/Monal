@@ -2,24 +2,24 @@
 /**
  * Base Controller.
  *
- * Base controller for requests to the system.
+ * This is the base controller for all requests to the system.
  *
  * @author	Arran Jacques
  */
 
-use Monal\GatewayInterface;
+use Monal\Monal;
 
 class BaseController extends Controller
 {
 	/**
-	 * Current base system instance
+	 * The current system instance.
 	 *
-	 * @var		 Monal\GatewayInterface
+	 * @var		 Monal\Monal
 	 */
 	protected $system;
 
 	/**
-	 * Request input data.
+	 * An array of input data from the request.
 	 *
 	 * @var		Array
 	 */
@@ -28,12 +28,12 @@ class BaseController extends Controller
 	/**
 	 * Constructor.
 	 *
-	 * @param	Monal\GatewayInterface
+	 * @param	Monal\Monal
 	 * @return	Void
 	 */
-	public function __construct(GatewayInterface $system_gateway)
+	public function __construct(Monal $system)
 	{
-		$this->system = $system_gateway;
+		$this->system = $system;
 		$this->input = Input::all();
 		View::share('system_user', $this->system->user);
 	}

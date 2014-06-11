@@ -3,16 +3,14 @@ namespace Monal\Repositories;
 /**
  * Package Repository.
  *
- * A repository for storing package details. The class defines
- * methods for reading, writing, updating and removing packages to
- * the repository.
+ * This is a repository for storing Package models.
  *
  * @author	Arran Jacques
  */
 
 use Monal\Models\Package;
 
-class PackagesRepository
+class PackagesRepository extends Repository
 {
 	/**
 	 * The database table the repository uses.
@@ -20,33 +18,6 @@ class PackagesRepository
 	 * @var		String
 	 */
 	protected $table = 'packages';
-
-	/**
-	 * The repository's messages.
-	 *
-	 * @var		 Monal\Core\Contracts\MessagesInterface
-	 */
-	protected $messages;
-
-	/**
-	 * Constructor.
-	 *
-	 * @return	Void
-	 */
-	public function __construct()
-	{
-		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
-	}
-
-	/**
-	 * Return the repository's messages.
-	 *
-	 * @return	Illuminate\Support\MessageBag
-	 */
-	public function messages()
-	{
-		return $this->messages->get();
-	}
 
 	/**
 	 * Return a new Package model.
@@ -78,7 +49,7 @@ class PackagesRepository
 		if ($package->validates($validation_rules, $validation_messages)) {
 			return true;
 		} else {
-			$this->messages->add($package->messages()->toArray());
+			$this->messages->merge($package->messages());
 			return false;
 		}
 	}

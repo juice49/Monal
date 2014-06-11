@@ -1,4 +1,5 @@
-<?php 
+<?php
+namespace Monal\Repositories;
 /**
  * Eloquent Authentication Repository.
  *
@@ -37,7 +38,7 @@ class EloquentAuthenticationRepository extends \Eloquent implements UserInterfac
 	 */
 	public function groupDetails()
 	{
-		return $this->belongsTo('EloquentUserGroupsRepository', 'group');
+		return $this->belongsTo('Monal\Repositories\EloquentUserGroupsRepository', 'group');
 	}
 
 	/**

@@ -5,7 +5,7 @@
  * @author	Arran Jacques
  */
 
-use Monal\GatewayInterface;
+use Monal\Monal;
 
 class InstallationController extends BaseController
 {
@@ -23,9 +23,9 @@ class InstallationController extends BaseController
 	 * @param	Installer
 	 * @return	Void
 	 */
-	public function __construct(GatewayInterface $system_gateway, Installer $installer)
+	public function __construct(Monal $system, Installer $installer)
 	{
-		parent::__construct($system_gateway);
+		parent::__construct($system);
 		$this->installer = $installer;
 		View::share('system', $this->system);
 	}
@@ -44,12 +44,12 @@ class InstallationController extends BaseController
 			if ($this->installer->installDatabase($this->input, isset($this->input['create']))) {
 				return Redirect::route('installation.user');
 			}
-			$this->system->messages->add($this->installer->messages()->toArray());
+			$this->system->messages->merge($this->installer->messages());
 		}
 		$database_management_systems = array(
 			'mysql' => 'MySQL',
 			);
-		$messages = $this->system->messages->get();
+		$messages = $this->system->messages;
 		return View::make('installation.database', compact('messages', 'database_management_systems'));
 	}
 
@@ -68,9 +68,9 @@ class InstallationController extends BaseController
 			if ($this->installer->createUser($this->input)) {
 				return Redirect::route('installation.remove');
 			}
-			$this->system->messages->add($this->installer->messages()->toArray());
+			$this->system->messages->merge($this->installer->messages());
 		}
-		$messages = $this->system->messages->get();
+		$messages = $this->system->messages;
 		return View::make('installation.user', compact('messages'));
 	}
 
@@ -89,9 +89,9 @@ class InstallationController extends BaseController
 			if ($this->installer->deleteInstallationFiles()) {
 				return Redirect::route('admin.login');
 			}
-			$this->system->messages->add($this->installer->messages()->toArray());
+			$this->system->messages->merge($this->installer->messages());
 		}
-		$messages = $this->system->messages->get();
+		$messages = $this->system->messages;
 		return View::make('installation.remove', compact('messages'));
 	}
 }

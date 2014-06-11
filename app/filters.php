@@ -45,10 +45,25 @@ App::before(function($request)
 				break;
 		}
 	}
-	// Check if the the Router class intercepts the route and returns a
-	// view.
-	if ($response = Router::intercept(Request::segments())) {
-		return $response;
+
+	// Check if a request is for an admin page and if so check the user
+	// has the credentials to access the admin dashboard.
+	$url_segments = Request::segments();
+	$admin_slug = \Config::get('admin.slug');
+	if ($admin_slug AND preg_match('/^[a-z0-9\-]+$/i', $admin_slug)) {
+		// Is the route trying to access the admin area of the system.
+		if (isset($url_segments[0]) AND $url_segments[0] == $admin_slug) {
+			// If it is check the user is logged in and has valid credentials.
+			$system = \Monal\API::systemInstance();
+			$grant_access = $system->attemptAuthFromSession(true);
+			if (count($url_segments) == 1) {
+				return $grant_access ? Redirect::route('admin.dashboard') : Redirect::route('admin.login');
+			} else {
+				if (!$grant_access AND \Request::url() != \URL::route('admin.login')) {
+					return Redirect::route('admin.login');
+				}
+			}
+		}
 	}
 });
 

@@ -3,9 +3,8 @@ namespace Monal\Core;
 /**
  * Permissions.
  *
- * Set and read system permission and permission sets. Permission
- * can be granted to objects allowing them to interact with parts of
- * the system, or to carry out specific functions.
+ * This is Monal’s permissions API, which providers methods to read
+ * and write permissions sets to and from the system.
  *
  * @author	Arran Jacques
  */
@@ -13,7 +12,7 @@ namespace Monal\Core;
 class Permissions
 {
 	/**
-	 * System permssion sets.
+	 * An array of permission sets added to the system.
 	 *
 	 * @var		Array
 	 */

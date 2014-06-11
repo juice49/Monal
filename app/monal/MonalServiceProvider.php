@@ -3,9 +3,9 @@ namespace Monal;
 /**
  * Monal Service Provider.
  *
- * Bootstrap the Monal application.
+ * This bootstraps the Monal application with Laravel.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
 use Illuminate\Support\ServiceProvider;
@@ -15,11 +15,11 @@ class MonalServiceProvider extends ServiceProvider
 	/**
 	 * Bootstrap the application events.
 	 *
-	 * @return	Void
+	 * @return  Void
 	 */
 	public function boot()
 	{
-		\Monal::registerMenuOption('System', 'Packages', 'packages');
+		\Monal\API\Dashboard::addMenuOption('System', 'Packages', 'packages');
 	}
 
 	/**
@@ -31,17 +31,12 @@ class MonalServiceProvider extends ServiceProvider
 	{
 		// Bind classes to the IOC container.
 		$this->app->singleton(
-			'Monal\GatewayInterface',
+			'Monal\Monal',
 			function() {
-				return new \Monal\Gateway;
+				return new \Monal\Monal;
 			}
 		);
-		$this->app->bind(
-			'Monal\Core\Contracts\MessagesInterface',
-			function() {
-				return new \Monal\Core\Messages;
-			}
-		);
+
 		$this->app->singleton(
 			'Monal\Repositories\PackagesRepository',
 			function() {
@@ -56,28 +51,14 @@ class MonalServiceProvider extends ServiceProvider
 		);
 
 		// Register Facades
-		$this->app['packagesrepository'] = $this->app->share(function ($app) {
+		$this->app['PackagesRepository'] = $this->app->share(function ($app) {
 				return \App::make('Monal\Repositories\PackagesRepository');
 		});
-		$this->app->booting(function () {
-			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('PackagesRepository', 'Monal\Repositories\Facades\PackagesRepository');
-		});
-
-		$this->app['settingsrepository'] = $this->app->share(function ($app) {
+		$this->app['SettingsRepository'] = $this->app->share(function ($app) {
 				return \App::make('Monal\Repositories\SettingsRepository');
 		});
-		$this->app->booting(function () {
-			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('SettingsRepository', 'Monal\Repositories\Facades\SettingsRepository');
-		});
-
-		$this->app['apipackages'] = $this->app->share(function ($app) {
-				return \App::make('Monal\API\Packages');
-		});
-		$this->app->booting(function () {
-			$loader = \Illuminate\Foundation\AliasLoader::getInstance();
-			$loader->alias('Packages', 'Monal\API\Facades\Packages');
+		$this->app['FlashMessages'] = $this->app->share(function ($app) {
+				return \App::make('Monal\Libraries\FlashMessages');
 		});
 	}
 }

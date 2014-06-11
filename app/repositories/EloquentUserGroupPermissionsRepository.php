@@ -1,4 +1,5 @@
-<?php 
+<?php
+namespace Monal\Repositories;
 /**
  * Eloquent User Group Permissions Repository.
  *

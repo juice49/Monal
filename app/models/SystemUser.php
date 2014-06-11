@@ -3,59 +3,59 @@ namespace Monal\Models;
 /**
  * System User.
  *
- * A model for a system user.
+ * This is a model for a system user.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
-class SystemUser
+class SystemUser extends Model
 {
 	/**
 	 * The user's ID.
 	 *
-	 * @var		Int
+	 * @var     Int
 	 */
 	public $id;
 
 	/**
 	 * The user's first name.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $first_name;
 
 	/**
 	 * The user's last name.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $last_name;
 
 	/**
 	 * The user's username.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $username;
 
 	/**
-	 * The usser's email address.
+	 * The user's email address.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $email;
 
 	/**
 	 * The ID of the user group that the user belongs to.
 	 *
-	 * @var		Int
+	 * @var     Int
 	 */
 	public $group_id;
 
 	/**
 	 * The user's status.
 	 *
-	 * @var		Integer
+	 * @var     Integer
 	 */
 	public $active;
 
@@ -63,7 +63,7 @@ class SystemUser
 	 * Timestamp of when user was first created and saved in the system's
 	 * database.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $created_at;
 
@@ -71,22 +71,22 @@ class SystemUser
 	 * Timestamp of when user was lasted updated and saved in the system's
 	 * database.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $updated_at;
 
 	/**
 	 * The user's group details.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	public $group_details;
 
 	/**
 	 * Constructor.
 	 *
-	 * @param	Array
-	 * @return	Void
+	 * @param   Array
+	 * @return  Void
 	 */
 	public function __construct(array $details = array())
 	{
@@ -110,7 +110,7 @@ class SystemUser
 	/**
 	 * Is the user a guest.
 	 *
-	 * @return	Boolean
+	 * @return  Boolean
 	 */
 	public function isGuest()
 	{
@@ -120,7 +120,7 @@ class SystemUser
 	/**
 	 * Is the user logged in.
 	 *
-	 * @return	Boolean
+	 * @return  Boolean
 	 */
 	public function isLoggedIn()
 	{
@@ -130,7 +130,7 @@ class SystemUser
 	/**
 	 * Is the user a global admin.
 	 *
-	 * @return	Boolean
+	 * @return  Boolean
 	 */
 	public function isGlobalAdmin()
 	{
@@ -140,7 +140,7 @@ class SystemUser
 	/**
 	 * Is the user an admin.
 	 *
-	 * @return	Boolean
+	 * @return  Boolean
 	 */
 	public function isAdmin()
 	{
@@ -150,9 +150,9 @@ class SystemUser
 	/**
 	 * Check if the user has an admin permission.
 	 *
-	 * @param	String
-	 * @param	String
-	 * @return	Boolean
+	 * @param   String
+	 * @param   String
+	 * @return  Boolean
 	 */
 	public function hasAdminPermissions($hi_level = null, $low_level = null)
 	{
@@ -166,7 +166,7 @@ class SystemUser
 			} elseif (isset($user_permissions[$hi_level][$low_level])){
 				return true;
 			}
-			return false;			
+			return false;           
 		}
 		return $this->isAdmin();
 	}

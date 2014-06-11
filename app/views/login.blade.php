@@ -3,7 +3,7 @@
 	<div class="login__container">
 		<div class="login__box">
 			{{ Form::open(array('class' => 'login__form')) }}
-				@if ($messages)
+				@if ($messages->count() > 0)
 					<div class="node__y--bottom">
 						<div class="message_box message_box--tomato">
 							<ul>

@@ -2,7 +2,7 @@
 /**
  * AJAX Controller
  *
- * AJAX controller for AJAX requests to the system.
+ * This is the base controller fo AJAX requests to the system.
  *
  * @author	Arran Jacques
  */
@@ -10,7 +10,7 @@
 class AJAXController extends BaseController
 {
 	/**
-	 * Map AJAX request to a class and function.
+	 * Map an AJAX request to a class and function.
 	 *
 	 * @return	Mixed
 	 */

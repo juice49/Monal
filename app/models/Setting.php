@@ -3,65 +3,38 @@ namespace Monal\Models;
 /**
  * Setting.
  *
- * A model of a system setting.
+ * This is a model of a system setting.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
-class Setting
+class Setting extends Model
 {
-	/**
-	 * The setting's messages.
-	 *
-	 * @var		Monal\Core\Contracts\MessagesInterface
-	 */
-	protected $messages;
-
 	/**
 	 * The setting's ID.
 	 *
-	 * @var		Integer
+	 * @var     Integer
 	 */
 	protected $id = null;
 
 	/**
 	 * The setting's key.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	protected $key = null;
 
 	/**
 	 * The setting's value.
 	 *
-	 * @var		String
+	 * @var     String
 	 */
 	protected $value = null;
 
 	/**
-	 * Constructor.
-	 *
-	 * @return	Void
-	 */
-	public function __construct()
-	{
-		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
-	}
-
-	/**
-	 * Return the setting's messages.
-	 *
-	 * @return	Illuminate\Support\MessageBag
-	 */
-	public function messages()
-	{
-		return $this->messages->get();
-	}
-
-	/**
 	 * Return the setting's ID.
 	 *
-	 * @return	Integer
+	 * @return  Integer
 	 */
 	public function ID()
 	{
@@ -71,7 +44,7 @@ class Setting
 	/**
 	 * Return the setting's key.
 	 *
-	 * @return	String
+	 * @return  String
 	 */
 	public function key()
 	{
@@ -81,7 +54,7 @@ class Setting
 	/**
 	 * Return the setting's value.
 	 *
-	 * @return	String
+	 * @return  String
 	 */
 	public function value()
 	{
@@ -91,8 +64,8 @@ class Setting
 	/**
 	 * Set the setting's ID.
 	 *
-	 * @param	Integer
-	 * @return	Void
+	 * @param   Integer
+	 * @return  Void
 	 */
 	public function setID($id)
 	{
@@ -102,8 +75,8 @@ class Setting
 	/**
 	 * Set the setting's key.
 	 *
-	 * @param	String
-	 * @return	Void
+	 * @param   String
+	 * @return  Void
 	 */
 	public function setKey($key)
 	{
@@ -113,8 +86,8 @@ class Setting
 	/**
 	 * Set the setting's value.
 	 *
-	 * @param	String
-	 * @return	Void
+	 * @param   String
+	 * @return  Void
 	 */
 	public function setValue($value)
 	{
@@ -124,9 +97,9 @@ class Setting
 	/**
 	 * Check the setting validates against a set of given rules.
 	 *
-	 * @param	Array
-	 * @param	Array
-	 * @return	Boolean
+	 * @param   Array
+	 * @param   Array
+	 * @return  Boolean
 	 */
 	public function validates(array $validation_rules = array(), array $validation_messages = array())
 	{
@@ -138,7 +111,7 @@ class Setting
 		if ($validation->passes()) {
 			return true;
 		} else {
-			$this->messages->add($validation->messages()->toArray());
+			$this->messages->merge($validation->messages());
 			return false;
 		}
 	}

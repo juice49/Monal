@@ -10,5 +10,5 @@ class PackagesRepository extends Facade
 	 *
 	 * @return	String
 	 */
-	protected static function getFacadeAccessor() { return 'packagesrepository'; }
+	protected static function getFacadeAccessor() { return 'PackagesRepository'; }
 }

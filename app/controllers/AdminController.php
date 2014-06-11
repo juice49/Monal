@@ -2,24 +2,25 @@
 /**
  * Admin Controller.
  *
- * Base controller for HTTP/S requests for the systems admin pages.
+ * This is the base controller for requests to the system's various
+ * admin dashboards.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
-use Monal\GatewayInterface;
+use Monal\Monal;
 
 class AdminController extends BaseController
 {
 	/**
 	 * Constructor.
 	 *
-	 * @param	Monal\GatewayInterface
-	 * @return	Void
+	 * @param   Monal\Monal
+	 * @return  Void
 	 */
-	public function __construct(GatewayInterface $system_gateway)
+	public function __construct(Monal $system)
 	{
-		parent::__construct($system_gateway);
+		parent::__construct($system);
 		$this->control_panel_navigation = $this->buildDashboardMenu();
 		View::share('control_panel', $this->control_panel_navigation);
 		View::share('system', $this->system);
@@ -28,7 +29,7 @@ class AdminController extends BaseController
 	/**
 	 * Redirect user to the dashboard or login page.
 	 *
-	 * @return	Illuminate\Http\RedirectResponse
+	 * @return  Illuminate\Http\RedirectResponse
 	 */
 	public function admin()
 	{
@@ -40,10 +41,10 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Controller for HTTP/S requests for the admin login page. Mediates
-	 * the requests and outputs a response.
+	 * Process requests to the login page for the admin dashboard and
+	 * output a response.
 	 *
-	 * @return	Illuminate\View\View / Illuminate\Http\RedirectResponse
+	 * @return  Illuminate\View\View / Illuminate\Http\RedirectResponse
 	 */
 	public function login()
 	{
@@ -59,17 +60,17 @@ class AdminController extends BaseController
 					return \Redirect::route('admin.dashboard');
 				}
 			}
-			$this->system->messages->add($authentication->messages->get()->toArray());
+			$this->system->messages->merge($authentication->messages());
 		}
-		$messages = $this->system->messages->get();
+		$messages = $this->system->messages;
 		return View::make('login', compact('messages'));
 	}
 
 	/**
-	 * Controller for HTTP/S requests for the admin logout page. Mediates
-	 * the requests and outputs a response.
+	 * Process requests to logout the current system user and output a
+	 * response.
 	 *
-	 * @return	Illuminate\Http\RedirectResponse
+	 * @return  Illuminate\Http\RedirectResponse
 	 */
 	public function logout()
 	{
@@ -78,15 +79,14 @@ class AdminController extends BaseController
 	}
 
 	/**
-	 * Controller for HTTP/S requests for the admin dashboard Mediates the
-	 * requests and outputs a response.
+	 * Process requests to the admin dashboard and output a response.
 	 *
-	 * @return	Illuminate\View\View / Illuminate\Http\RedirectResponse
+	 * @return  Illuminate\View\View / Illuminate\Http\RedirectResponse
 	 */
 	public function dashboard()
 	{
-		$uninstalled_packages = Packages::unistalledPackages();
-		$messages = $this->system->messages->get();
+		$uninstalled_packages = $this->system->packages->uninstalledPackages();
+		$messages = $this->system->messages;
 		return View::make('admin.dashboard', compact('messages', 'uninstalled_packages'));
 	}
 
@@ -94,7 +94,7 @@ class AdminController extends BaseController
 	 * Create an array of menu options for the dashboard control panel
 	 * based on the current system user’s permissions.
 	 *
-	 * @return	Array
+	 * @return  Array
 	 */
 	public function buildDashboardMenu()
 	{

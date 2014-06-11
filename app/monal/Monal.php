@@ -1,90 +1,117 @@
 <?php
+namespace Monal;
 /**
  * Monal.
  *
- * Static API for directly accessing core system classes.
+ * This is the base system class which acts as a hub for connecting
+ * the different system APIs together, and for processing user
+ * authentication.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
 class Monal
 {
 	/**
-	 * Return the current instance of the system gateway class.
+	 * The system's messages.
 	 *
-	 * @return	Monal\Core\Contracts\GatewayInterface
+	 * @var     Illuminate\Support\MessageBag
 	 */
-	public static function instance()
+	public $messages;
+
+	/**
+	 * The system's dashboard API.
+	 *
+	 * @var     Monal\Core\Dashboard
+	 */
+	public $dashboard;
+
+	/**
+	 * The system's permissions API.
+	 *
+	 * @var     Monal\Core\Permissions
+	 */
+	public $permissions;
+
+	/**
+	 * The system's packages API.
+	 *
+	 * @var     Monal\Core\Packages
+	 */
+	public $packages;
+
+	/**
+	 * The system's routes API.
+	 *
+	 * @var     Monal\Core\Routes
+	 */
+	public $routes;
+
+	/**
+	 * The system's current user.
+	 *
+	 * @var     Monal\Models\SystemUser
+	 */
+	public $user;
+
+	/**
+	 * Constructor.
+	 *
+	 * @return  Void
+	 */
+	public function __construct()
 	{
-		return App::make('Monal\GatewayInterface');
+		$this->messages = \App::make('Illuminate\Support\MessageBag');
+		$this->dashboard = \App::make('Monal\Core\Dashboard');
+		$this->permissions = \App::make('Monal\Core\Permissions');
+		$this->packages = \App::make('Monal\Core\Packages');
+		$this->routes = \App::make('Monal\Core\Routes');
 	}
 
 	/**
-	 * Register a new admin route.
+	 * Create a new authentication request.
 	 *
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @return	Void
+	 * @return  Monal\Core\AuthenticationRequest
 	 */
-	public static function registerAdminRoute($type, $url, $name, $controller)
+	public function newAuthRequest()
 	{
-		$route = \Config::get('admin.slug') . '/' .$url;
-		switch ($type) {
-			case 'get':
-			case 'GET':
-				Route::get($route, array('as' => $name, 'uses' => $controller));
-				break;
-			case 'post':
-			case 'POST':
-				Route::post($route, array('as' => $name, 'uses' => $controller));
-				break;
-			case 'any':
-			case 'ANY':
-				Route::any($route, array('as' => $name, 'uses' => $controller));
-				break;
+		$this->revokeAuth();
+		return \App::make('Monal\Models\AuthenticationRequest');
+	}
+
+	/**
+	 * Check if the current user has already been authenticated.
+	 *
+	 * @param   Boolean
+	 * @return  Boolean
+	 */
+	public function attemptAuthFromSession($is_admin = false)
+	{
+		$user = (\Auth::check()) ? \Auth::user() : false;
+		if ($user) {
+			if ($user->active) {
+				if ($is_admin) {
+					if ($user->GroupDetails->id != 1 AND !$user->GroupDetails->groupPermissions->admin) {
+						$this->user = new \Monal\Models\SystemUser();
+						return false;
+					}
+				}
+				$this->user = new \Monal\Models\SystemUser($user->toArray());
+				return true;
+			}
+			$this->revokeAuth();
 		}
+		$this->user = new \Monal\Models\SystemUser();
+		return false;
 	}
 
 	/**
-	 * Register route logic.
+	 * Revoke the current user’s authentication.
 	 *
-	 * @param	Closure
-	 * @return	Void
+	 * @return  Void
 	 */
-	public static function registerFrontendRouteLogic($closure)
+	public function revokeAuth()
 	{
-		$system = self::instance();
-		array_push($system->route_logic, $closure);
-	}
-
-	/**
-	 * Register a new dashboard menu option.
-	 *
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @param	String
-	 * @return	Void
-	 */
-	public static function registerMenuOption($category, $title, $route, $permissions = null)
-	{
-		$system = self::instance();
-		$system->dashboard->addMenuOption($category, $title, $route, $permissions);
-	}
-
-	/**
-	 * Register a new permission set.
-	 *
-	 * @param	String
-	 * @param	String
-	 * @param	Array
-	 * @return	Void
-	 */
-	public static function registerPermissionSet($name, $slug, array $permissions = array())
-	{
-		$system = self::instance();
-		$system->permissions->addPermissionSet($name, $slug, $permissions);
+		\Auth::logout();
 	}
 }

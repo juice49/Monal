@@ -3,58 +3,52 @@ namespace Monal\Models;
 /**
  * Authentication Request.
  *
- * A model for a authentication request to the system.
+ * This is a model for an authentication requests and can be used to
+ * authenticate a user with the system.
  *
- * @author	Arran Jacques
+ * @author  Arran Jacques
  */
 
-class AuthenticationRequest
+class AuthenticationRequest extends Model
 {
-	/**
-	 * The authentication request's messages.
-	 *
-	 * @var		Monal\Core\Contracts\MessagesInterface
-	 */
-	public $messages;
-
 	/**
 	 * The system's authentication repository.
 	 *
-	 * @var		Monal\Repositories\Contracts\AuthenticationRepository
+	 * @var     Monal\Repositories\EloquentAuthenticationRepository
 	 */
 	protected $repository;
 
 	/**
 	 * Email address to authenticate.
 	 *
-	 * @var		 String
+	 * @var      String
 	 */
 	private $email;
 
 	/**
 	 * Password to authenticate.
 	 *
-	 * @var		 String
+	 * @var      String
 	 */
 	private $password;
 
 	/**
 	 * Constructor.
 	 *
-	 * @return	Void
+	 * @return  Void
 	 */
 	public function __construct()
 	{
-		$this->messages = \App::make('Monal\Core\Contracts\MessagesInterface');
-		$this->repository = \App::make('EloquentAuthenticationRepository');
+		parent::__construct();
+		$this->repository = \App::make('Monal\Repositories\EloquentAuthenticationRepository');
 	}
 
 	/**
 	 * Set the user's authentication details.
 	 *
-	 * @param	String
-	 * @param	String
-	 * @return	Void
+	 * @param   String
+	 * @param   String
+	 * @return  Void
 	 */
 	public function setUser($email, $password)
 	{
@@ -66,7 +60,7 @@ class AuthenticationRequest
 	 * Check if the user details provided are valid values for an
 	 * authentication request.
 	 *
-	 * @return	Boolean
+	 * @return  Boolean
 	 */
 	public function validates()
 	{
@@ -81,13 +75,7 @@ class AuthenticationRequest
 			)
 		);
 		if (!$validation->passes()) {
-			$this->messages->add(
-				array(
-					'error' => array(
-						'Login failed.'
-					)
-				)
-			);
+			$this->messages->add('error', 'Login failed.');
 			return false;
 		}
 		return true;
@@ -96,8 +84,8 @@ class AuthenticationRequest
 	/**
 	 * Attempt to authenticate the user with the system and log them in.
 	 *
-	 * @param	Boolean
-	 * @return	Boolean
+	 * @param   Boolean
+	 * @return  Boolean
 	 */
 	public function attempt($remember = false, $as_admin = false)
 	{
@@ -113,13 +101,7 @@ class AuthenticationRequest
 				}
 			}
 		}
-		$this->messages->add(
-			array(
-				'error' => array(
-					'Login failed.'
-				)
-			)
-		);
+		$this->messages->add('error', 'Login failed.');
 		return $authenticated;
 	}
 }

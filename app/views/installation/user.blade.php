@@ -4,7 +4,7 @@
 		<h1 class="color--teal fs--bravo">Installation Guide</h1>
 		<p class="color--grey__medium fs--echo">Welcome. This guide will take you through 3 simple steps to install the Monal core system and get you up and running in a jiffy!</p>
 
-		@if ($messages)
+		@if ($messages->any())
 			<div class="message_box message_box--tomato">
 				<span class="message_box__title">Great Scott!</span>
 				<ul>

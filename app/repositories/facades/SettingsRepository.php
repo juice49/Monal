@@ -10,5 +10,5 @@ class SettingsRepository extends Facade
 	 *
 	 * @return	String
 	 */
-	protected static function getFacadeAccessor() { return 'settingsrepository'; }
+	protected static function getFacadeAccessor() { return 'SettingsRepository'; }
 }
