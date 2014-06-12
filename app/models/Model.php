@@ -8,8 +8,8 @@ namespace Monal\Models;
  * @author  Arran Jacques
  */
 
-class Model {
-
+class Model
+{
     /**
      * The model's message bag.
      *
