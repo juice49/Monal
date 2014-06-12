@@ -12,5 +12,5 @@ Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));
 // Handle 404 errors
 App::missing(function($exception)
 {
-	return '404';
+	return Response::view('errors.missing', [], 404);
 });
