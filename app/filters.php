@@ -46,9 +46,10 @@ App::before(function($request)
 		}
 	}
 
+	$url_segments = Request::segments();
+
 	// Check if a request is for an admin page and if so check the user
 	// has the credentials to access the admin dashboard.
-	$url_segments = Request::segments();
 	$admin_slug = \Config::get('admin.slug');
 	if ($admin_slug AND preg_match('/^[a-z0-9\-]+$/i', $admin_slug)) {
 		// Is the route trying to access the admin area of the system.
@@ -63,6 +64,13 @@ App::before(function($request)
 					return Redirect::route('admin.login');
 				}
 			}
+		}
+	}
+
+	// Check if any of the frontend route closures return a response.
+	foreach (\Monal\API\Routes::getFrontendRouteClosures() as $closure) {
+		if ($response = $closure($url_segments)) {
+			return $response;
 		}
 	}
 });

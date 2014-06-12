@@ -19,6 +19,16 @@ class Routes
     public $frontend_closures = array();
 
     /**
+     * Return all frontend route closures registered with the system.
+     *
+     * @return  Array
+     */
+    public function getFrontendRouteClosures()
+    {
+        return $this->frontend_closures;
+    }
+
+    /**
      * Add a new admin route.
      *
      * @param   String

@@ -13,6 +13,16 @@ use Monal\API;
 class Routes extends API
 {
     /**
+     * Return all frontend route closures registered with the system.
+     *
+     * @return  Array
+     */
+    public static function getFrontendRouteClosures()
+    {
+        return self::systemInstance()->routes->getFrontendRouteClosures();
+    }
+
+    /**
      * Add a new admin route.
      *
      * @param   String

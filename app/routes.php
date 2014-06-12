@@ -9,7 +9,7 @@ Monal\API\Routes::addAdminRoute('any', 'packages', 'admin.packages', 'PackagesCo
 // Ajax route.
 Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));
 
-// Handle 404 errors
+// Handle missing routes.
 App::missing(function($exception)
 {
 	return Response::view('errors.missing', [], 404);
