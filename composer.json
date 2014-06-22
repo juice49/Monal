@@ -1,6 +1,6 @@
 {
 	"name": "arranjacques/monal",
-	"description": "A Laravel web application framework for building custom web applications.",
+	"description": "An extensible web application designed to aid web developers in quickly building powerful and bespoke web applications.",
 	"keywords": ["monal", "application", "framework", "laravel"],
 	"license": "MIT",
 	"require": {
