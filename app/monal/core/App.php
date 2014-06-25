@@ -12,20 +12,83 @@ namespace Monal\Core;
 class App
 {
     /**
+     * The template to use for general errors.
+     *
+     * @var     String
+     */
+    protected $error_template = 'errors.default';
+
+    /**
+     * The template to use for 403 errors.
+     *
+     * @var     String
+     */
+    protected $error_template_403 = 'errors.403';
+
+    /**
      * The template to use for 404 errors.
      *
      * @var     String
      */
-    protected $missing_page_template = 'errors.missing';
+    protected $error_template_404 = 'errors.404';
+
+    /**
+     * The template to use for 500 errors.
+     *
+     * @var     String
+     */
+    protected $error_template_500 = 'errors.500';
+
+    /**
+     * Return the template to use for general errors.
+     *
+     * @return  String
+     */
+    public function errorTemplate()
+    {
+        return $this->error_template;
+    }
+
+    /**
+     * Set the template to use for 403 errors.
+     *
+     * @param   String
+     * @return  Void
+     */
+    public function setErrorTemplate($template)
+    {
+        $this->error_template = (string) $template;
+    }
+
+    /**
+     * Return the template to use for 403 errors.
+     *
+     * @return  String
+     */
+    public function error403Template()
+    {
+        return $this->error_template_403;
+    }
+
+    /**
+     * Set the template to use for 403 errors.
+     *
+     * @param   String
+     * @return  Void
+     */
+    public function setError403Template($template)
+    {
+        $this->error_template_403 = (string) $template;
+    }
 
     /**
      * Return the template to use for 404 errors.
      *
      * @return  String
      */
-    public function missingTemplate()
+    public function error404Template()
     {
-        return $this->missing_page_template;
+        return $this->error_template_404;
     }
 
     /**
@@ -34,8 +97,29 @@ class App
      * @param   String
      * @return  Void
      */
-    public function setMissingTemplate($template)
+    public function setError404Template($template)
     {
-        $this->missing_page_template = (string) $template;
+        $this->error_template_404 = (string) $template;
+    }
+
+    /**
+     * Return the template to use for 500 errors.
+     *
+     * @return  String
+     */
+    public function error500Template()
+    {
+        return $this->error_template_500;
+    }
+
+    /**
+     * Set the template to use for 404 errors.
+     *
+     * @param   String
+     * @return  Void
+     */
+    public function setError500Template($template)
+    {
+        $this->error_template_500 = (string) $template;
     }
 }
