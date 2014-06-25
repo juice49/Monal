@@ -12,5 +12,14 @@ Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));
 // Handle missing routes.
 App::missing(function($exception)
 {
-	return Response::view(Monal\API\App::missingTemplate(), [], 404);
+	$page_template = App::make('Monal\Core\PageTemplate');
+	$page_template->setTitle('404');
+	$slug = '';
+	foreach (Request::segments() as $segment) {
+		$slug .= $segment . '/';
+	}
+	$page_template->setSlug($slug);
+	$page = App::make('Monal\Core\Page', array($page_template));
+	$view = View::make(Monal\API\App::missingTemplate(), compact('page'))->render();
+	return Response::make($view, 404);
 });
