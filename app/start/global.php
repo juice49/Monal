@@ -49,6 +49,40 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 App::error(function(Exception $exception, $code)
 {
 	Log::error($exception);
+	$page_template = App::make('Monal\Core\PageTemplate');
+	$slug = '';
+	foreach (Request::segments() as $segment) {
+		$slug .= $segment . '/';
+	}
+	switch ($code) {
+		case 403:
+			$page_template->setTitle('403');
+			$page_template->setSlug($slug);
+			$page = App::make('Monal\Core\Page', array($page_template));
+			$view = View::make(Monal\API\App::error403Template(), compact('page'))->render();
+			return Response::make($view, 403);
+			break;
+		case 404:
+			$page_template->setTitle('404');
+			$page_template->setSlug($slug);
+			$page = App::make('Monal\Core\Page', array($page_template));
+			$view = View::make(Monal\API\App::error404Template(), compact('page'))->render();
+			return Response::make($view, 404);
+			break;
+		case 500:
+			$page_template->setTitle('500');
+			$page_template->setSlug($slug);
+			$page = App::make('Monal\Core\Page', array($page_template));
+			$view = View::make(Monal\API\App::error500Template(), compact('page'))->render();
+			return Response::make($view, 500);
+			break;
+		default:
+			$page_template->setTitle($code);
+			$page_template->setSlug($slug);
+			$page = App::make('Monal\Core\Page', array($page_template));
+			$view = View::make(Monal\API\App::errorTemplate(), compact('page'))->render();
+			return Response::make($view, $code);
+	}
 });
 
 /*
