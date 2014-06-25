@@ -20,6 +20,13 @@ class Monal
     public $messages;
 
     /**
+     * The system's App API.
+     *
+     * @var     Monal\Core\App
+     */
+    public $app;
+
+    /**
      * The system's dashboard API.
      *
      * @var     Monal\Core\Dashboard
@@ -62,6 +69,7 @@ class Monal
     public function __construct()
     {
         $this->messages = \App::make('Illuminate\Support\MessageBag');
+        $this->app = \App::make('Monal\Core\App');
         $this->dashboard = \App::make('Monal\Core\Dashboard');
         $this->permissions = \App::make('Monal\Core\Permissions');
         $this->packages = \App::make('Monal\Core\Packages');

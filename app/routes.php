@@ -12,5 +12,5 @@ Route::post('ajax', array('as' => 'ajax', 'uses' => 'AJAXController@map'));
 // Handle missing routes.
 App::missing(function($exception)
 {
-	return Response::view('errors.missing', [], 404);
+	return Response::view(Monal\API\App::missingTemplate(), [], 404);
 });
