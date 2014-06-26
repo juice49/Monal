@@ -1,10 +1,10 @@
 <?php
-namespace Monal\Core;
+namespace Monal\Models;
 /**
  * Page Template.
  *
  * A basic implementation of the PageTemplateInterface, which can be
- * used to instantiate new instances of the Monal\Core\Page model.
+ * used to instantiate new instances of the Monal\Models\Page model.
  *
  * @author  Arran Jacques
  */
@@ -12,11 +12,25 @@ namespace Monal\Core;
 class PageTemplate implements PageTemplateInterface
 {
     /**
+     * The page template's ID.
+     *
+     * @var     Integer
+     */
+    protected $id = null;
+
+    /**
      * The page template's slug.
      *
      * @var     String
      */
     protected $slug = null;
+
+    /**
+     * The page template's URI.
+     *
+     * @var     String
+     */
+    protected $uri = null;
 
     /**
      * The page template's title.
@@ -42,12 +56,34 @@ class PageTemplate implements PageTemplateInterface
     /**
      * Set the page template's slug.
      *
+     * @param   Integer
+     * @return  Void
+     */
+    public function setID($id)
+    {
+        $this->id = (int) $id;
+    }
+
+    /**
+     * Set the page template's slug.
+     *
      * @param   String
      * @return  Void
      */
     public function setSlug($slug)
     {
         $this->slug = trim($slug, '/');
+    }
+
+    /**
+     * Set the page template's URI.
+     *
+     * @param   String
+     * @return  Void
+     */
+    public function setURI($uri)
+    {
+        $this->uri = trim($uri, '/');
     }
 
     /**
@@ -84,6 +120,16 @@ class PageTemplate implements PageTemplateInterface
     }
 
     /**
+     * Return the page template's ID.
+     *
+     * @return  String
+     */
+    public function ID()
+    {
+        return $this->id;
+    }
+
+    /**
      * Return the page template's slug.
      *
      * @return  String
@@ -91,6 +137,16 @@ class PageTemplate implements PageTemplateInterface
     public function slug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Return the page template's URI.
+     *
+     * @return  String
+     */
+    public function URI()
+    {
+        return $this->uri;
     }
 
     /**
@@ -121,15 +177,5 @@ class PageTemplate implements PageTemplateInterface
     public function keywords()
     {
         return $this->keywords;
-    }
-
-    /**
-     * Return the page template's URL.
-     *
-     * @return  String
-     */
-    public function URL()
-    {
-        return \URL::to($this->slug);
     }
 }

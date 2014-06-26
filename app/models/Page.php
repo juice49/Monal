@@ -1,9 +1,9 @@
 <?php
-namespace Monal\Core;
+namespace Monal\Models;
 /**
  * Page.
  *
- * A model of a front-end page. Provides methods  for returning
+ * A model of a front-end page. Provides methods for returning
  * universal properties that every front-end page should have, such
  * as a URL, title, meta description and keywords.
  *
@@ -13,54 +13,37 @@ namespace Monal\Core;
 class Page
 {
     /**
-     * The page's slug.
+     * The page's details.
      *
-     * @var     String
+     * @var     array
      */
-    protected $slug = null;
-
-    /**
-     * The page's title.
-     *
-     * @var     String
-     */
-    protected $title = null;
-
-    /**
-     * The page's description.
-     *
-     * @var     String
-     */
-    protected $description = null;
-
-    /**
-     * The page's keywords.
-     *
-     * @var     String
-     */
-    protected $keywords = null;
-
-    /**
-     * The page's URL.
-     *
-     * @var     String
-     */
-    protected $url = null;
+    protected $details = array();
 
     /**
      * Constructor.
      *
-     * @param   Monal\Core\PageTemplateInterface
+     * @param   Monal\Models\PageTemplateInterface
      * @return  Void
      */
     public function __construct(PageTemplateInterface $template)
     {
         // Build the page model from a template.
-        $this->slug = $template->slug();
-        $this->title = $template->title();
-        $this->description = $template->description();
-        $this->keywords = $template->keywords();
-        $this->url = $template->URL();
+        $this->details['id'] = $template->ID();
+        $this->details['slug'] = $template->slug();
+        $this->details['uri'] = $template->URI();
+        $this->details['title'] = $template->title();
+        $this->details['description'] = $template->description();
+        $this->details['keywords'] = $template->keywords();
+    }
+
+    /**
+     * Return the pages's ID.
+     *
+     * @return  Integer
+     */
+    public function ID()
+    {
+        return $this->details['id'];
     }
 
     /**
@@ -70,7 +53,7 @@ class Page
      */
     public function slug()
     {
-        return $this->slug;
+        return $this->details['slug'];
     }
 
     /**
@@ -80,7 +63,7 @@ class Page
      */
     public function title()
     {
-        return $this->title;
+        return $this->details['title'];
     }
 
     /**
@@ -90,7 +73,7 @@ class Page
      */
     public function description()
     {
-        return $this->description;
+        return $this->details['description'];
     }
 
     /**
@@ -100,7 +83,7 @@ class Page
      */
     public function keywords()
     {
-        return $this->keywords;
+        return $this->details['keywords'];
     }
 
     /**
@@ -110,7 +93,7 @@ class Page
      */
     public function URL()
     {
-        return $this->url;
+        return \URL::to($this->details['id']);
     }
 
     /**
@@ -120,7 +103,7 @@ class Page
      */
     public function metaTitle()
     {
-        return $this->title();
+        return $this->details['title'];
     }
 
     /**

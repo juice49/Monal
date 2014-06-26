@@ -48,42 +48,45 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
+	// Log the error.
 	Log::error($exception);
+
 	if (!Config::get('app.debug')) {
-		$page_template = App::make('Monal\Core\PageTemplate');
-		$slug = '';
-		foreach (Request::segments() as $segment) {
-			$slug .= $segment . '/';
+
+		// Create a new page template.
+		$page_template = App::make('Monal\Models\PageTemplate');
+
+		// Build the pages URI from the request URL.
+		$url_segments = Request::segments();
+		$uri = '';
+		foreach ($url_segments as $segment) {
+			$uri .= $segment . '/';
 		}
+
+		// Set the page template's properties.
+		$page_template->setTitle($code);
+		$page_template->setSlug(end($url_segments));
+		$page_template->setURI($uri);
+
+		// Decide what error template we should use.
 		switch ($code) {
 			case 403:
-				$page_template->setTitle('403');
-				$page_template->setSlug($slug);
-				$page = App::make('Monal\Core\Page', array($page_template));
-				$view = View::make(Monal\API\App::error403Template(), compact('page'))->render();
-				return Response::make($view, 403);
+				$function_name = 'error403Template';
 				break;
 			case 404:
-				$page_template->setTitle('404');
-				$page_template->setSlug($slug);
-				$page = App::make('Monal\Core\Page', array($page_template));
-				$view = View::make(Monal\API\App::error404Template(), compact('page'))->render();
-				return Response::make($view, 404);
+				$function_name = 'error404Template';
 				break;
 			case 500:
-				$page_template->setTitle('500');
-				$page_template->setSlug($slug);
-				$page = App::make('Monal\Core\Page', array($page_template));
-				$view = View::make(Monal\API\App::error500Template(), compact('page'))->render();
-				return Response::make($view, 500);
+				$function_name = 'error500Template';
 				break;
 			default:
-				$page_template->setTitle($code);
-				$page_template->setSlug($slug);
-				$page = App::make('Monal\Core\Page', array($page_template));
-				$view = View::make(Monal\API\App::errorTemplate(), compact('page'))->render();
-				return Response::make($view, $code);
+				$function_name = 'errorTemplate';
 		}
+
+		// Create a new page and render it's view, and then output a response.
+		$page = App::make('Monal\Models\Page', array($page_template));
+		$view = View::make(Monal\API\App::$function_name(), compact('exception', 'page'))->render();
+		return Response::make($view, $code);
 	}
 });
 
