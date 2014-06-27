@@ -8,8 +8,31 @@ namespace Monal\Libraries;
  * @author  Arran Jacques
  */
 
+use Illuminate\Support\MessageBag;
+
 class FlashMessages
 {
+    /**
+     * Check if there are any flash message in the user’s session.
+     *
+     * @return  Boolean
+     */
+    public function any()
+    {
+        return $this->all()->count() > 0;
+    }
+
+    /**
+     * Check if there is a specific flash message in the user’s session.
+     *
+     * @param   String
+     * @return  Boolean
+     */
+    public function has($key)
+    {
+        return $this->all()->has($key);
+    }
+
     /**
      * Flash a message to the user's session.
      *
@@ -22,6 +45,28 @@ class FlashMessages
         $messages = $this->all();
         $messages->add($key, $message);
         \Session::flash('flash_messages', $messages->toArray());
+    }
+
+    /**
+     * Flash all of the messages in a message bag to the user’s session.
+     *
+     * @param   Illuminate\Support\MessageBag
+     * @return  Void
+     */
+    public function flashMessageBag(MessageBag $message_bag)
+    {
+        \Session::flash('flash_messages', $message_bag->toArray());
+    }
+
+    /**
+     * Get a flash message from the user’s session by its key.
+     *
+     * @param   String
+     * @return  Array / String
+     */
+    public function get($key)
+    {
+        return $this->has($key) ? $this->all()->get($key) : null; 
     }
 
     /**
