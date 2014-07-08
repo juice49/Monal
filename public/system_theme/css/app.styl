@@ -1,695 +1,734 @@
-@import colors
+@import mixins
+@import "../node_modules/StylusTriangle"
 @import config
 @import resets
 
-displayInlineBlock()
-	display inline-block
-	*display inline
-	*zoom 1
-
 /* ============================================================
+ * Globals
+ ============================================================ */
+
+/**
  * Typography
-=========================================================== */
+ ============================================================ */
 
 html
-body
 input
 textarea
 select
 button
 	font-family: fonts['main']
 	-webkit-font-smoothing antialiased
-	-moz-osx-font-smoothing grayscale
 	font-smoothing antialiased
 	text-rendering optimizeLegibility
 
-input
-textarea
-select
-button
-	font-family: fonts['main']
-	font-size: font_sizes['foxtrot']
+h1
+h2
+h3
+h4
+h5
+h6
+	font-family: fonts['heading']
 
-.fs--alpha
+h1.title
+	color: colors['grey-60']
+	font-family: fonts['main']
+	font-weight normal
 	font-size: font_sizes['alpha']
 
-.fs--bravo
-	font-size: font_sizes['bravo']
+	@media screen and (max-width: 912px)
+		font-size: font_sizes['charlie']
 
-.fs--charlie
+h2.title
+	color: colors['grey-40']
+	font-family: fonts['main']
+	font-weight normal
 	font-size: font_sizes['charlie']
 
-.fs--delta
-	font-size: font_sizes['delta']
+	@media screen and (max-width: 912px)
+		font-size: font_sizes['echo']
 
-.fs--echo
-	font-size: font_sizes['echo']
+/**
+ * Wraps
+ ============================================================ */
 
-.fs--foxtrot
-	font-size: font_sizes['foxtrot']
+.wrap
+	width base_unit * 44
+	margin auto
 
-/* ============================================================
- * Colors
-=========================================================== */
+	@media screen and (min-width: 1296px)
+		width base_unit * 50
 
-.color--grey__dark
-	color: colors['grey+2']
+	@media screen and (max-width: 1104px)
+		width base_unit * 35
 
-.color--grey__medium
-	color: colors['grey']
+	@media screen and (max-width: 912px)
+		width base_unit * 26
 
-.color--grey__light
-	color: colors['grey+2']
+	@media screen and (max-width: 720px)
+		width auto
+		margin 0 5%
 
-.color--grey__vlight
-	color: colors['grey+4']
-
-.color--teal
-	color: colors['teal']
-
-/* ============================================================
- * Aligns
-=========================================================== */
-
-.align--right
-	text-align right
-
-.align--center
-	text-align center
+/**
+ * Align
+ ============================================================ */
 
 .align--left
 	text-align left
 
+.align--center
+	text-align center
 
-/* ============================================================
- * Nodes
-=========================================================== */
+.align--right
+	text-align right
 
-.node__y
-	padding-top base_unit
-	padding-bottom base_unit
+/**
+ * Clearfix
+ ============================================================ */
 
-.node__y--top
-	padding-top base_unit
-	padding-bottom 0
+*
 
-.node__y--bottom
-	padding-top 0
-	padding-bottom base_unit
+	html
 
-/* ============================================================
+		.clearfix
+			height 1%
+
+html
+
+	.clearfix
+		display block
+
+.clearfix
+	display inline-block
+
+	&:after
+		content ' '
+		display block
+		clear both
+		height 0
+		line-height 0
+		visibility hidden
+
+/**
  * Buttons
-=========================================================== */
+ ============================================================ */
 
 .button
 	displayInlineBlock()
-	box-sizing border-box
-	padding (base_unit * .5) (base_unit * .75)
-	margin 0
-	font-size: font_sizes['foxtrot']
+	padding (base_unit * .5) base_unit
+	font-size: font_sizes['gamma']
 	font-weight bold
+	text-align center
 	text-decoration none
+	text-transform uppercase
 	border none
-	border-radius 2px
 	cursor pointer
 
-.button--small
-	font-size: font_sizes['gamma']
-	padding (base_unit * .125) (base_unit * .5)
-
-
-.button--cuban_heat
-	color #ffffff
-	background-color: colors['cuban_heat']
-
-.button.button--cuban_heat
-
-	&:hover
-		background-color: colors['cuban_heat+1']
-
-	&:active
-		background-color: colors['cuban_heat-2']
-
-.button--dusk
-	color #ffffff
-	background-color: colors['dusk']
-
-.button.button--dusk
-
-	&:hover
-		background-color: colors['dusk+1']
-
-	&:active
-		background-color: colors['dusk-2']
-
-.button--mist
-	color #ffffff
-	background-color: colors['mist']
-
-.button.button--mist
-
-	&:hover
-		background-color: colors['mist+1']
-
-	&:active
-		background-color: colors['mist-2']
-
-.button--mustard
-	color #ffffff
-	background-color: colors['mustard']
-
-.button.button--mustard
-
-	&:hover
-		background-color: colors['mustard+1']
-
-	&:active
-		background-color: colors['mustard-2']
-
-.button--teal
-	color #ffffff
-	background-color: colors['teal']
-
-.button.button--teal
-
-	&:hover
-		background-color: colors['teal+1']
-
-	&:active
-		background-color: colors['teal-2']
-
-.button--wasabi
-	color #ffffff
-	background-color: colors['wasabi']
-
-.button.button--wasabi
-
-	&:hover
-		background-color: colors['wasabi+1']
-
-	&:active
-		background-color: colors['wasabi-2']
-
-/* ============================================================
- * Messages
-=========================================================== */
-
-.message_box
-	padding (base_unit * .5) base_unit
-	border-radius 2px
-
-	ul
-	ol
-		padding 0
-		list-style none
-
-		li
-			padding 0
-			margin 0 0 (base_unit * .6) 0
-			font-size: font_sizes['foxtrot']
-
-			&:last-child
-				margin 0
-
-.message_box__title
+.button--block
 	display block
-	margin-top base_unit * .5
-	font-size: font_sizes['foxtrot']
-	font-weight bold
-	text-transform uppercase
 
-.message_box--small
-	padding (base_unit * .25) (base_unit * .75)
+.button--grey
+	color #ffffff
+	background-color: colors['grey+40']
 
-	.message_box__title
-		margin-top base_unit * .25
-		font-size: font_sizes['gamma']
+	&:hover
+		background: colors['grey+20']
 
-	ul
-	ol
+	&:active
+		background: colors['grey+60']
 
-		li
-			margin 0 0 (base_unit * .4) 0
-			font-size: font_sizes['gamma']
+.button--gradient
+	color #ffffff
+	background-color: colors['orange']
+	background: -webkit-linear-gradient(left, colors['orange'] 0%, colors['red'] 100%)
+	background: -moz-linear-gradient(left, colors['orange'] 0%, colors['red'] 100%)
+	background: linear-gradient(left, colors['orange'] 0%, colors['red'] 100%)
 
-			&:last-child
-				margin 0
+	&:hover
+		background: colors['orange']
 
-.message_box--mustard
-	color: colors['mustard-6']
-	background-color: colors['mustard']
-
-	* 
-		color: colors['mustard-6']
-
-	a
-		font-weight bold
-
-.message_box--tomato
-	color: colors['tomato-6']
-	background-color: colors['tomato']
-
-	* 
-		color: colors['tomato-6']
-
-.message_box--wasabi
-	color: colors['wasabi-6'] !important
-	background-color: colors['wasabi']
-
-	* 
-		color: colors['wasabi-6']
-
-/* ============================================================
- * Forms
-=========================================================== */
-
-.form__controls__right
-.form__controls__left
-	displayInlineBlock()
-	width 50%
-	margin-right -4px
+	&:active
+		background: colors['red']
 
 /**
- * Labels
+ * Read More
  ============================================================ */
 
-.label
-	color: colors['grey-4']
-	font-size: font_sizes['foxtrot']
-
-.label--block
-	display block
-	padding-bottom base_unit * .75
-	margin 0
-
-.label--inline
-	displayInlineBlock()
-	vertical-align middle 
-	padding-left base_unit
-	padding-right base_unit
-	margin-top base_unit * .75
-
-.label--strong
-	font-weight bold
-
-.label--description
-	color: colors['grey'] !important
-	font-size: font_sizes['gamma']
+.read_more
+	color: colors['red']
+	font-size: font_sizes['delta']
 	font-style italic
+	text-decoration none
+	text-shadow 0 0 6px #ffffff
 
-	a
-		color: colors['grey-2']
+	@media screen and (max-width: 912px)
+		font-size: font_sizes['echo']
+
+	&:hover
+		color: colors['orange']
 		text-decoration underline
 
-		&:hover
-			color: colors['grey-4']
-
 /**
- * Inputs - Text
+ * Inputs
  ============================================================ */
 
-.input__text
+.input
 	box-sizing border-box
 	width base_unit * 14
-	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
+	padding (base_unit * .75) base_unit
 	margin 0
-	color: colors['grey']
-	border: solid 2px colors['grey+2']
-	border-radius 2px
-	background-color #ffffff
-
-	&:hover
-		color: colors['grey-2']
-		border-color: colors['grey']
-
-	&:focus
-		color: colors['grey-4']
-		border-color: colors['grey-2']
-
-.input__text:disabled
-.input__text.input__text--disabled
-	border-color: colors['grey+3']
-	background-color: colors['grey+5']
-
-	&:hover
-		color: colors['grey']
-		border-color: colors['grey+3']
-
-	&:focus
-		color: colors['grey']
-		border-color: colors['grey+3']
-
-/**
- * Inputs - Numbers
- ============================================================ */
-
-.input__number::-webkit-outer-spin-button
-.input__number::-webkit-inner-spin-button
-	-webkit-appearance none
-	margin 0
-
-.input__number
-	@extend .input__text
-
-/**
- * Inputs - Radio buttons and checkboxes
- ============================================================ */
-
-.checkbox
-
-	&:hover
-
-		.checkbox__input
-			border: solid 2px colors['grey']
-
-	.checkbox__label
-		displayInlineBlock()
-		vertical-align middle 
-
-	.checkbox__input
-		-webkit-appearance none
-		-moz-appearance none
-		appearance none
-		displayInlineBlock()
-		vertical-align middle 
-		width 20px
-		height 20px
-		border: solid 2px colors['grey+2']
-		border-radius 2px
-		background-color #ffffff
-		background-size 16px, 16px
-		background-repeat no-repeat
-		background-position center center
-
-	.checkbox__input:checked
-		border-color: colors['grey']
-		background-image url(../images/checkbox--tick_@2x.png)
-
-	.checkbox__input:disabled
-		border-color: colors['grey+3']
-		background-color: colors['grey+5']
-
-/**
- * Inputs - Textareas
- ============================================================ */
-
-.textarea
-	box-sizing border-box
-	width base_unit * 24
-	max-width 100%
-	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
-	margin 0
-	color: colors['grey']
-	border: solid 2px colors['grey+2']
-	border-radius 2px
-	background #ffffff
+	color: colors['grey-80']
+	border none
+	background: colors['grey+80']
 	resize none
 
 	&:hover
-		color: colors['grey-2']
-		border-color: colors['grey']
+		background: colors['grey+40']
 
 	&:focus
-		color: colors['grey-4']
-		border-color: colors['grey-2']
+		background: colors['grey+20']
+
+	&::-webkit-input-placeholder
+		color: colors['grey-40']
+
+	&:-moz-placeholder
+		color: colors['grey-40']
+
+	&::-moz-placeholder
+		color: colors['grey-40']
+
+	&:-ms-input-placeholder
+		color: colors['grey-40']
+
+.input--full
+	width 100%
 
 /**
- * Inputs - Selects
+ * Borders
  ============================================================ */
 
-.select
-	-webkit-appearance none
-	-moz-appearance none
-	appearance none
+.border--x
+	display block
+	width 100%
+	height 6px
+	background-color: colors['orange']
+	background: -webkit-linear-gradient(left, colors['orange'] 0%, colors['red'] 100%)
+	background: -moz-linear-gradient(left, colors['orange'] 0%, colors['red'] 100%)
+	background: linear-gradient(left, colors['orange'] 0%, colors['red'] 100%)
+
+/**
+ * Trail
+ ============================================================ */
+
+.trail
+	position relative
+
+	&:after
+		content ' '
+		display block
+		position absolute
+		top 100%
+		right base_unit
+		width 0
+		height 0
+		border-style solid
+		border-width 0 (base_unit * 1.5) (base_unit) 0;
+		border-color transparent
+
+.trail--red
+
+	&:after
+		border-right-color: colors['red']
+
+/**
+ * Captions
+ ============================================================ */
+
+.caption
 	box-sizing border-box
-	width base_unit * 14
-	padding (base_unit * .5) base_unit (base_unit * .5) base_unit
-	margin 0
-	color: colors['grey-4']
+	max-width 100%
+	padding (base_unit * .125) (base_unit * .25)
+	color #ffffff
+	font-size: font_sizes['gamma']
 	font-weight bold
-	border none
 	border-radius 2px
-	background-color: colors['grey+4']
-	background-image url(../images/select--arrow_down.png)
-	background-repeat no-repeat
-	background-position right center
-	background-size 48px 24px
+	background-color #000000
+	background-color rgba(0, 0, 0, 0.3)
+
+/* ============================================================
+ * Widgets
+ ============================================================ */
+
+/**
+ * Newsletter
+ ============================================================ */
+
+.newsletter
+	padding base_unit
+	background-color #ffffff
+
+.newsletter__messages
+	padding (base_unit * .25) (base_unit * .5)
+	margin 0 0 (base_unit * .75) 0
+	list-style none
+
+	li
+		padding 0
+		margin 0
+		color #ffffff
+		font-weight bold
+		text-align center
+
+.newsletter__messages--error
+	background-color #c54835
+
+.newsletter__messages--success
+	margin 0
+	background-color #aed964
+
+.newsletter__form
+	position relative
+
+.newsletter__title
+	padding 0
+	margin 0 0 (base_unit * .5) 0
+	color: colors['grey-60']
+	font-family: fonts['main']
+	font-weight normal
+
+.newsletter__cta
+	padding 0
+	margin 0 0 (base_unit * .75) 0
+	color: colors['grey-40']
+	font-size: font_sizes['gamma']
+
+.newsletter__input
+	box-sizing border-box
+	width 100%
+	padding (base_unit * .5) (base_unit * 3) (base_unit * .5) base_unit
+	color: colors['grey-60']
+	border: solid 2px colors['grey+60']
+	background #ffffff
+
+.newsletter__submit
+	position absolute
+	top 2px
+	right 0
+	font-family icomoon
+	padding (base_unit * .5) (base_unit * .625)
+	color #ffffff
+	border: none
+	background-color: colors['red']
 	cursor pointer
 
 	&:hover
-		background-color: colors['grey+3']
-
-	&:focus
-		background-color: colors['grey+2']
-
-	@media only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
-		background-image url(../images/select--arrow_down_@2x.png)
-
-/* ============================================================
- * Admin
-=========================================================== */
+		background-color: colors['orange']
 
 /**
- * Master Admin Template
+ * Case Study
  ============================================================ */
 
-html
-body
-	height auto
-	height 100%
-	background-color: colors['grey+6']
+.case_study__body
+	position relative
+	max-height base_unit * 14
+	overflow hidden
 
-.dashboard
+.case_study__image
+	display block
+	width 100%
 	height auto
+
+.case_study__content__wrap
+	position absolute
+	top 0
+	left 0
 	height 100%
 	width 100%
-	overflow-x hidden
+	text-decoration none
+	background-image url(../images/tile-black_opaque.png)
 
-.dashboard__footer
-	margin-top 0 - (base_unit * 2)
-
-	span
-		display block
-		margin 0 base_unit
-		padding (base_unit * .5) 0 0 0
-		color: colors['grey+2']
-		font-size: font_sizes['gamma']
-		text-align right
-		border-top: solid 1px colors['grey+5']
-
-		@media screen and (max-width: 960px)
-			margin 0 base_unit
-
-/**
- * Admin Login
- ============================================================ */
-
-.login__container
+.case_study__content
 	display table
 	width 100%
 	height 100%
-	text-align center
 
-.login__box
+.case_study__content__cell
 	display table-cell
 	vertical-align middle
+	width 100%
 	height 100%
-
-	@media screen and (max-width: 600px)
-		padding-right base_unit
-		padding-left base_unit
-
-.login__form
-	displayInlineBlock()
-	text-align left
-	width base_unit * 14
-	padding-bottom base_unit * 4
-
-	@media screen and (max-width: 600px)
-		width 100%
-
-	@media screen and (max-height: 550px)
-		margin-top 0
-
-	.input__text
-		width base_unit * 14
-
-		@media screen and (max-width: 600px)
-			width 100%
-
-.login__form__remember
-	margin-left base_unit
-
-/**
- * Admin Dashboard
- ============================================================ */
-
-.dashboard__wrap
-	height 100%
-	padding-left base_unit * 11
-	transition padding .3s ease, margin .3s ease
-
-	@media screen and (max-width: 960px)
-		padding 0
-
-.dashboard__control_panel--open
-
-	.dashboard__wrap
-		padding-left base_unit * 22
-		overflow hidden
-		margin-right 0 - (base_unit * 12)
-
-		@media screen and (max-width: 960px)
-			padding-left base_unit * 11
-
-		@media screen and (max-width: 600px)
-			padding-left 60%
-			margin-right -60%
-
-.dashboard__body__wrap
-	position relative
-	min-height 100%
-	padding 0 base_unit
-	transition margin .3s ease
-
-.dashboard__header
-	position relative
-	height base_unit * 7
-
-	@media screen and (max-width: 960px)
-		height auto
-		padding-top base_unit * 3
-		padding-bottom base_unit
-
-.dashboard__user
-	position absolute
-	top base_unit
-	right 0
-	text-align right
+	color #ffffff
+	text-align center
+	text-decoration none
 
 	&:hover
+		text-shadow 0 0 6px #000000
 
-		span.icon-user
-			color: colors['teal']
+		h2
+			opacity 1
 
-		span.dashboard__header__name
-			text-decoration underline
+	h1
+	h2
+		margin 0
 
-	@media screen and (max-width: 960px)
+	h1
+		font-weight normal
 
-		&:hover
+	h2
+		padding 0 base_unit
+		opacity 0
+		transition opacity .2s linear, text-shadow .2s linear
 
-			span.icon-user
-				color #ffffff
+		@media screen and (max-width: 912px)
+			text-shadow 0 0 6px #000000
+			opacity 1
 
-			span.dashboard__header__name
-				text-decoration none
+/**
+ * Calling card
+ ============================================================ */
 
+.calling_card
+	margin-bottom base_unit * 3
+	background-color #000000
 
-	@media screen and (max-width: 960px)
-		top 0
-		z-index 10
+.calling_card__title
+	padding (base_unit * .5) base_unit
+	margin 0
+	color #ffffff
+	font-size: font_sizes['delta']
+	font-weight normal
+	list-style none
+	background: -moz-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, colors['orange']), color-stop(75%, colors['red']))
+	background: -webkit-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -o-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -ms-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: linear-gradient(to right, colors['orange'] 0%, colors['red'] 75%)
+
+.calling_card__email
+.calling_card__telephone
+	padding base_unit
+	color: colors['grey-80']
+
+.calling_card__telephone
+	background-color: colors['grey+40']
+
+.calling_card__email
+	background-color: colors['grey+60']
+
+.calling_card__action
+	margin-bottom base_unit * .75
+	font-size: font_sizes['foxtrot']
+	text-transform uppercase
 
 	span
 		displayInlineBlock()
 		vertical-align middle
-		line-height 1
 
-	span.icon-user
-		margin-right base_unit * .25
-		color: colors['grey+2']
-		font-size: font_sizes['echo']
+	.icon
+		margin-right base_unit * .5
+		color: colors['grey']
+		font-size: font_sizes['charlie']
 
-		@media screen and (max-width: 960px)
-			color #ffffff
+.calling_card__info
+	color: colors['grey-60']
 
-	span.dashboard__header__name
-		color: colors['grey-2']
+	a
+		color: colors['grey-60']
 		font-weight bold
+		text-decoration none
 
-		@media screen and (max-width: 960px)
-			color #ffffff
+		&:hover
+			color: colors['red']
+			text-decoration underline
 
-	span.icon-triangle-down
-		color: colors['grey-2']
+/* ============================================================
+ * Header
+ ============================================================ */
 
-		@media screen and (max-width: 960px)
-			color #ffffff
-
-.dashboard__user__details 
-	cursor pointer
-
-	@media screen and (max-width: 960px)
-		padding (base_unit * .5)
-		background-color: colors['teal+3']
-
-.dashboard__user__menu
-	display none
-	min-width base_unit * 5
+.header
 	padding 0
-	margin (base_unit * .5) 0 0 0
-	list-style none
-	text-align left
-	border-radius 2px
-	background-color: colors['teal']
+	margin 0
+	background-color #ffffff
 
-	@media screen and (max-width: 960px)
-		position absolute
-		top 100%
-		right 0
-		min-width 100%
-		margin 0
-		border-top-right-radius 0
-		border-top-left-radius 0
-		background-color: colors['teal+3']
+.header__top
+	position relative
+	padding-top base_unit * .75
+	padding-bottom base_unit * .5
 
-	li
+	@media screen and (max-width: 1104px)
+		text-align center
+
+.header__logo
+	displayInlineBlock()
+	width base_unit * 8
+
+	@media screen and (max-width: 1104px)
+		width base_unit * 6
+
+	.svg__image
+		width 100%
+		heigth auto
+
+	.svg__fallback
+		display none
+
+.no_svg
+
+	.header__logo
+
+		.svg__image
+			display none
+
+		.svg__fallback
+			display block
+			width 100%
+			height 66px
+			background url(../images/logo-fallback.png) no-repeat center center
+
+			@media screen and (max-width: 1104px)
+				height 50px
+
+.header__telephone
+	float right
+	padding-top base_unit
+	color: colors['grey-80']
+	font-weight bold
+
+	@media screen and (max-width: 1104px)
+		display none
+
+	a
+		color: colors['grey-80']
+		text-decoration none
+
+		&:hover
+			color: colors['grey-60']
+			text-decoration underline
+
+/**
+ * Nav
+ ============================================================ */
+
+.header__nav__hamburger
+	display none
+	color: colors['grey+40']
+
+	@media screen and (max-width: 1104px)
 		display block
-		padding 0
+		position absolute
+		top 0
+		left 0
+		padding base_unit base_unit base_unit 0
+		font-size: font_sizes['charlie']
+		outline none
+		cursor pointer
+
+.header__nav__wrap
+	border-top: solid 1px colors['grey+60']
+	border-bottom: solid 6px colors['grey-80']
+
+	@media screen and (max-width: 1104px)
+		position fixed
+		top 0
+		left 0 - (base_unit * 12)
+		width base_unit * 12
+		height 100%
+		border none
+		background-color: colors['grey+80']
+		transition left 0.3s ease
+
+	@media screen and (max-width: 720px)
+		left -75%
+		width 75%
+
+.header__nav
+	position relative
+	padding 0
+	margin-top 0
+	list-style none
+
+	@media screen and (max-width: 1104px)
+		width auto
+		min-height 100%
 		margin 0
+		padding base_unit 0 0 0
+		border-right: solid 3px colors['grey+60']
+
+.header__nav__option
+	displayInlineBlock()
+	padding 0
+	margin 0
+	width 14.27%
+
+	&:hover
+
+		.header__nav__link
+			color: colors['red']
+
+		.border--x
+			opacity 1
+
+	@media screen and (max-width: 1104px)
+		display block
+		width auto
+
+		&:hover
+
+			.border--x
+				display none
+
+	.border--x
+		margin-bottom -6px
+		opacity 0
+		transition opacity .2s ease
+
+.lt-ie9
+
+	.header__nav__option
+
+		&:hover
+
+			.border--x
+				display block
+
+		.border--x
+			display none
+
+.lt-ie8
+
+	.header__nav__option
+		width 14.2%
+
+.header__nav__link
+	display block
+	padding (base_unit * .875) 0
+	color: colors['grey-80']
+	font-size: font_sizes['gamma']
+	font-weight bold
+	text-align center
+	letter-spacing 1px
+	text-decoration none
+	text-transform uppercase
+	cursor pointer
+	transition color .2s ease
+
+	@media screen and (max-width: 1104px)
+		position relative
+		padding (base_unit * .75) base_unit
+		color: colors['grey-20']
+		font-weight normal
+		text-align left
+		border-bottom: solid 1px colors['grey+60']
+
+		&:hover
+			color: colors['orange']
+
+		.icon-arrow-down
+			display none
+
+		.icon--mobile
+			display block
+			position absolute
+			top 0
+			right base_unit
+			padding-top (base_unit * .875)
+			font-size: font_sizes['foxtrot']
+
+			&:before
+				content '\f0a9'
+
+.header__nav__option--reveal
+
+	@media screen and (max-width: 1104px)
+
+		.header__nav__link
+			color: colors['red']
+
+			.icon--mobile
+
+				&:before
+					content '\f0ab'
+
+.header__nav__link--active
+	color: colors['red']
+
+.header__nav__tel
+	display none
+
+	@media screen and (max-width: 1104px)
+		display block
+		background-color: colors['grey+20']
 
 		a
 			display block
-			padding (base_unit * .25) (base_unit * .5)
-			color: #ffffff
+			padding (base_unit * .75) base_unit
+			color #ffffff
+			font-size: font_sizes['echo']
 			font-weight bold
+			text-align center
 			text-decoration none
 
-			&:hover
-				color: colors['teal-6']
+/**
+ * --- Nav Open
+ */
 
-			@media screen and (max-width: 960px)
-				padding (base_unit * .5)
+.header
+.body
+.footer
+	transition padding 0.3s ease, margin 0.3s ease
 
-.dashboard__title
-.dashboard__subtitle
-	position absolute
+.menu--open
+
+	@media screen and (max-width: 1104px)
+
+		html
+		body
+		.body__wrap
+			height 100%
+			overflow hidden
+
+		.header
+		.body
+		.footer
+			padding-left base_unit * 12
+			margin-right 0 - (base_unit * 12)
+
+		.header__nav__hamburger
+			color: colors['red']
+
+		.header__nav__wrap
+			left 0
+
+		.header__nav__wrap--scroll
+			overflow-y scroll
+
+	@media screen and (max-width: 720px)
+		.header
+		.body
+		.footer
+			padding-left 75%
+			margin-right -75%
+
+/* ============================================================
+ * Body
+ ============================================================ */
+
+html,
+body
+	height 100%
+
+.body__wrap
+	width 100%
+	height auto
+	min-height 100%
+	overflow hidden
+	background-color #ffffff
+
+.body
 	padding 0
 	margin 0
 
-	@media screen and (max-width: 960px)
-		position static
-		left auto
-		bottom auto
-
-.dashboard__title
-	bottom base_unit
-	color: colors['teal']
-	font-size: font_sizes['bravo']
-
-	@media screen and (max-width: 600px)
-		font-size: font_sizes['charlie']
-
-.dashboard__subtitle
-	bottom base_unit * 3.5
-	color: colors['grey+2']
-	font-size: font_sizes['charlie']
-
-	@media screen and (max-width: 600px)
-		font-size: font_sizes['delta']
-
-.dashboard__body
-	padding-bottom base_unit * 5
+.article__body
 
 	h1
 	h2
@@ -697,344 +736,1452 @@ body
 	h4
 	h5
 	h6
+		color: colors['grey-60']
+		font-family: fonts['heading']
+		font-weight normal
+
+		&:first-child
+			padding-top 0
+			margin-top 0
+
+		a
+			color: colors['grey-60']
+			text-decoration none
+
+			&:hover
+				text-decoration underline
+
+	h1
+		font-size: font_sizes['charlie']
+
+	h2
+		font-size: font_sizes['delta']
+
 	p
 	ol
 	ul
-		color: colors['grey-4']
+		color: colors['grey-40']
+		font-size: font_sizes['gamma']
+		line-height 2
+		text-align justify
 
 		&:first-child
+			padding-top 0
 			margin-top 0
 
-/**
- * Admin Dashboard Control Panel
+		a
+			color: colors['grey-60']
+			text-decoration underline
+
+			&:hover
+				color: colors['red']
+
+	iframe
+		display block
+		width 100% !important
+		height base_unit * 14
+		margin auto
+
+		@media screen and (max-width: 720px)
+			height base_unit * 10
+
+.article__body--dark
+
+	h1
+	h2
+	h3
+	h4
+	h5
+	h6
+		color: colors['grey-80']
+
+		a
+			color: colors['grey-80']
+
+	p
+	ol
+	ul
+		color: colors['grey-60']
+
+		&:first-child
+			padding-top 0
+			margin-top 0
+
+		a
+			color: colors['grey-80']
+
+			&:hover
+				color: colors['red']
+
+
+/* ============================================================
+ * Footer
  ============================================================ */
 
-.dashboard__mobile__nav
-	display none
+.footer
+	padding (base_unit * 2) 0
+	margin 0
+	background-color #ffffff
 
-	@media screen and (max-width: 960px)
+.footer__nav
+	displayInlineBlock()
+	padding 0
+	margin 0
+	list-style none
+
+	@media screen and (max-width: 1104px)
 		display block
-		position absolute
-		top 0
-		left 0
-		z-index 2
-		width 100%
-		background-color: colors['teal']
+		text-align center
 
-		.icon
-			displayInlineBlock()
-			padding (base_unit * .5) base_unit
-			color: #ffffff
-			font-size: font_sizes['delta']
-			cursor pointer
+.footer__nav__option
+	displayInlineBlock()
+	margin-left base_unit * .5
 
-.dashboard__control_panel
-	position fixed
+	&:first-child
+		margin 0
+
+	@media screen and (max-width: 912px)
+		margin 0
+
+.footer__nav__link
+	color: colors['grey']
+	font-size: font_sizes['gamma']
+	text-decoration none
+
+a.footer__nav__link
+	
+	&:hover
+		color: colors['red']
+		text-decoration underline
+
+.footer__nav__smallprint
+
+	@media screen and (max-width: 1104px)
+		float none
+
+		.footer__nav__option
+			display block
+			margin 0
+
+			&:first-child
+				margin-bottom base_unit * .75
+
+		.footer__nav__option--divider
+			display none
+
+.footer__nav__social
+	display block
+	margin-bottom base_unit
+
+	@media screen and (min-width: 1296px)
+		float right
+		margin 0
+
+	.footer__nav__option
+		margin-left base_unit * .75
+
+		&:first-child
+			margin 0
+
+	.footer__nav__link
+		font-size: font_sizes['delta']
+
+		&:hover
+			text-decoration none
+
+	.footer__nav__link--facebook
+
+		&:hover
+			color #39579b
+
+	.footer__nav__link--twitter
+
+		&:hover
+			color #59a8df
+
+	.footer__nav__link--google
+
+		&:hover
+			color #d14d33
+
+	.footer__nav__link--linkedin
+
+		&:hover
+			color #39579b
+
+/* ============================================================
+ * Banners
+ ============================================================ */
+
+.banner__slide
+	position absolute
 	top 0
 	left 0
 	z-index 1
-	width base_unit * 11
-	height 100%
-	background-color: colors['grey+5']
+	width 100%
+	height auto
+	background-color: colors['grey-60']
+	background-repeat no-repeat
+	background-position center center
+	background-size cover
+
+.banner__slide--0
+	z-index 2
+
+/**
+ * Thin
+ ============================================================ */
+
+.banner__thin
+	background-color: colors['grey+40']
+
+.banner__thin__body
+	position relative
+	height base_unit * 13
+	background-color: colors['grey-60']
+	background-repeat no-repeat
+	background-position center center
+	background-size cover
 	overflow hidden
-	transition padding .3s ease, left .3s ease
 
-	@media screen and (max-width: 960px)
-		left 0 - (base_unit * 11)
+	@media screen and (max-width: 1104px)
+		height base_unit * 10
 
-	@media screen and (max-width: 600px)
-		width 60%
-		left -60%
+	@media screen and (max-width: 912px)
+		height base_unit * 8
 
-.dashboard__control_panel--open
+.banner__thin__image
+	display block
+	width 100%
+	height auto
 
-	.dashboard__control_panel
-		padding-right base_unit * 11
+	@media screen and (max-width: 720px)
+		display none
 
-		@media screen and (max-width: 960px)
-			left 0
-			padding-right 0
+/**
+ * Home page banner
+ ============================================================ */
 
-.dashboard__logo
-	height base_unit * 4
-	padding base_unit * 1.5
-	margin-bottom (base_unit * .5)
+.banner__thin--home
+
+	@media screen and (max-width: 720px)
+		display none
+
+/**
+ * Case Study
+ ============================================================ */
+
+.banner__case_study__body
+	position relative
+	height base_unit * 17
+	background-color: colors ['grey+40']
+	overflow hidden
+
+	@media screen and (min-width: 1296px)
+		height base_unit * 20
+
+	@media screen and (max-width: 1104px)
+		height base_unit * 15
+
+	@media screen and (max-width: 912px)
+		height base_unit * 13
+
+	@media screen and (max-width: 720px)
+		height base_unit * 11
+
+.banner__case_study__slide
+	position absolute
+	top 0
+	left 0
+	z-index 1
+	width 100%
+	height 100%
+
+	&:first-child
+		z-index 2
+
+	.wrap
+		position relative
+		height 100%
+
+.case_study__slide__image
+	position absolute
+	top 0
+	left 0
+	width 100%
+	height 100%
+	background-repeat no-repeat
+	background-position center center
+	background-size cover
+
+.case_study__slide__credit
+	position absolute
+	displayInlineBlock()
+	right 0
+	bottom base_unit * 1.2
+	padding (base_unit * .125) (base_unit * .25)
+	color #ffffff
+	font-size: font_sizes['gamma']
+	font-weight bold
+	border-radius 2px
+	background-color #000000
+	background-color rgba(0, 0, 0, 0.3)
+
+.banner__case_study__arrows
+	position relative
+	height 100%
+	z-index 3
+
+.banner__case_study__arrow
+	display none
+	position absolute
+	top 50%
+	padding base_unit * .5
+	margin-top 0 - (base_unit * 1.5)
+	color #ffffff
+	color rgba(255, 255, 255, 0.7)
+	font-size: font_sizes['alpha']
+	background-image url(../images/tile-black_opaque.png)
+	cursor pointer
+
+	&:hover
+		color rgba(255, 255, 255, 1)
+
+	@media screen and (max-width: 912px)
+		padding base_unit * .25
+		font-size: font_sizes['bravo']
+
+.banner__case_study__arrow--left
+	left 0
+
+.banner__case_study__arrow--right
+	right 0
+
+/* ============================================================
+ * Content Blocks
+ ============================================================ */
+
+.block
+	padding (base_unit * 2) 0
+
+.block--padd__top
+	padding-top base_unit * 3
+
+	@media screen and (max-width: 912px)
+		padding-top base_unit * 2
+
+.block--trail__top
+.block--trail__bottom
+	position relative
+
+	&:after
+	&:before
+		content ' '
+		display block
+		position absolute
+		left 50%
+		z-index 100
+		width base_unit * 5
+		height base_unit * 2
+		margin-left 0 - (base_unit * 2.5)
+
+		@media screen and (max-width: 912px)
+			width base_unit * .25
+			height base_unit
+			margin-left 0 - (base_unit * 1.25)
+
+.block--trail__bottom
+	
+	&:before
+		top 100%
+		triangle(base_unit * 5, base_unit * 2, 'bottom', #ffffff)
+
+		@media screen and (max-width: 912px)
+			triangle(base_unit * 2.5, base_unit, 'bottom', #ffffff)
+
+.block--trail__top
+	
+	&:after
+		bottom 100%
+		triangle(base_unit * 5, base_unit * 2, 'top', #ffffff)
+
+		@media screen and (max-width: 912px)
+			triangle(base_unit * 2.5, base_unit, 'top', #ffffff)
+
+.block__title
+	padding 0
+	margin 0 0 (base_unit * 2) 0
+
+.block__subtitle
+	padding 0
+	margin 0 0 base_unit 0
+
+/**
+ * Grid
+ ============================================================ */
+
+.block__grid
+	background-color: colors['grey+80']
+
+.block__grid--center
+
+	.block__grid__grid
+		text-align center
+
+.block__grid__grid
+	margin-left 0 - base_unit
+
+.grid__cell
+	displayInlineBlock()
+	vertical-align top
+	width base_unit * 14
+	margin 0 0 (base_unit * 2) base_unit
+	text-align left
+	background-color #ffffff
+
+	@media screen and (min-width: 1296px)
+		width base_unit * 16
+
+	@media screen and (max-width: 1104px)
+		width base_unit * 17
+
+	@media screen and (max-width: 912px)
+		display block
+		width auto
+		margin-right 0
+
+.grid__cell__link
+	display block
+	text-decoration none
+
+	&:hover
+
+		.grid__cell__title
+			color: colors['orange']
+
+			&:before
+				color: colors['red']
+
+.grid__cell__img
+	position relative
+
+	img
+		display block
+		width 100%
+		height auto
+
+	span
+		display block
+		position absolute
+		right base_unit * .5
+		bottom base_unit * .5
+
+.grid__cell__title
+	position relative
+	padding base_unit
+	margin 0
+	color: colors['grey-60']
+	font-size: base_font_size * 1.1
+	font-weight normal
+	transition color .2s ease
+
+	&:before
+		content '\f0a9'
+		display block
+		position absolute
+		top 50%
+		right (base_unit * .5)
+		margin-top 0 - base_unit
+		color: colors['grey+40']
+		font-family icomoon
+		font-size: font_sizes['charlie']
+		transition color .2s ease
+
+	@media screen and (max-width: 912px)
+		padding-right base_unit * 2.25
+
+/**
+ * Two Col
+ ============================================================ */
+
+.block__two_col
+	background-color: colors['grey+80']
+
+.two_col__content
+	float right
+	width 65%
+	padding-top base_unit
+
+	@media screen and (max-width: 912px)
+		float none
+		width auto
+		padding-top 0
+
+	.padder
+		padding-left base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+.two_col__aside
+	float left
+	width 35%
+	margin-top 0 - (base_unit * 1.5)
+
+	@media screen and (max-width: 912px)
+		float none
+		width auto
+		padding-top base_unit
+		margin 0
+
+	.padder
+		padding-right base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+.two_col__menu__title
+	margin (0 - (base_unit * .7)) 0 0 0
+	padding (base_unit * .7) 0
+	color: colors['grey-40']
+	font-family: fonts['main']
+	font-size: font_sizes['charlie']
+	font-weight normal
+
+	@media screen and (max-width: 912px)
+		font-size: font_sizes['delta']
+
+.two_col__menu
+	margin 0
+	padding 0 0 (base_unit * 1.5) 0
+	list-style none
+
+.two_col__menu__option
+	display block
+	padding 0
+	margin 0
+	border-top: solid 1px colors['grey+60']
+
+	&:first-child
+		border none
+
+.two_col__menu__link
+	display block
+	position relative
+	padding (base_unit * .75) (base_unit * 2) (base_unit * .75) 0
+	color: colors['grey-40']
+	font-size: font_sizes['gamma']
+	text-transform uppercase
+	text-decoration none
+	transition color .2s ease
+
+	&:hover
+		color: colors['red']
+
+		.icon
+			color: colors['red']
+
+	.icon
+		position absolute
+		top 50%
+		right 0
+		margin-top 0 - (base_unit * .625)
+		color: colors['grey+60']
+		font-size: font_sizes['charlie']
+		transition color .2s ease
+
+.two_col__menu__link--active
+	color: colors['orange']
+	font-weight bold
+
+	.icon
+		color: colors['orange']
+		font-weight normal
+
+.two_col__menu__link--open
+	font-weight bold
+
+	.icon
+		color: colors['grey-40']
+		font-weight normal
+
+.two_col__submenu
+	padding 0 0 0 (base_unit * 1.5)
+	margin 0
+	list-style none
+	border-top: solid 1px colors['grey+60']
+
+.two_col__submenu__option
+	display block
+	padding 0
+	margin 0
+	border-top: solid 1px colors['grey+60']
+
+	&:first-child
+		border none
+
+.two_col__submenu__link
+	display block
+	position relative
+	padding (base_unit * .5) (base_unit * 2) (base_unit * .5) 0
+	color: colors['grey-40']
+	font-size: font_sizes['gamma']
+	text-decoration none
+	transition color .2s ease
+
+	&:hover
+		color: colors['red']
+
+		.icon
+			color: colors['red']
+
+	.icon
+		position absolute
+		top 50%
+		right base_unit * .125
+		margin-top 0 - (base_unit * .4)
+		color: colors['grey+60']
+		font-size: font_sizes['delta']
+		transition color .2s eas
+
+.two_col__submenu__link--active
+	color: colors['orange']
+	font-weight bold
+
+	.icon
+		color: colors['orange']
+		font-weight normal
+
+/**
+ * About
+ ============================================================ */
+
+.block__about
+
+	@media screen and (max-width: 720px)
+		border-top: solid 3px colors['grey+40']
+
+.block__about__video
+.block__about__content
+	displayInlineBlock()
+	vertical-align top
+	width 50%
+
+	@media screen and (max-width: 912px)
+		display block
+		width auto
+
+.block__about__video
+
+	.padder
+		padding-right base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+.video__container
+	box-shadow 0 0 12px #000000
+	background-color: colors['grey-80']
+
+	iframe
+		width 100%
+		height base_unit * 14
+
+		@media screen and (max-width: 1104px)
+			height base_unit * 10
+
+		@media screen and (max-width: 912px)
+			height base_unit * 14
+
+		@media screen and (max-width: 720px)
+			height base_unit * 12
+
+.block__about__content
+	padding-bottom base_unit * 2
+
+	@media screen and (max-width: 912px)
+		padding-top base_unit * 2
+
+	.padder
+		padding-left base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+/**
+ * News
+ ============================================================ */
+
+.block__news
+	background: colors['grey+80'] url(../images/striped_background.png) no-repeat center center
+	background-size 975px 600px
+
+	@media only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx)
+		background-image url(../images/striped_background-@x2.png)
+
+	@media screen and (max-width: 912px)
+		background: colors['grey+80']
+
+.block__news__aside
+.block__news__content
+	displayInlineBlock()
+	vertical-align top
+
+	@media screen and (max-width: 912px)
+		display block
+
+.block__news__aside
+	width 40%
+	padding-bottom base_unit * 2
+
+	@media screen and (max-width: 912px)
+		width auto
+
+	.padder
+		padding-right base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+.block__news__photo
+	overflow hidden
+
+	img
+		display block
+		width 100%
+		height auto
+
+.block__news__date
+	display block
+	position relative
+	padding (base_unit * .5) base_unit
+	color #ffffff
+	font-weight bold
+	font-size: font_sizes['echo']
+	text-transform uppercase
+	background-color: colors['red']
+	background: -moz-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, colors['orange']), color-stop(75%, colors['red']))
+	background: -webkit-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -o-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -ms-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: linear-gradient(to right, colors['orange'] 0%, colors['red'] 75%)
+
+.block__news__content
+	width 60%
+
+	@media screen and (max-width: 912px)
+		width auto
+
+	.padder
+		padding-left base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+/**
+ * Services
+ ============================================================ */
+
+.block__services
+	background-color: colors['grey+80']
+
+	.grid__cell
+		background-color #ffffff
+
+/**
+ * Careers
+ ============================================================ */
+
+.block__careers
+	background-color: colors['grey+80']
+
+	.two_col__aside
+		padding-top base_unit
+		margin 0
+
+.block__careers__image
+	width 100%
+	height auto
+	margin-bottom base_unit * 2
+
+.block__careers__download
+	margin-top base_unit
+
+/**
+ * Article
+ ============================================================ */
+
+.block__article
+	background-color: colors['grey+80']
+
+/**
+ * Contact
+ ============================================================ */
+
+.block__contact
+
+	@media screen and (max-width: 1104px)
+		border-top: solid 3px colors['grey+40']
+
+	@media screen and (max-width: 720px)
+		padding-bottom 0
+
+	.title
+		margin-bottom base_unit * .5
+
+	.block__subtitle
+		margin-bottom base_unit * 2
+
+.block__contact__points
+	text-align center
+
+.contact_point
+	displayInlineBlock()
+	margin 0 base_unit
+	text-align center
+
+	@media screen and (max-width: 720px)
+		margin 0 (base_unit * .5) (base_unit * 2) (base_unit * .5)
+
+.contact_point__link
+	display block
+	color: colors['grey-60']
+	text-decoration none
+
+	&:hover
+
+		.icon
+			color: colors['orange']
+
+		.contact_point__title
+			color: colors['red']
+
+		.contact_point__value
+			display block
+			color: colors['grey-80']
+			text-decoration underline
+
+	.icon
+		margin-bottom base_unit * .25
+		color: colors['grey-40']
+		font-size base_font_size * 4.5
+
+		@media screen and (max-width: 912px)
+			font-size base_font_size * 4
+
+		@media screen and (max-width: 720px)
+			font-size base_font_size * 3
+
+.contact_point__title
+	padding 0
+	margin 0 0 (base_unit * .25)
+	color: colors['orange']
+	font-weight normal
+	text-transform uppercase
+
+	@media screen and (max-width: 720px)
+		font-size: font_sizes['foxtrot']
+
+.contact_point__value
+
+	@media screen and (max-width: 720px)
+		white-space nowrap
+
+/**
+ * Locations
+ ============================================================ */
+
+.block__locations
+	background-color: colors['grey+80']
+
+	@media screen and (max-width: 1104px)
+		text-align center
+
+.block__locations__map
+	height base_unit * 18
+	margin-bottom base_unit * 2
+
+	@media screen and (max-width: 1104px)
+		height base_unit * 14
+
+	@media screen and (max-width: 912px)
+		height base_unit * 11
+
+.map__canvas
+	width 100%
+	height 100%
+
+.location
+	displayInlineBlock()
+	vertical-align top
+	width base_unit * 14
+	padding-bottom base_unit
+	margin-right base_unit
 	text-align center
 	background-color #ffffff
 
-	@media screen and (max-width: 960px)
-		height auto
-		padding base_unit * .25
-		text-align left
+	@media screen and (min-width: 1296px)
+		width base_unit * 16
 
-	img
-		width auto
-		max-width 100%
-		height auto
-		max-height 100%
+	@media screen and (max-width: 1104px)
+		width base_unit * 17
 
-		@media screen and (max-width: 960px)
-			height base_unit * 1.25
+	@media screen and (max-width: 912px)
+		width base_unit * 12.5
 
-.dashboard__menu
-	padding 0 0 0 (base_unit * .5)
-	margin 0
-	list-style none
-
-	@media screen and (max-width: 960px)
-		padding 0
-
-.dashboard__menu__group
-	display block
-
-.menu__group__title
-	display block
-	margin 0 0 (base_unit * .125) 0
-	padding (base_unit * .75) (base_unit * 1.25)
-	color: colors['grey-4']
-	font-weight bold
-	text-decoration none
-	border-top-left-radius 2px
-	border-bottom-left-radius 2px
-	cursor pointer
-
-	&:hover
-		background-color: colors['grey+4']
-
-	@media screen and (max-width: 960px)
-		padding (base_unit * .5) base_unit
-		background-color transparent
-
-		&:hover
-			background-color transparent
-
-.menu__group__title--active
-	background-color: colors['grey+4']
-
-.menu__group__options
-	display none
-	position absolute
-	top 0
-	left base_unit * 11
-	width base_unit * 11
-	height 100%
-	padding 0
-	margin 0
-	list-style none
-	background-color: colors['teal+4']
-
-	@media screen and (max-width: 960px)
-		position static
-		left auto
-		width auto
-		height auto
-		background-color transparent
-
-.menu__group__options--active
-	display block
-
-.menu__group__option
-	display block
-	padding 0
-	margin 0 0 0 (base_unit * .5)
-
-	&:first-child
-		margin-top base_unit * 7.5
-
-.dashboard__control_panel--open
-
-	.menu__group__option
-
-		@media screen and (max-width: 960px)
-			margin 0 0 0 (base_unit)
-
-.menu__group__link
-	display block
-	padding (base_unit * .75) 
-	margin 0 0 (base_unit * .125) 0
-	color: colors['mist-6']
-	font-weight bold
-	text-decoration none
-	border-top-left-radius 2px
-	border-bottom-left-radius 2px
-	cursor pointer
-
-	&:hover
-		background-color: colors['teal+6']
-
-.dashboard__control_panel--open
-
-	.menu__group__link
-
-		@media screen and (max-width: 960px)
-			color: colors['grey-4']
-			font-weight normal
-
-			&:hover
-				background-color transparent
-
-/* ============================================================
- * Installation
-=========================================================== */
-
-.installation__wrap
-	width base_unit * 42
-	height auto
-	min-height 100%
-	margin auto
-
-	h1
-		padding-top base_unit * 2
-		margin-top 0
-
-	.well
-		margin-bottom base_unit * 4
-
-/* ============================================================
- * Wall Tiles
-=========================================================== */
-	
-.wall__tiles
-	display block
-	padding 0 0 0 4px
-	margin 0 (0 - base_unit) 0 0
-	list-style none
-
-	@media screen and (max-width: 792px)
-		padding 0
-		margin 0
-
-.tile
-	displayInlineBlock()
-	vertical-align top
-	width base_unit * 15
-	margin 0 base_unit base_unit -4px
-	background #ffffff
-
-	@media screen and (max-width: 792px)
+	@media screen and (max-width: 720px)
 		display block
 		width auto
 		margin 0 0 base_unit 0
 
-.tile__content
-	padding (base_unit * .75)
-	font-size: font_sizes['foxtrot']
+.location__directions
+	margin 0 base_unit
 
-.tile__properties
-	padding 0
+	.input
+		margin-bottom base_unit * .5
+
+.lt-ie8
+
+	.location__directions
+
+		.input
+			width 240px
+
+.location__directions__label
+	display block
+	margin-bottom base_unit * .5
+	color: colors['grey-60']
+	text-align left
+	display none
+
+.lt-ie9
+
+	.location__directions__label
+		display block
+
+.location__title
+	position relative
+	padding (base_unit * .5) base_unit
+	margin 0
+	color #ffffff
+	font-size: font_sizes['echo']
+	font-weight normal
+	text-transform uppercase
+
+	&:before
+		content '\e609'
+		display block
+		position absolute
+		top 0 - (base_unit * .125)
+		left base_unit * .25
+		color #ffffff
+		font-family icomoon
+		font-size: font_sizes['bravo']
+		opacity 0.6
+
+.location--havant
+
+	@media screen and (max-width: 1104px)
+		margin-bottom base_unit
+
+	.location__title
+		background-color #ec4d00
+
+.location--horndean
+
+	@media screen and (max-width: 1104px)
+		margin 0 0 base_unit 0
+
+	.location__title
+		background-color #5db348
+
+.location--portsmouth
+	margin 0
+
+	.location__title
+		background-color #21a9e4
+
+.location__address
+	padding (base_unit * 1.2) base_unit
+	margin 0
+	color: colors['grey-40']
+	list-style none
+
+/**
+ * Case Studies
+ ============================================================ */
+
+.block__case_studies
+	background: colors['grey-60'] url(../images/case_studies-bkg.jpg) no-repeat center center
+	background-size cover
+
+h1.block__case_studies__title
+	color #ffffff
+	text-shadow 0 0 6px #000000
+
+.case_studies__case
+	displayInlineBlock()
+	width base_unit * 10.25
+	margin 0 0 base_unit base_unit
+
+	&:hover
+
+		.case_studies__case__cover
+			opacity 1
+
+	@media screen and (min-width: 1296px)
+		width base_unit * 11.75
+
+	@media screen and (max-width: 1104px)
+		width base_unit * 17
+
+	@media screen and (max-width: 912px)
+		width base_unit * 12.5
+
+	@media screen and (max-width: 720px)
+		display block
+		width auto
+		margin-left 0
+
+.case_studies__case--1
+	margin-left 0
+
+.case_studies__case--3
+
+	@media screen and (max-width: 1104px)
+		margin-left 0
+
+.case_studies__case__body
+	position relative
+
+.case_studies__case__image
+	
+	img
+		display block
+		width 100%
+		height auto
+
+.case_studies__case__cover
+	position absolute
+	top 0
+	left 0
+	width 100%
+	height 100%
+	background-image url(../images/tile-black_opaque.png)
+	opacity 0
+	transition opacity .2s linear
+
+.case_studies__case__table
+	display table
+	width 100%
+	height 100%
+
+.case_studies__case__cell
+	display table-cell
+	vertical-align middle
+	color #ffffff
+	text-align center
+	text-shadow 0 0 3px #000000
+	text-decoration none
+
+/**
+ * Case Study
+ ============================================================ */
+
+.block__case_study__aside
+.block__case_study__content
+	displayInlineBlock()
+	vertical-align top
+	width 50%
+
+	@media screen and (max-width: 912px)
+		display block
+		width auto
+
+.block__case_study__aside
+	margin-bottom base_unit * 2
+
+	.padder
+		padding-right base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+	.media__container
+		box-shadow 0 0 12px #000000
+		background-color: colors['grey-80']
+
+		img
+			display block
+			width 100%
+			height auto
+
+		iframe
+			width 100%
+			height base_unit * 14
+
+			@media screen and (max-width: 1104px)
+				height base_unit * 10
+
+			@media screen and (max-width: 912px)
+				height base_unit * 14
+
+			@media screen and (max-width: 720px)
+				height base_unit * 12
+
+.block__case_study__content
+
+	.padder
+		padding-left base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+/* ============================================================
+ * Template - About
+ ============================================================ */
+
+.about
+	padding-top base_unit * 2
+	background-color: colors['grey+80']
+
+	.title
+		padding 0
+		margin 0
+
+.about__block
+	padding (base_unit * 3) 0
+	background-color #ffffff
+
+.about__block--grey
+	background-color: colors['grey+80']
+
+.about__block__col
+	displayInlineBlock()
+	vertical-align middle
+	width 50%
+
+	@media screen and (max-width: 912px)
+		display block
+		width auto
+
+	h1
+
+		@media screen and (max-width: 912px)
+			text-align center
+
+.about__block__col--left
+
+	.padder
+		padding-right base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+			margin-bottom base_unit * 2
+
+.about__block__col--right
+
+	.padder
+		padding-left base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+.about__block__col--left.about__block__col--padd
+
+	.padder
+		padding-right base_unit * 5
+
+		@media screen and (max-width: 912px)
+			padding 0
+			margin-bottom base_unit * 2
+
+.about__block__col--right.about__block__col--padd
+
+	.padder
+		padding-left base_unit * 5
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+.about__block__col--wide
+	width 55%
+
+	@media screen and (max-width: 912px)
+		width auto
+
+.about__block__col--narrow
+	width 45%
+
+	@media screen and (max-width: 912px)
+		width auto
+
+.about__infographic
+	display block
+	width 100%
+	height auto
+
+	@media screen and (max-width: 912px)
+		max-width base_unit * 16
+		margin auto
+
+.about__word_cloud_wrap
+	displayInlineBlock()
+	width 100%
+	height base_unit * 15
+
+	@media screen and (max-width: 720px)
+		display none
+
+.about__word_cloud
+	position relative
+	width 100%
+	height 100%
+
+/* ============================================================
+ * Template - News
+ ============================================================ */
+
+.news
+	padding (base_unit * 2) 0
+	background-color: colors['grey+80']
+
+	@media screen and (max-width: 1104px)
+		padding-top base_unit
+
+.news__title
+	margin 0 0 (base_unit * 2) 0
+
+.news__body
+	displayInlineBlock()
+	vertical-align top
+	width 70%
+
+	@media screen and (max-width: 912px)
+		display block
+		width auto
+
+	.news__body__padder
+		padding-right base_unit
+
+		@media screen and (max-width: 912px)
+			padding 0
+
+/**
+ * News Nav
+ ============================================================ */
+
+.news__aside
+	displayInlineBlock()
+	vertical-align top
+	width 30%
+
+	@media screen and (max-width: 912px)
+		display block
+		width auto
+		padding (base_unit * 2) 0 0 0
+		border-top: solid 1px colors['grey+60']
+
+	.padder
+		padding-let base_unit
+
+.news__nav__wrap
+	margin-bottom base_unit * 2
+	background-color #ffffff
+
+.news__nav
+	padding base_unit
 	margin 0
 	list-style none
 
-.tile__property
-	display block
-	padding 0
-	margin (base_unit * .5) 0 0 0
-
-	&:first-child
+	@media screen and (max-width: 912px)
 		margin 0
 
-.tile__property__key
-.tile__property__value
+.news__nav__year_option
+	display block
+	padding 0
+	margin 0
+
+.news__nav__year_link
+	display block
+	padding (base_unit * .25) 0
+	margin 0
+	color: colors['grey-60']
+	font-weight bold
+	text-decoration none
+	border-bottom: solid 1px colors['grey+60']
+
+.news__nav__years
+	display block
+	padding (base_unit * .5) 0 0 0
+	margin 0 0 0 (base_unit * .5)
+	list-style none
+
+.news__nav__month_option
+	display block
+	padding 0
+	margin 0
+
+.news__nav__month_link
+	display block
+	padding base_unit * .5
+	color: colors['grey+20']
+	font-weight bold
+	text-decoration none
+
+	&:hover
+		color: colors['grey-60']
+		background-color: colors['grey+80']
+
+/**
+ * Latest News
+ ============================================================ */
+
+.latest__article
+	padding (base_unit * 2) 0
+	border-bottom: solid 1px colors['grey+60']
+
+	&:first-child
+		padding-top 0
+
+	&:last-child
+		border none
+
+.latest__article__aside
 	displayInlineBlock()
 	vertical-align top
+	width 35%
 
-.tile__property__key
-	width base_unit * 4
-	color: colors['grey+2']
+	@media screen and (max-width: 720px)
+		display block
+		width auto
 
-.tile__property__value
-	color: colors['grey-4']
-	width base_unit * 9
-	margin-left -4px
-	padding-left base_unit * .5
+	.padder
+		padding-right base_unit
+
+		@media screen and (max-width: 720px)
+			padding 0 0 (base_unit * 2) 0
+
+.latest__article__photo
+	position relative
 
 	img
 		display block
-		max-width 100%
-		max-height base_unit * 2.5
+		width 100%
+		height 100%
 
-/* ============================================================
- * Wells & Control Blocks
-=========================================================== */
+	span
+		displayInlineBlock
+		position absolute
+		right base_unit * .5
+		bottom base_unit * .5
 
-.well
-	padding base_unit
-	margin-top base_unit
+.latest__article__date
+	display block
+	position relative
+	padding (base_unit * .5) (base_unit * .75)
+	color #ffffff
+	font-weight bold
+	font-size: font_sizes['foxtrot']
+	text-transform uppercase
+	background-color: colors['red']
+	background: -moz-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, colors['orange']), color-stop(75%, colors['red']))
+	background: -webkit-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -o-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -ms-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: linear-gradient(to right, colors['orange'] 0%, colors['red'] 75%)
+
+.latest__article__content
+	displayInlineBlock()
+	vertical-align top
+	width 65%
+
+	@media screen and (max-width: 720px)
+		display block
+		width auto
+
+	.padder
+		padding-left base_unit
+
+		@media screen and (max-width: 1104px)
+			padding 0
+
+h1.latest__article__title
+	font-size: font_sizes['delta']
+
+/**
+ * News Article
+ ============================================================ */
+
+.news__article__header
+	position relative
+	padding (base_unit * .75) base_unit
 	margin-bottom base_unit
-	border-radius 2px
-	background-color #ffffff
+	color #ffffff
+	background-color: colors['red']
+	background: -moz-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%, colors['orange']), color-stop(75%, colors['red']))
+	background: -webkit-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -o-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: -ms-linear-gradient(left, colors['orange'] 0%, colors['red'] 75%)
+	background: linear-gradient(to right, colors['orange'] 0%, colors['red'] 75%)
 
-	&:first-of-type
-		margin-top 0
+.news__article__icon
+	display block
+	position absolute
+	top 50%
+	left base_unit
+	margin-top 0 - base_unit
+	font-size: font_sizes['alpha']
 
-	h2
-		color: colors['grey-4']
-		margin-top base_unit * .5
-		margin-bottom base_unit * 1.25
-		fontFamilyHeading()
-		font-size: font_sizes['delta']
+	@media screen and (max-width: 1104px)
+		left base_unit * .75
+		margin-top 0 - (base_unit * .625)
+		font-size: font_sizes['charlie']
 
-	h3
-		color: colors['grey-4']
-		margin-top base_unit * .25
+.news__article__title
+	vertical-align top
+	margin 0 0 0 (base_unit * 3)
+	font-size: font_sizes['echo']
+	font-weight normal
+	text-transform uppercase
+
+	@media screen and (max-width: 1104px)
+		margin-left base_unit * 1.75
+
+.news__article__img
+	position relative
+	margin-bottom base_unit * 2
+
+	@media screen and (max-width: 1104px)
 		margin-bottom base_unit
-		fontFamilyHeading()
-		font-size: font_sizes['echo']
+
+	img
+		display block
+		width 100%
+		height auto
+
+	span
+		displayInlineBlock()
+		position absolute
+		right base_unit * .5
+		bottom base_unit * .5
+
+.news__article__body
 
 	p
-	ul
-	ol
-		color: colors['grey+2']
-		margin-top base_unit * .75
-		margin-bottom base_unit
-		font-size: font_sizes['foxtrot']
-
-	.control_block
-		padding-top base_unit * .75
-		padding-bottom base_unit * .75
 
 		&:first-child
-			padding-top base_unit * .25
-
-.block__y__top
-	padding-top base_unit * .75
-
-.block__y__bottom
-	padding-bottom base_unit * .75
-
+			color: colors['grey-80']
+			font-size: font_sizes['foxtrot']
 
 /* ============================================================
- * Nav Bars
-=========================================================== */
+ * Template - Default
+ ============================================================ */
 
-.navbar__menu
-	padding base_unit * .25
-	margin 0
-	list-style none
-	border-radius 2px
-	background-color #ffffff
-
-.navbar__menu__option
-	displayInlineBlock()
-	padding 0
-	margin 0 0 0 -4px
-
-	&:first-child
-		margin 0
-
-.navbar__menu__link
-	display block
-	padding (base_unit * .25) (base_unit * .75)
-	margin-right base_unit * .25
-	color: colors['mist-6']
-	font-weight bold
-	text-decoration none
-	border-radius 2px
-	background-color: colors['mist']
-	cursor pointer
-
-	&:hover
-		background-color: colors['mist+1']
-
-	&:active
-		background-color: colors['mist-1']
+.default__article
+	width base_unit * 30
+	max-width 100%
+	margin auto
