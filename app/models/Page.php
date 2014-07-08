@@ -93,7 +93,7 @@ class Page
      */
     public function URL()
     {
-        return \URL::to($this->details['id']);
+        return \URL::to($this->details['uri']);
     }
 
     /**

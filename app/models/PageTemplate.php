@@ -54,6 +54,66 @@ class PageTemplate implements PageTemplateInterface
     protected $keywords = null;
 
     /**
+     * Return the page template's ID.
+     *
+     * @return  String
+     */
+    public function ID()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Return the page template's slug.
+     *
+     * @return  String
+     */
+    public function slug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * Return the page template's URI.
+     *
+     * @return  String
+     */
+    public function URI()
+    {
+        return $this->uri;
+    }
+
+    /**
+     * Return the page template's title.
+     *
+     * @return  String
+     */
+    public function title()
+    {
+        return $this->title;
+    }
+
+    /**
+     * Return the page template's description.
+     *
+     * @return  String
+     */
+    public function description()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Return the page template's keywords.
+     *
+     * @return  String
+     */
+    public function keywords()
+    {
+        return $this->keywords;
+    }
+
+    /**
      * Set the page template's slug.
      *
      * @param   Integer
@@ -117,65 +177,5 @@ class PageTemplate implements PageTemplateInterface
     public function setKeywords($keywords)
     {
         $this->keywords = $keywords;
-    }
-
-    /**
-     * Return the page template's ID.
-     *
-     * @return  String
-     */
-    public function ID()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Return the page template's slug.
-     *
-     * @return  String
-     */
-    public function slug()
-    {
-        return $this->slug;
-    }
-
-    /**
-     * Return the page template's URI.
-     *
-     * @return  String
-     */
-    public function URI()
-    {
-        return $this->uri;
-    }
-
-    /**
-     * Return the page template's title.
-     *
-     * @return  String
-     */
-    public function title()
-    {
-        return $this->title;
-    }
-
-    /**
-     * Return the page template's description.
-     *
-     * @return  String
-     */
-    public function description()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Return the page template's keywords.
-     *
-     * @return  String
-     */
-    public function keywords()
-    {
-        return $this->keywords;
     }
 }
