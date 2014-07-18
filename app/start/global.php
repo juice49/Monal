@@ -48,11 +48,23 @@ Log::useFiles(storage_path().'/logs/laravel.log');
 
 App::error(function(Exception $exception, $code)
 {
+	return handleException($exception, $code);
+});
+
+// Listen for Eloquent's `ModelNotFoundException` and map it to a 404 error
+App::error(function(Illuminate\Database\Eloquent\ModelNotFoundException $exception)
+{
+	return handleException($exception, 404);
+});
+
+function handleException(Exception $exception, $code)
+{
 	// Log the error.
 	Log::error($exception);
 
-	if (!Config::get('app.debug')) {
-
+	// A 404 error should always return the 404 view, even with debug mode on	
+	if (!Config::get('app.debug') || $code == 404)
+	{
 		// Create a new page template.
 		$page_template = App::make('Monal\Models\PageTemplate');
 
@@ -68,27 +80,18 @@ App::error(function(Exception $exception, $code)
 		$page_template->setSlug(end($url_segments));
 		$page_template->setURI($uri);
 
-		// Decide what error template we should use.
-		switch ($code) {
-			case 403:
-				$function_name = 'error403Template';
-				break;
-			case 404:
-				$function_name = 'error404Template';
-				break;
-			case 500:
-				$function_name = 'error500Template';
-				break;
-			default:
-				$function_name = 'errorTemplate';
-		}
+		// Does this error code have a specialised view?
+		$error_has_view = in_array($code, [403, 404, 500]);
+		$function_name = $error_has_view
+			? 'error' . $code . 'Template'
+			: 'errorTemplate';
 
-		// Create a new page and render it's view, and then output a response.
+		// Create a new page and render its view, and then output a response.
 		$page = App::make('Monal\Models\Page', array($page_template));
 		$view = View::make(Monal\API\App::$function_name(), compact('exception', 'page'))->render();
 		return Response::make($view, $code);
 	}
-});
+}
 
 /*
 |--------------------------------------------------------------------------
